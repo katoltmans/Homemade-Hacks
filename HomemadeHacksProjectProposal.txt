@@ -1,0 +1,53 @@
+[REQUIRED] Name: Kathryn (Kat) Oltmans
+[REQUIRED] Project Title: Homemade Hacks
+[REQUIRED] Project Stack: Projects & Algorithms (solo project)
+[REQUIRED] GitHub Repo Link: https://github.com/katoltmans/Homemade-Hacks
+
+[REQUIRED] Project Description: Many of us have random household lifehacks that we feel are common sense because we grew up with them, 
+but could be a revelation to those outside our circles. I would like to create a site where people can share natural cleaning/pest/household/etc. 
+remedies that can be executed with less expensive, natural, everyday materials. I have often looked for natural ideas such as this and found 
+individual blogs or articles, but have yet to find a aggregated site where people can add and rate lifehacks that are healthy and less expensive. 
+I believe it could be helpful to create a central place to look for these types of tips and tricks.
+
+[REQUIRED] New Programming Concept(s) I'm Planning to Learn: Material UI and how to add form fields on demand (by clicking a button) - add a search bar if time permits - 
+I would also like to try to combine what I learned from the two stacks I took and use Python and MongoDB for the back end and React with Flask for the front end. 
+
+Week 1 Features (to show at Review during Week 2)
+- Create CRUD components (Add A Hack, Hack Details, Update Hack, and delete button)
+- Add Validations to Add A Hack Form
+- Login/Registration with validations
+- Figure out how to add fields on demand for the Add a Hack component
+
+Week 2 Features (to show at first office hour/lecture of Week 3)
+- ***Finish CSS work (learn incorporate Material UI)***
+- Login and Sign Up buttons are replaced with Welcome user once logged in
+- Add ability to favorite hacks and Favorite Hacks component if time
+- Welcome screen with carosel to display either most favorited or most recently added hacks
+
+Product Backlog (If I have more time after completing my MVP, I'll start to work on...)
+- working search bar
+- create links to a component that features the hacks specific each category
+- add the ability to rate hacks and then prioritize top rated hacks
+
+
+
+
+
+Other Week 1 Tasks
+- Reply to Group Preferences Email
+- Schedule a Review during Week 2 (https://calendly.com/d/cnc-5t7-4yv/solo-project-sprint-w1-review)
+- Create GitHub repo for project
+- Create a .gitignore file for my project for my GitHub repo (enter in React, Python, or Java at https://www.toptal.com/developers/gitignore)
+- Finish this completed txt file and create project wireframe using Balsamiq (https://balsamiq.com/wireframes/) [Drawings and other wireframe programs also accepted!]
+- Email Zack this completed txt file, and project wireframe for approval
+- Submit completed wireframe on platform (https://login.codingdojo.com/m/97/6237/44911)
+- Complete Arrays To Do 1 & Strings To Do 1 assignments
+
+
+Other Week 2 Tasks
+- Schedule my time for my presentation (https://docs.google.com/spreadsheets/d/1h44-JSv6npmdqAftZHxLcX2FRDlSKEzEZlTOlizIGfw/edit#gid=414986054)
+- Begin to talk with assigned group about project ideas and what skills I bring to the table
+- Complete Singly Linked Lists Fronts & Display assignments
+
+
+
