@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Paper } from "@material-ui/core";
+import { AppBar, Paper } from "@mui/material";
 import { NavLink, Router, Routes } from "react-router-dom";
 
 const Navbar = () => {
