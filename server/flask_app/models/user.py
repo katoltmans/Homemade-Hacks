@@ -31,7 +31,7 @@ class User:
     @classmethod
     def new_user(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, birthdate, location, username, password, created_at, updated_at) \
-	    VALUES (%(first_name)s, %(last_name)s, %(email)s, %(birthdate)s, %(location)s, %(username)s, %(password)s, %(created_at)s, %(updated_at)s, NOW(), NOW());"
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(birthdate)s, %(location)s, %(username)s, %(password)s, %(created_at)s, %(updated_at)s, NOW(), NOW());"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         return results

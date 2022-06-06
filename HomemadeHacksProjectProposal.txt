@@ -10,7 +10,8 @@ individual blogs or articles, but have yet to find a aggregated site where peopl
 I believe it could be helpful to create a central place to look for these types of tips and tricks.
 
 [REQUIRED] New Programming Concept(s) I'm Planning to Learn: Material UI and how to add form fields on demand (by clicking a button) - add a search bar if time permits - 
-I would also like to try to combine what I learned from the two stacks I took and use Python and MongoDB for the back end and React with Flask for the front end. 
+I would also like to try to combine what I learned from the two stacks I took and use Python and MongoDB for the back end and React for the front end. (If this is nuts, please let me know.)
+I would like to work with my MERN stackmates for the group project if possible, but do not want my Python Skills to get too rusty.
 
 Week 1 Features (to show at Review during Week 2)
 - Create CRUD components (Add A Hack, Hack Details, Update Hack, and delete button)

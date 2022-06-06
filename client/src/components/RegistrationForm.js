@@ -8,6 +8,7 @@ import {
     Paper,
     TextField,
     Typography,
+    Button,
 } from "@mui/material";
 
 const RegistrationForm = () => {
@@ -111,6 +112,9 @@ const RegistrationForm = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Button variant="contained" sx={{ mt: 3 }}>
+                    Submit
+                </Button>
             </Box>
         </Paper>
     );
