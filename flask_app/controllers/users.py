@@ -3,12 +3,11 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 from flask import render_template, redirect, request, session, jsonify
 from flask_app.models import user # will need to import hack
-from flask_cors import CORS, cross_origin
 # Source: https://rasyue.com/full-stack-react-with-python-flask/
 import pprint
 
 
-@app.route("/")
+@app.route("/test")
 def display_login():
     return '''<!DOCTYPE html>
 <html lang="en">
@@ -24,7 +23,6 @@ Hello World!
 
 # Route to process registration data
 @app.route("/register", methods=["POST"])
-@cross_origin()
 def process_registration():
     # Redirect to registration page if not a valid email
     pp = pprint.PrettyPrinter(indent=4)
@@ -60,7 +58,6 @@ def process_registration():
 
 # Route to process login
 @app.route("/login", methods=["POST"])
-@cross_origin()
 def process_login():
     # Check if email exists in database
     email_data = {
@@ -79,7 +76,6 @@ def process_login():
 
 # Route to logout
 @app.route("/logout")
-@cross_origin()
 def process_logout():
     session.clear()
     response = flask.jsonify({"message":"successfully logged out"})
