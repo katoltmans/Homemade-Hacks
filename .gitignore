@@ -1,1 +1,4 @@
 /WireframeImages
+__pycache__/
+*.pyc
+
