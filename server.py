@@ -8,5 +8,7 @@ from flask_app.controllers import base
 #            static_folder='flask_app/client/dist',
 #            template_folder='flask_app/templates')
 
+
+
 if __name__=="__main__":  #Code to run in development mode
     app.run(debug=True)

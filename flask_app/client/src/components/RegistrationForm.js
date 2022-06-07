@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -50,7 +50,10 @@ const RegistrationForm = () => {
                 }
             })
             .catch((err) => {
-                console.log("Error with post request (client)", err);
+                console.log(
+                    "Error with post registration request (client)",
+                    err
+                );
                 setErrors(err.response.data?.error?.errors);
                 console.log("ERROR:", errors);
             });

@@ -7,20 +7,6 @@ from flask_app.models import user # will need to import hack
 import pprint
 
 
-@app.route("/test")
-def display_login():
-    return '''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Homemade Hacks</title>
-</head>
-<body>
-Hello World!
-</body>
-</html>'''
-
 # Route to process registration data
 @app.route("/register", methods=["POST"])
 def process_registration():
