@@ -1,14 +1,35 @@
 from flask_app import app
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, jsonify
 from flask_app.models import user # will need to import hack
+from flask_cors import CORS, cross_origin
+# Source: https://rasyue.com/full-stack-react-with-python-flask/
+import pprint
 
+
+@app.route("/")
+def display_login():
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Homemade Hacks</title>
+</head>
+<body>
+Hello World!
+</body>
+</html>'''
 
 # Route to process registration data
 @app.route("/register", methods=["POST"])
+@cross_origin()
 def process_registration():
     # Redirect to registration page if not a valid email
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(vars(request))
+    # Source: https://docs.python.org/3/library/pprint.html
     if not user.User.validate_registration(request.form):
         return redirect("/register")
     # Create the hash of the password
@@ -33,10 +54,13 @@ def process_registration():
     session["first_name"] = request.form["first_name"]
     session["id"] = user_id
     # Redirect after submit
-    return redirect("/")  # will need to change to /hacks/explore once made
+    response = flask.jsonify({"message":"successfully registered"})
+    return response
+# Solution source: https://stackoverflow.com/questions/26980713/solve-cross-origin-resource-sharing-with-flask
 
 # Route to process login
 @app.route("/login", methods=["POST"])
+@cross_origin()
 def process_login():
     # Check if email exists in database
     email_data = {
@@ -50,12 +74,15 @@ def process_login():
     session["first_name"] = user_in_db.first_name
     session["id"] = user_in_db.id
     # Redirect after submit
-    return redirect("/")  # will need to change to /hacks/explore once made
+    response = flask.jsonify({"message":"successfully logged in"})
+    return response
 
 # Route to logout
 @app.route("/logout")
+@cross_origin()
 def process_logout():
     session.clear()
-    return redirect("/")
+    response = flask.jsonify({"message":"successfully logged out"})
+    return response
 
 

@@ -14,14 +14,15 @@ import {
 const RegistrationForm = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState({
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
         birthdate: "",
         location: "",
         username: "",
         password: "",
     });
+    const [errors, setErrors] = useState([]);
 
     const onChangeHandler = (e) => {
         setUser({
@@ -31,9 +32,28 @@ const RegistrationForm = () => {
     };
 
     const onSubmitHandler = (e) => {
+        console.log("submitting");
         e.preventDefault();
-
         //make axios post request
+        console.log(user);
+        // Post request to create a new author
+        axios
+            .post("http://localhost:5000/register", user)
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                try {
+                    //navigate("/");
+                    console.log(res?.data?.message);
+                } catch (error) {
+                    console.error(error);
+                }
+            })
+            .catch((err) => {
+                console.log("Error with post request (client)", err);
+                setErrors(err.response.data?.error?.errors);
+                console.log("ERROR:", errors);
+            });
     };
 
     return (
@@ -47,15 +67,19 @@ const RegistrationForm = () => {
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                name="first_name"
                                 label="First Name"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                name="last_name"
                                 label="Last Name"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                     </Grid>
@@ -63,8 +87,10 @@ const RegistrationForm = () => {
                         <Grid item xs={12}>
                             <TextField
                                 fullWidth
+                                name="email"
                                 label="Email"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                     </Grid>
@@ -72,15 +98,19 @@ const RegistrationForm = () => {
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
-                                label="Birthdate"
+                                name="birthdate"
+                                label="Birth Date"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                name="location"
                                 label="Location"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                     </Grid>
@@ -88,8 +118,10 @@ const RegistrationForm = () => {
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                name="username"
                                 label="Username"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                     </Grid>
@@ -97,22 +129,30 @@ const RegistrationForm = () => {
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                name="password"
                                 type="password"
                                 label="Password"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
+                                name="confirm_password"
                                 type="password"
                                 label="Confirm Password"
                                 variant="outlined"
+                                onChange={onChangeHandler}
                             />
                         </Grid>
                     </Grid>
                 </Grid>
-                <Button variant="contained" sx={{ mt: 3 }}>
+                <Button
+                    variant="contained"
+                    sx={{ mt: 3 }}
+                    onClick={onSubmitHandler}
+                >
                     Submit
                 </Button>
             </Box>

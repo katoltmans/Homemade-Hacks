@@ -1,4 +1,5 @@
 from flask_app import app  # Import the app itself
+from flask_app.controllers import users
 #from flask_app.controllers import users, hacks # Import controllers for the project
 
 
