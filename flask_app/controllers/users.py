@@ -20,7 +20,7 @@ def process_registration():
     #    return redirect("/register")
     # Create the hash of the password
     pw_hash = bcrypt.generate_password_hash(formData["password"])
-    pw_hash_confirm = bcrypt.generate_password_hash(formData["confirm password"])
+    pw_hash_confirm = bcrypt.generate_password_hash(formData["confirm_password"])
     print(pw_hash)
     print(pw_hash_confirm)
     # Create a user dictionary
