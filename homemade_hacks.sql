@@ -54,11 +54,18 @@ CREATE TABLE IF NOT EXISTS `homemade_hacks`.`hacks` (
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW() ON UPDATE NOW(),
   `category_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `category_id`),
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `category_id`, `user_id`),
   INDEX `fk_hacks_categories1_idx` (`category_id` ASC) VISIBLE,
+  INDEX `fk_hacks_users1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_hacks_categories1`
     FOREIGN KEY (`category_id`)
     REFERENCES `homemade_hacks`.`categories` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_hacks_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `homemade_hacks`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
