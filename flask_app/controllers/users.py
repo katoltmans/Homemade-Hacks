@@ -3,7 +3,7 @@ from flask_app import app
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 from flask import render_template, redirect, request, session, jsonify
-from flask_app.models import user # will need to import hack
+from flask_app.models import user, hack
 # Source: https://rasyue.com/full-stack-react-with-python-flask/
 import pprint
 
@@ -14,7 +14,7 @@ def process_registration():
     # Redirect to registration page if not a valid email
     pp = pprint.PrettyPrinter(indent=4)
     formData = request.get_json()
-    print(request.get_json())
+    print(formData)
     # Source: https://docs.python.org/3/library/pprint.html
     #if not user.User.validate_registration(formData):
     #    return redirect("/register")
@@ -44,13 +44,15 @@ def process_registration():
 # Route to process login
 @app.route("/login", methods=["POST"])
 def process_login():
+    formData = request.get_json()
+    console.log("FORM DATA:", formData)
     # Check if email exists in database
     email_data = {
-        "email": request.form["email"]
+        "email": formData["email"]
     }
     user_in_db = user.User.get_by_email(email_data)
     # Redirect home if not a valid email
-    if not user.User.validate_login(request.form, user_in_db):
+    if not user.User.validate_login(formData, user_in_db):
         return redirect("/login") 
     # Save session info
     session["first_name"] = user_in_db.first_name

@@ -3,8 +3,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask_app.models import user
 import re
-
-class Hack:
+class Hack():
     # Assign schema
     schema = "homemade_hacks"
     
@@ -16,10 +15,13 @@ class Hack:
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.category_id = data["category_id"]
+        self.category_name = data["category_name"]
         self.user_id = data["user_id"]
+        self.first_name = data["first_name"]
+        self.last_name = data["last_name"]
         self.creator = None
         self.users = []
-        self.user_count = 0
+        self.favorite_count = 0
         
     # Method to add a hack (create)
     @classmethod
@@ -31,37 +33,86 @@ class Hack:
         print(results)
         return results
     
-    # Method to display all hacks with categories
+    # Method to get all hacks with categories
     @classmethod
-    def display_all_hacks_with_category_and_user(cls, data):
-        query = """SELECT * FROM homemade_hacks.hacks LEFT JOIN homemade_hacks.categories ON categories.id = hacks.category_id;"""
-        results = connectToMySQL(cls.schema).query_db(query, data)
+    def get_all_hacks_with_category_and_user(cls):
+        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
+	LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
+    LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id;"""
+        results = connectToMySQL(cls.schema).query_db(query)
         print(results)
         all_hacks = []
         # Return None if no hacks are registered
         if not results or len(results) == 0:  
             print("no results")
-            return None
+            return ""
         else:
             
             for row_from_db in results:
                 
                 one_hack = cls(row_from_db)
-                one_hack_creator = {
-                    "id" : row_from_db["users.id"],
-                    "title": row_from_db["title"],
-                    "supplies": row_from_db["supplies"],
-                    "instructions": row_from_db["instructions"],
-                    "created_at": row_from_db["created_at"],
-                    "updated_at": row_from_db["hacks.updated_at"],
-                    "name": row_from_db["name"],
-                }
+                # TODO: THIS NEEDS HELP!!!!!!!
+                #one_hack_favorites_user = {
+                #    "id" : row_from_db["users.id"],
+                #    "first_name": row_from_db["first_name"],
+                #    "last_name": row_from_db["last_name"],
+                #}
                 # Creates a user object and associates the creator with the hack
-                one_hack.creator = user.User(one_hack_creator)
+                #one_hack.creator = user.User(one_hack_creator)
                 # Access the single visitor_count value from the row
-                one_hack.visitor=_count = row_from_db["visitor_count"]
+                #one_hack.user_count = row_from_db["user_count"]
                 # Each hack that is created is appended to the all_hacks list
                 all_hacks.append(one_hack)
-                # TODO: THIS NEEDS HELP!!!!!!!
-                
         return all_hacks
+    
+    # Method to view details of one hack
+    
+    
+    
+    
+    
+    # Method to update a hack
+    
+    
+    
+    # Method to delete a hack
+    
+    
+    # Method to record favorites (?)
+    
+    
+    # Method to display hacks made by a creator (or favorites?)
+    
+    
+    
+    # Static methods to validate hack entry
+    @staticmethod
+    def validate_hack_entry(form_data):
+        is_valid = True
+        # Check if all fields contain at least 2 characters
+        if len(form_data['title']) < 1 or len(form_data['category']) < 1 \
+            or len(form_data['supplies']) < 1 or len(form_data['instructions']) < 1:
+            print("Missing data")
+            flash("All fields are required to create a hack. Please try again.", "tree_entry")
+            is_valid = False
+        # Check to make sure species has at least 5 characters
+        if len(form_data['title']) < 2:
+            print("title name too short")
+            flash("Please enter a title that contains at least 2 characters.", "tree_entry")
+            is_valid = False
+        # Check to make sure location has at least 2 characters
+        if len(form_data['category']) < 2:
+            print("category not selected")
+            flash("Please select a category.", "tree_entry")
+            is_valid = False
+        # Check to make sure location has at least 2 characters
+        if len(form_data['supplies']) > 50:
+            print("supplies too short")
+            flash("We are brief summaries. Please limit your reason to a max of 50 characters.", "tree_entry")
+            is_valid = False
+        # Check to make sure location has at least 2 characters
+        if len(form_data['location']) > 50:
+            print("reason too long")
+            flash("We are brief summaries. Please limit your reason to a max of 50 characters.", "tree_entry")
+            is_valid = False
+        return is_valid
