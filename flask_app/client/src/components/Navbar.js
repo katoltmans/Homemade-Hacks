@@ -28,7 +28,7 @@ const Navbar = () => {
                         sx={{ ml: 5 }}
                     >
                         <Link
-                            href="/api/hacks/view"
+                            href="/hacks/view"
                             color="inherit"
                             underline="none"
                         >
@@ -52,7 +52,7 @@ const Navbar = () => {
                         sx={{ ml: 5 }}
                     >
                         <Link
-                            href="/api/hacks/new"
+                            href="/hacks/new"
                             color="inherit"
                             underline="none"
                         >
