@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {
-    Box,
-    FormControl,
-    Grid,
-    Paper,
-    TextField,
-    Typography,
-    Button,
-} from "@mui/material";
+import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
 
 const RegistrationForm = () => {
     const navigate = useNavigate();

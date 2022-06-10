@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes, Router } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
+import HacksList from "./components/HacksList";
+import AddHack from "./components/AddHack";
 
 const App = () => {
     // declare state
@@ -20,6 +22,8 @@ const App = () => {
                     <Route path="/register" element={<RegistrationForm />} />
                     <Route path="/login" element={<LoginForm />} />
                     {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
+                    <Route path="/api/hacks/view" element={<HacksList />} />
+                    <Route path="/api/hacks/new" element={<AddHack />} />
                 </Routes>
             </div>
         </BrowserRouter>

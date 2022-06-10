@@ -27,7 +27,11 @@ const Navbar = () => {
                         component="div"
                         sx={{ ml: 5 }}
                     >
-                        <Link href="/" color="inherit" underline="none">
+                        <Link
+                            href="/api/hacks/view"
+                            color="inherit"
+                            underline="none"
+                        >
                             Explore
                         </Link>
                     </Typography>
@@ -47,7 +51,11 @@ const Navbar = () => {
                         component="div"
                         sx={{ ml: 5 }}
                     >
-                        <Link href="/" color="inherit" underline="none">
+                        <Link
+                            href="/api/hacks/new"
+                            color="inherit"
+                            underline="none"
+                        >
                             Add A Hack
                         </Link>
                     </Typography>
