@@ -24,6 +24,10 @@ const AddHack = () => {
         });
     };
 
+    const addSuppliesHandler = () => {
+        setSupplies([...supplies, ""]);
+    };
+
     const addInstructionHandler = () => {
         setInstructions([...instructions, ""]);
     };
@@ -110,72 +114,85 @@ const AddHack = () => {
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="supplies"
-                                label="Supply Name"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="supplies"
-                                label="Quantity"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Button variant="contained" sx={{ ml: 3 }}>
-                            Add Supplies
-                        </Button>
-                    </Grid>
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        component="div"
-                        sx={{ ml: 3 }}
-                    >
-                        <h3>Instructions</h3>
-                    </Typography>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="instructions"
-                                label="Instruction step"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        {instructions.map((step) => {
+                        {supplies.map((supply_name, quantity) => {
                             return (
-                                <Grid item xs={12} key={step}>
-                                    <TextField
-                                        fullWidth
-                                        name="instructions"
-                                        value={step}
-                                        label="Instruction step"
-                                        variant="outlined"
-                                        onChange={onChangeHandler}
-                                    />
-                                </Grid>
+                                <>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            fullWidth
+                                            key={supply_name}
+                                            name="supplies"
+                                            value={supply_name}
+                                            label="Supply Name"
+                                            variant="outlined"
+                                            onChange={onChangeHandler}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            fullWidth
+                                            key={quantity}
+                                            name="supplies"
+                                            value={quantity}
+                                            label="Quantity"
+                                            variant="outlined"
+                                            onChange={onChangeHandler}
+                                        />
+                                    </Grid>
+                                </>
                             );
                         })}
-                        <Button
-                            variant="contained"
-                            sx={{ ml: 3 }}
-                            onClick={addInstructionHandler}
-                        >
-                            Add Step
-                        </Button>
                     </Grid>
+                    <Button
+                        variant="contained"
+                        sx={{ ml: 3 }}
+                        onClick={addSuppliesHandler}
+                    >
+                        Add Supplies
+                    </Button>
+                </Grid>
+                <Typography
+                    variant="h6"
+                    color="inherit"
+                    component="div"
+                    sx={{ ml: 3 }}
+                >
+                    <h3>Instructions</h3>
+                </Typography>
+                <Grid container item spacing={3}>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            name="instructions"
+                            label="Instruction step"
+                            variant="outlined"
+                            onChange={onChangeHandler}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container item spacing={3}>
+                    {instructions.map((step) => {
+                        return (
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    key={step}
+                                    name="instructions"
+                                    value={step}
+                                    label="Instruction step"
+                                    variant="outlined"
+                                    onChange={onChangeHandler}
+                                />
+                            </Grid>
+                        );
+                    })}
+                    <Button
+                        variant="contained"
+                        sx={{ ml: 3, mt: 3 }}
+                        onClick={addInstructionHandler}
+                    >
+                        Add Step
+                    </Button>
                 </Grid>
                 <Button
                     variant="contained"
