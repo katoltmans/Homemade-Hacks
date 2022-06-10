@@ -66,10 +66,17 @@ class Hack():
         return all_hacks
     
     # Method to view details of one hack
-    
-    
-    
-    
+    @classmethod
+    def view_details(cls, data):
+        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
+        LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
+        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id
+        WHERE hacks.id = %{id}s;"""
+        results = connectToMySQL(cls.schema).query_db(query, db)
+        print(results)
+        this_hack = cls(results[0])
+        return this_hack
+        
     
     # Method to update a hack
     

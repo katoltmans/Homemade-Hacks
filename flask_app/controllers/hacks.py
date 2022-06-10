@@ -39,8 +39,10 @@ def view_all_hacks():
 # Route to view one hack
 @app.route("/api/hacks/view/<int:num>")
 def view_one_hack(num):
-    pass
-
+    # # Check to see if the user is in session
+    # if "id" not in session:
+    #     return redirect("/")
+    return Response(jsonpickle.encode(hack.Hack.view_details()), mimetype='application/json')
 
 
 # Route to update a hack

@@ -8,6 +8,7 @@ import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
 import HacksList from "./components/HacksList";
 import AddHack from "./components/AddHack";
+import HackDetail from "./components/HackDetail";
 
 const App = () => {
     // declare state
@@ -24,6 +25,7 @@ const App = () => {
                     {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
                     <Route path="/hacks/view" element={<HacksList />} />
                     <Route path="/hacks/new" element={<AddHack />} />
+                    <Route path="/hacks/view/:id" element={<HackDetail />} />
                 </Routes>
             </div>
         </BrowserRouter>

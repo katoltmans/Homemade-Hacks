@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
     Grid,
     Paper,
@@ -18,7 +18,17 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const HacksList = () => {
-    const [hacks, sethHacks] = useState([]);
+    const [hacks, setHacks] = useState([]);
+    const catrgories = [
+        "Cleaning Hacks",
+        "Wardrobe Hacks",
+        "Item Repair Hacks",
+        "Pest Control Hacks",
+        "Home Repair Hacks",
+        "Lawn & Gardening Hacks",
+        "Organization Hacks",
+        "Travel Hacks",
+    ];
 
     useEffect(() => {
         // GET request to find all hacks
@@ -26,7 +36,7 @@ const HacksList = () => {
             .get("http://localhost:5000/api/hacks/view")
             .then((res) => {
                 console.log(res.data);
-                sethHacks(res.data);
+                setHacks(res.data);
             })
             .catch((err) => {
                 console.log(
@@ -35,6 +45,10 @@ const HacksList = () => {
                 );
             });
     }, []);
+
+    useEffect(() => {
+        console.log("HACKS", hacks);
+    }, [hacks]);
 
     const sortList = (a, b) => {
         if (a.title < b.title) {
@@ -51,27 +65,34 @@ const HacksList = () => {
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Explore Hacks
             </Typography>
+            {/* {categories.map((category_name) => {
+                return (
+                    <> */}
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                     <CardMedia
                         component="img"
                         height="140"
-                        image="/static/images/cards/contemplative-reptile.jpg"
+                        image="/"
                         alt="green iguana"
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            Hacks
+                            Hacks Title
                         </Typography>
                         <Grid item xs={12} md={6}>
                             <Typography
-                                sx={{ mt: 4, mb: 2 }}
+                                sx={{
+                                    mt: 4,
+                                    mb: 2,
+                                    color: "info.main",
+                                }}
                                 variant="h6"
                                 component="div"
                             >
-                                Hacks
+                                Hacks list item
                             </Typography>
-                            <List dense={dense}>
+                            <List>
                                 {hacks.sort(sortList).map((hack, index) => {
                                     <ListItem>
                                         <ListItemText>
@@ -100,6 +121,9 @@ const HacksList = () => {
                     </CardContent>
                 </CardActionArea>
             </Card>
+            {/* </>
+                ); */}
+            {/* })} */}
         </Paper>
     );
 };

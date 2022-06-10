@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
 
 const AddHack = () => {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const [hack, setHack] = useState({
         title: "",
         supplies: [{ supply_name: "", quantity: "" }],
@@ -39,7 +39,7 @@ const AddHack = () => {
         console.log(user);
         // Post request to create a new author
         axios
-            .post("http://localhost:5000/api/hacks/new", user)
+            .post("http://localhost:5000/api/hacks/update/:id", user)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -114,17 +114,15 @@ const AddHack = () => {
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-
-                        {supplies.map((supply_item, index) => {
+                        {supplies.map((supply_name, quantity) => {
                             return (
-                                <Grid container item spacing={3} key={index}>
+                                <>
                                     <Grid item xs={6}>
                                         <TextField
                                             fullWidth
+                                            key={supply_name}
                                             name="supplies"
-                                            defaultValue={
-                                                supply_item.supply_name
-                                            }
+                                            value={supply_name}
                                             label="Supply Name"
                                             variant="outlined"
                                             onChange={onChangeHandler}
@@ -133,20 +131,21 @@ const AddHack = () => {
                                     <Grid item xs={6}>
                                         <TextField
                                             fullWidth
+                                            key={quantity}
                                             name="supplies"
-                                            defaultValue={supply_item.quantity}
+                                            value={quantity}
                                             label="Quantity"
                                             variant="outlined"
                                             onChange={onChangeHandler}
                                         />
                                     </Grid>
-                                </Grid>
+                                </>
                             );
                         })}
                     </Grid>
                     <Button
                         variant="contained"
-                        sx={{ ml: 3, mt: 1 }}
+                        sx={{ ml: 3 }}
                         onClick={addSuppliesHandler}
                     >
                         Add Supplies
@@ -170,9 +169,11 @@ const AddHack = () => {
                             onChange={onChangeHandler}
                         />
                     </Grid>
-                    {instructions.map((step, index) => {
+                </Grid>
+                <Grid container item spacing={3}>
+                    {instructions.map((step) => {
                         return (
-                            <Grid item xs={12} key={index}>
+                            <Grid item xs={12}>
                                 <TextField
                                     fullWidth
                                     key={step}
@@ -187,7 +188,7 @@ const AddHack = () => {
                     })}
                     <Button
                         variant="contained"
-                        sx={{ ml: 3, mt: 1 }}
+                        sx={{ ml: 3, mt: 3 }}
                         onClick={addInstructionHandler}
                     >
                         Add Step
@@ -195,7 +196,7 @@ const AddHack = () => {
                 </Grid>
                 <Button
                     variant="contained"
-                    sx={{ mt: 5 }}
+                    sx={{ mt: 3 }}
                     onClick={onSubmitHandler}
                 >
                     Submit
