@@ -22,8 +22,8 @@ const App = () => {
                     <Route path="/register" element={<RegistrationForm />} />
                     <Route path="/login" element={<LoginForm />} />
                     {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
-                    <Route path="/api/hacks/view" element={<HacksList />} />
-                    <Route path="/api/hacks/new" element={<AddHack />} />
+                    <Route path="/hacks/view" element={<HacksList />} />
+                    <Route path="/hacks/new" element={<AddHack />} />
                 </Routes>
             </div>
         </BrowserRouter>
