@@ -78,31 +78,26 @@ const HacksList = () => {
                                         >
                                             {categoryData.name}
                                         </Typography>
-                                        <Grid item xs={12} md={6}>
-                                            <List>
-                                                {hacks
-                                                    .filter(
-                                                        (hack) =>
-                                                            hack.category_id ===
-                                                            categoryData.id
-                                                    )
-                                                    .sort(sortList)
-                                                    .map((hackData, index) => {
-                                                        <ListItem key={index}>
-                                                            <ListItemText>
-                                                                <Link
-                                                                    href={`/hacks/view/${hackData.id}`}
-                                                                    underline="hover"
-                                                                >
-                                                                    {
-                                                                        hackData.title
-                                                                    }
-                                                                </Link>
-                                                            </ListItemText>
-                                                        </ListItem>;
-                                                    })}
-                                            </List>
-                                        </Grid>
+                                        <List>
+                                            {hacks
+                                                .filter(
+                                                    (hack) =>
+                                                        hack.category_id ===
+                                                        categoryData.id
+                                                )
+                                                .sort(sortList)
+                                                .map((hackData, index) => {
+                                                    return (
+                                                        <Link
+                                                            to={`/hacks/view/${hackData.id}`}
+                                                            underline="hover"
+                                                            key={index}
+                                                        >
+                                                            {hackData.title}
+                                                        </Link>
+                                                    );
+                                                })}
+                                        </List>
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
