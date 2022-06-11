@@ -20,16 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const HacksList = () => {
     const [hacks, setHacks] = useState([]);
-    const categories = [
-        "Cleaning Hacks",
-        "Wardrobe Hacks",
-        "Item Repair Hacks",
-        "Pest Control Hacks",
-        "Home Repair Hacks",
-        "Lawn & Gardening Hacks",
-        "Organization Hacks",
-        "Travel Hacks",
-    ];
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         // GET request to find all hacks
@@ -37,7 +28,8 @@ const HacksList = () => {
             .get("http://localhost:5000/api/hacks/view")
             .then((res) => {
                 console.log(res.data);
-                setHacks(res.data);
+                setHacks(res.data.all_hacks);
+                setCategories(res.data.all_categories);
             })
             .catch((err) => {
                 console.log(
@@ -67,7 +59,7 @@ const HacksList = () => {
                 Explore Hacks
             </Typography>
             <Grid container spacing={5}>
-                {categories.map((categoryName, index) => {
+                {categories.map((categoryData, index) => {
                     return (
                         <Grid item xs={3} key={index}>
                             <Card sx={{ maxWidth: 345 }}>
@@ -75,8 +67,8 @@ const HacksList = () => {
                                     <CardMedia
                                         component="img"
                                         height="140"
-                                        image="/static/img/pexels-andre-moura-2563028.jpg"
-                                        alt={categoryName}
+                                        image={categoryData.cat_img}
+                                        alt={categoryData.name}
                                     />
                                     <CardContent>
                                         <Typography
@@ -84,43 +76,28 @@ const HacksList = () => {
                                             variant="h5"
                                             component="div"
                                         >
-                                            {categoryName}
+                                            {categoryData.name}
                                         </Typography>
                                         <Grid item xs={12} md={6}>
-                                            <Typography
-                                                sx={{
-                                                    mt: 4,
-                                                    mb: 2,
-                                                    color: "info.main",
-                                                }}
-                                                variant="h6"
-                                                component="div"
-                                            >
-                                                Hacks list item
-                                            </Typography>
                                             <List>
                                                 {hacks
+                                                    .filter(
+                                                        (hack) =>
+                                                            hack.category_id ===
+                                                            categoryData.id
+                                                    )
                                                     .sort(sortList)
-                                                    .map((hack, index) => {
-                                                        <ListItem>
+                                                    .map((hackData, index) => {
+                                                        <ListItem key={index}>
                                                             <ListItemText>
-                                                                {/*primary= */}
-                                                                {/*secondaryAction = ( */}
                                                                 <Link
-                                                                    href="/"
+                                                                    href={`/hacks/view/${hackData.id}`}
                                                                     underline="hover"
                                                                 >
                                                                     {
-                                                                        hacks.title
+                                                                        hackData.title
                                                                     }
                                                                 </Link>
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="delete"
-                                                                >
-                                                                    <DeleteIcon />
-                                                                </IconButton>
-                                                                ;{/*); */}
                                                             </ListItemText>
                                                         </ListItem>;
                                                     })}
