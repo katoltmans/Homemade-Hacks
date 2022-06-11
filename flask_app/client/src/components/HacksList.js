@@ -14,12 +14,13 @@ import {
     ListItem,
     ListItemText,
     IconButton,
+    Stack,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const HacksList = () => {
     const [hacks, setHacks] = useState([]);
-    const catrgories = [
+    const categories = [
         "Cleaning Hacks",
         "Wardrobe Hacks",
         "Item Repair Hacks",
@@ -65,65 +66,73 @@ const HacksList = () => {
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Explore Hacks
             </Typography>
-            {/* {categories.map((category_name) => {
-                return (
-                    <> */}
-            <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="/"
-                        alt="green iguana"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Hacks Title
-                        </Typography>
-                        <Grid item xs={12} md={6}>
-                            <Typography
-                                sx={{
-                                    mt: 4,
-                                    mb: 2,
-                                    color: "info.main",
-                                }}
-                                variant="h6"
-                                component="div"
-                            >
-                                Hacks list item
-                            </Typography>
-                            <List>
-                                {hacks.sort(sortList).map((hack, index) => {
-                                    <ListItem>
-                                        <ListItemText>
-                                            {/*primary= */}
-                                            {/*secondaryAction = ( */}
-                                            <Link href="/" underline="hover">
-                                                {hacks.title}
-                                            </Link>
-                                            <IconButton
-                                                edge="end"
-                                                aria-label="delete"
+            <Grid container spacing={5}>
+                {categories.map((categoryName, index) => {
+                    return (
+                        <Grid item xs={3} key={index}>
+                            <Card sx={{ maxWidth: 345 }}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image="/static/img/pexels-andre-moura-2563028.jpg"
+                                        alt={categoryName}
+                                    />
+                                    <CardContent>
+                                        <Typography
+                                            gutterBottom
+                                            variant="h5"
+                                            component="div"
+                                        >
+                                            Hacks Title
+                                        </Typography>
+                                        <Grid item xs={12} md={6}>
+                                            <Typography
+                                                sx={{
+                                                    mt: 4,
+                                                    mb: 2,
+                                                    color: "info.main",
+                                                }}
+                                                variant="h6"
+                                                component="div"
                                             >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                            ;{/*); */}
-                                        </ListItemText>
-                                    </ListItem>;
-                                })}
-                                {/*secondary={
-                                                    secondary
-                                                        ? "Secondary text"
-                                                        : null
-                                                } */}
-                            </List>
+                                                Hacks list item
+                                            </Typography>
+                                            <List>
+                                                {hacks
+                                                    .sort(sortList)
+                                                    .map((hack, index) => {
+                                                        <ListItem>
+                                                            <ListItemText>
+                                                                {/*primary= */}
+                                                                {/*secondaryAction = ( */}
+                                                                <Link
+                                                                    href="/"
+                                                                    underline="hover"
+                                                                >
+                                                                    {
+                                                                        hacks.title
+                                                                    }
+                                                                </Link>
+                                                                <IconButton
+                                                                    edge="end"
+                                                                    aria-label="delete"
+                                                                >
+                                                                    <DeleteIcon />
+                                                                </IconButton>
+                                                                ;{/*); */}
+                                                            </ListItemText>
+                                                        </ListItem>;
+                                                    })}
+                                            </List>
+                                        </Grid>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
                         </Grid>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-            {/* </>
-                ); */}
-            {/* })} */}
+                    );
+                })}
+            </Grid>
         </Paper>
     );
 };
