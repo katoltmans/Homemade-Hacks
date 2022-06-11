@@ -16,6 +16,7 @@ class Hack():
         self.updated_at = data["updated_at"]
         self.category_id = data["category_id"]
         self.category_name = data["category_name"]
+        self.cat_img = data["cat_img"]
         self.user_id = data["user_id"]
         self.first_name = data["first_name"]
         self.last_name = data["last_name"]
@@ -41,6 +42,10 @@ class Hack():
     LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id;"""
         results = connectToMySQL(cls.schema).query_db(query)
         print(results)
+        category_query = "SELECT * FROM categories;"
+        category_results = connectToMySQL(cls.schema).query_db(category_query)
+        all_categories = []
+        results_object = {}
         all_hacks = []
         # Return None if no hacks are registered
         if not results or len(results) == 0:  
@@ -63,7 +68,23 @@ class Hack():
                 #one_hack.user_count = row_from_db["user_count"]
                 # Each hack that is created is appended to the all_hacks list
                 all_hacks.append(one_hack)
-        return all_hacks
+        if not category_results or len(category_results) == 0:  
+            print("no results")
+            return ""
+        else:
+            
+            for row_from_db in category_results:
+                
+                one_category = {
+                    "id": row_from_db["id"],
+                    "name": row_from_db["name"],
+                    "cat_img": row_from_db["cat_img"],
+                }
+                all_categories.append(one_category)
+        results_object["all_hacks"] = all_hacks
+        results_object["all_categories"] = all_categories
+        
+        return results_object
     
     # Method to view details of one hack
     @classmethod

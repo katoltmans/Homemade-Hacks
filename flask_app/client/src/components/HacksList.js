@@ -84,7 +84,7 @@ const HacksList = () => {
                                             variant="h5"
                                             component="div"
                                         >
-                                            Hacks Title
+                                            {categoryName}
                                         </Typography>
                                         <Grid item xs={12} md={6}>
                                             <Typography
