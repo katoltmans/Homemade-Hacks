@@ -30,8 +30,8 @@ class User:
     # Method to create a user
     @classmethod
     def new_user(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email, birthdate, location, username, password, created_at, updated_at) \
-        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(birthdate)s, %(location)s, %(username)s, %(password)s, %(created_at)s, %(updated_at)s, NOW(), NOW());"
+        query = "INSERT INTO homemade_hacks.users (first_name, last_name, email, birthdate, location, username, password, created_at, updated_at) \
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(birthdate)s, %(location)s, %(username)s, %(password)s, NOW(), NOW());"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         return results
@@ -39,7 +39,7 @@ class User:
     # Method to display a user
     @classmethod
     def display_user(cls, data):
-        query = "SELECT * FROM users WHERE users.id = %(id)s;"
+        query = "SELECT * FROM homemade_hacks.users WHERE users.id = %(id)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         if len(results) == 0: # In case no users are registered
@@ -50,7 +50,7 @@ class User:
     # Method to check identify repeats when registering
     @classmethod
     def has_repeats(cls, data):
-        query = "SELECT COUNT(*) AS count FROM users WHERE email = %(email)s;"
+        query = "SELECT COUNT(*) AS count FROM homemade_hacks.users WHERE email = %(email)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         return results[0]['count'] > 0
@@ -58,7 +58,7 @@ class User:
     # Method to check if a user's email is in the database when logging in
     @classmethod
     def get_by_email(cls, data):
-        query = "SELECT * FROM users WHERE email = %(email)s;"
+        query = "SELECT * FROM homemade_hacks.users WHERE email = %(email)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         # Action when no matching email is found
         if len(results) <1: 
@@ -68,7 +68,7 @@ class User:
     # Static method to display flash messages for registration
     def validate_registration(form_data):
         is_valid = True
-        print(form_data['first_name'] + str(len(form_data['first_name'])))
+        # print(form_data['first_name'] + str(len(form_data['first_name'])))
         # Validate length of first and last name
         if len(form_data['first_name']) < 2:
             print("First name too short")
