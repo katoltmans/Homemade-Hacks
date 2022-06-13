@@ -42,7 +42,11 @@ def view_one_hack(num):
     # # Check to see if the user is in session
     # if "id" not in session:
     #     return redirect("/")
-    return Response(jsonpickle.encode(hack.Hack.view_details()), mimetype='application/json')
+    # Display one hack
+    data = {
+        "id": num
+    }
+    return Response(jsonpickle.encode(hack.Hack.view_details(data)), mimetype='application/json')
 
 
 # Route to update a hack

@@ -63,43 +63,41 @@ const HacksList = () => {
                     return (
                         <Grid item xs={3} key={index}>
                             <Card sx={{ maxWidth: 345 }}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={categoryData.cat_img}
-                                        alt={categoryData.name}
-                                    />
-                                    <CardContent>
-                                        <Typography
-                                            gutterBottom
-                                            variant="h5"
-                                            component="div"
-                                        >
-                                            {categoryData.name}
-                                        </Typography>
-                                        <List>
-                                            {hacks
-                                                .filter(
-                                                    (hack) =>
-                                                        hack.category_id ===
-                                                        categoryData.id
-                                                )
-                                                .sort(sortList)
-                                                .map((hackData, index) => {
-                                                    return (
-                                                        <Link
-                                                            to={`/hacks/view/${hackData.id}`}
-                                                            underline="hover"
-                                                            key={index}
-                                                        >
-                                                            {hackData.title}
-                                                        </Link>
-                                                    );
-                                                })}
-                                        </List>
-                                    </CardContent>
-                                </CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    height="140"
+                                    image={categoryData.cat_img}
+                                    alt={categoryData.name}
+                                />
+                                <CardContent>
+                                    <Typography
+                                        gutterBottom
+                                        variant="h5"
+                                        component="div"
+                                    >
+                                        {categoryData.name}
+                                    </Typography>
+                                    <List>
+                                        {hacks
+                                            .filter(
+                                                (hack) =>
+                                                    hack.category_id ===
+                                                    categoryData.id
+                                            )
+                                            .sort(sortList)
+                                            .map((hackData, index) => {
+                                                return (
+                                                    <Link
+                                                        to={`/hacks/view/${hackData.id}`}
+                                                        underline="hover"
+                                                        key={index}
+                                                    >
+                                                        {hackData.title}
+                                                    </Link>
+                                                );
+                                            })}
+                                    </List>
+                                </CardContent>
                             </Card>
                         </Grid>
                     );

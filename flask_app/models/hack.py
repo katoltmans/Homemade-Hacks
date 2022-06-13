@@ -92,8 +92,8 @@ class Hack():
         query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
         LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
         LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id
-        WHERE hacks.id = %{id}s;"""
-        results = connectToMySQL(cls.schema).query_db(query, db)
+        WHERE hacks.id = %(id)s;"""
+        results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         this_hack = cls(results[0])
         return this_hack

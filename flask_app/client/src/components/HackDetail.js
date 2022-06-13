@@ -11,8 +11,9 @@ const HackDetail = (props) => {
     const { id } = useParams();
 
     useEffect(() => {
+        console.log(id);
         axios
-            .get("http://localhost:5000/api/hacks/" + id) //Remember the slash at the end of the IP address!
+            .get("http://localhost:5000/api/hacks/view/" + id) //Remember the slash at the end of the IP address!
             .then((res) => {
                 console.log(res.data);
                 setHack(res.data);
@@ -28,7 +29,7 @@ const HackDetail = (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={9}>
                         <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
-                            Title Goes Here: {hack.title}
+                            {hack.title}
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
