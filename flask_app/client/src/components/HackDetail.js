@@ -8,6 +8,7 @@ const HackDetail = (props) => {
     const navigate = useNavigate();
     const [hack, setHack] = useState({});
     const { hacks, setHacks } = props;
+    const { user, setUser } = props;
     const { id } = useParams();
 
     useEffect(() => {
@@ -23,6 +24,19 @@ const HackDetail = (props) => {
             });
     }, []);
 
+    const handleDelete = (hackId) => {
+        axios
+            .delete(`http://localhost:5000/api/hacks/delete/${hackId}`)
+            .then((res) => {
+                console.log(res);
+                setHacks(hacks.filter((hack) => hack.id !== hackId));
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log("Error with delete request (client)", err);
+            });
+    };
+
     return (
         <Paper elevation={2} sx={{ p: 5, m: 5 }}>
             <Box sx={{ flexGrow: 1 }}>
@@ -32,19 +46,23 @@ const HackDetail = (props) => {
                             {hack.title}
                         </Typography>
                     </Grid>
-                    <Grid item xs={3}>
-                        <Button>
-                            <Link href="/" color="inherit" underline="none">
-                                Update Hack
-                            </Link>
-                        </Button>
-                        <Button>
-                            <Link href="/" color="inherit" underline="none">
+                    {user.id == hack.user_id ? (
+                        <Grid item xs={3}>
+                            <Button variant="contained">
+                                <Link href="/" color="inherit" underline="none">
+                                    Update Hack
+                                </Link>
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => handleDelete(hack.id)}
+                            >
                                 Delete Hack
-                            </Link>
-                        </Button>
-                    </Grid>
+                            </Button>
+                        </Grid>
+                    ) : null}
                 </Grid>
+
                 <Grid item xs={12}>
                     <Typography
                         variant="h6"
@@ -55,31 +73,27 @@ const HackDetail = (props) => {
                         <h3>Supplies Needed</h3>
                     </Typography>
                     <Grid container spacing={3} sx={{ display: "flex" }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={6}>
-                                <Typography
-                                    variant="h6"
-                                    color="inherit"
-                                    component="div"
-                                    sx={{ ml: 3 }}
-                                >
-                                    Supply Name:
-                                </Typography>
-                                <List></List>
-                            </Grid>
+                        <Grid item xs={6}>
+                            <Typography
+                                variant="h6"
+                                color="inherit"
+                                component="div"
+                                sx={{ ml: 3 }}
+                            >
+                                Supply Name:
+                            </Typography>
+                            <List>{hack.supplies}</List>
                         </Grid>
-                        <Grid container spacing={3}>
-                            <Grid item xs={6}>
-                                <Typography
-                                    variant="h6"
-                                    color="inherit"
-                                    component="div"
-                                    sx={{ ml: 3 }}
-                                >
-                                    Quantity:
-                                </Typography>
-                                <List></List>
-                            </Grid>
+                        <Grid item xs={6}>
+                            <Typography
+                                variant="h6"
+                                color="inherit"
+                                component="div"
+                                sx={{ ml: 3 }}
+                            >
+                                Quantity:
+                            </Typography>
+                            <List></List>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -92,6 +106,7 @@ const HackDetail = (props) => {
                     >
                         <h3>Instructions</h3>
                     </Typography>
+                    <List>{hack.instructions}</List>
                 </Grid>
             </Box>
         </Paper>

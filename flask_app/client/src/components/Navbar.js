@@ -16,7 +16,10 @@ const Navbar = (props) => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container
+                maxWidth="xl"
+                sx={{ display: "flex", justifyContent: "space-between" }}
+            >
                 <Toolbar disableGutters>
                     <CountertopsIcon
                         sx={{
@@ -69,8 +72,8 @@ const Navbar = (props) => {
                             Add A Hack
                         </Link>
                     </Typography>
-
-                    {!!user ? (
+                    {/* Source: help from James Oltmans for !!user?.firstName*/}
+                    {!!user?.firstName ? (
                         <Box
                             sx={{
                                 display: "flex",
@@ -78,7 +81,9 @@ const Navbar = (props) => {
                                 ml: 5,
                             }}
                         >
-                            <Typography sx={{ pt: 1 }}>
+                            <Typography
+                                sx={{ pt: 1, fontSize: 30, fontWeight: "bold" }}
+                            >
                                 Welcome {user.firstName}
                             </Typography>
                             <Button

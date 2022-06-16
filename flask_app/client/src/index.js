@@ -29,7 +29,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className="App">
-                <Navbar user={user} />
+                <Navbar user={user} setUser={setUser} />
                 <Routes>
                     {/* add routes - remember to pass state */}
                     <Route path="/" element={<WelcomePage />} />
@@ -54,7 +54,17 @@ const App = () => {
                         path="/hacks/new"
                         element={<AddHack user={user} setUser={setUser} />}
                     />
-                    <Route path="/hacks/view/:id" element={<HackDetail />} />
+                    <Route
+                        path="/hacks/view/:id"
+                        element={
+                            <HackDetail
+                                hacks={hacks}
+                                setHacks={setHacks}
+                                user={user}
+                                setUser={setUser}
+                            />
+                        }
+                    />
                 </Routes>
             </div>
         </BrowserRouter>

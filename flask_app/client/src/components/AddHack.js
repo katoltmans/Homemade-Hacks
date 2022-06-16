@@ -37,6 +37,24 @@ const AddHack = (props) => {
         });
     };
 
+    const onChangeHandlerSupplies = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        setHack({
+            ...hack,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const onChangeHandlerInstructions = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        setHack({
+            ...hack,
+            [e.target.name]: e.target.value,
+        });
+    };
+
     const addSuppliesHandler = () => {
         setSupplies([...supplies, ""]);
     };

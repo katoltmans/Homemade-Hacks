@@ -100,16 +100,25 @@ class Hack():
         
     
     # Method to update a hack
-    
+    @classmethod
+    def update_hack(cls, data):
+        query = "UPDATE homemade_hacks.hacks SET title=%(title)s, supplies=%(supplies)s, instructions=%(instructions)s, category_id=%(category_id)s, updated_at=NOW() WHERE id=%(id)s;"
+        return connectToMySQL(cls.schema).query_db(query, data)
     
     
     # Method to delete a hack
-    
+    @classmethod
+    def delete_hack_record(cls, data):
+        query = "DELETE FROM homemade_hacks.hacks WHERE id=%(id)s;"
+        results = connectToMySQL(cls.schema).query_db(query, data)
+        print(results)
+        return results
+
     
     # Method to record favorites (?)
     
     
-    # Method to display hacks made by a creator (or favorites?)
+    # Method to display favorite hacks
     
     
     
