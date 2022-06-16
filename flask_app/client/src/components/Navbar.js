@@ -10,6 +10,10 @@ import SearchIcon from "@mui/icons-material/Search";
 const Navbar = (props) => {
     const { user, setUser } = props;
 
+    const logoutHandler = () => {
+        setUser({});
+    };
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -43,7 +47,11 @@ const Navbar = (props) => {
                         component="div"
                         sx={{ ml: 5 }}
                     >
-                        <Link href="/" color="inherit" underline="none">
+                        <Link
+                            href="/hacks/favorite/"
+                            color="inherit"
+                            underline="none"
+                        >
                             Favorite Hacks
                         </Link>
                     </Typography>
@@ -63,9 +71,21 @@ const Navbar = (props) => {
                     </Typography>
 
                     {!!user ? (
-                        <Box sx={{ flexDirection: "row", ml: 5 }}>
-                            <Typography>Welcome {user.firstName}</Typography>
-                            <Button variant="contained">
+                        <Box
+                            sx={{
+                                display: "flex",
+                                // justifyContent: "flex-end",
+                                ml: 5,
+                            }}
+                        >
+                            <Typography sx={{ pt: 1 }}>
+                                Welcome {user.firstName}
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                onClick={logoutHandler}
+                                sx={{ ml: 3 }}
+                            >
                                 <Link href="/" color="inherit" underline="none">
                                     Logout
                                 </Link>

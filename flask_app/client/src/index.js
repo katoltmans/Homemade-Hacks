@@ -10,6 +10,7 @@ import HacksList from "./components/HacksList";
 import AddHack from "./components/AddHack";
 import HackDetail from "./components/HackDetail";
 import WelcomePage from "./components/WelcomePage";
+import FavoriteHackList from "./components/FavoriteHackList";
 
 const App = () => {
     // declare state
@@ -44,6 +45,11 @@ const App = () => {
                     />
                     {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
                     <Route path="/hacks/view" element={<HacksList />} />
+                    <Route
+                        path="/hacks/favorite/"
+                        element={<FavoriteHackList />}
+                    />
+
                     <Route
                         path="/hacks/new"
                         element={<AddHack user={user} setUser={setUser} />}

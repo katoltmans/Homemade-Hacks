@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
+import {
+    Box,
+    Grid,
+    Paper,
+    TextField,
+    Typography,
+    Button,
+    FormControl,
+    Select,
+    MenuItem,
+    InputLabel,
+} from "@mui/material";
 
 const AddHack = (props) => {
     const navigate = useNavigate();
@@ -92,13 +103,29 @@ const AddHack = (props) => {
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="category_id"
-                                label="Category"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">
+                                    Category
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    name="category_id"
+                                    label="Category"
+                                    onChange={onChangeHandler}
+                                >
+                                    <MenuItem value={1}>Cleaning</MenuItem>
+                                    <MenuItem value={2}>Wardrobe</MenuItem>
+                                    <MenuItem value={3}>Item Repair</MenuItem>
+                                    <MenuItem value={4}>Pest Control</MenuItem>
+                                    <MenuItem value={5}>Home Repair</MenuItem>
+                                    <MenuItem value={6}>
+                                        Lawn And Garden
+                                    </MenuItem>
+                                    <MenuItem value={7}>Organization</MenuItem>
+                                    <MenuItem value={8}>Travel</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                     </Grid>
                     <Typography
