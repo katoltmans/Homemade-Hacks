@@ -7,7 +7,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const { user, setUser } = props;
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -59,31 +61,38 @@ const Navbar = () => {
                             Add A Hack
                         </Link>
                     </Typography>
-                    <Box sx={{ flexDirection: "row-reverse", ml: 5 }}>
-                        <Button variant="contained">
-                            <Link
-                                href="/login"
-                                color="inherit"
-                                underline="none"
-                            >
-                                Login
-                            </Link>
-                        </Button>
-                        <Button variant="contained">
-                            <Link
-                                href="/register"
-                                color="inherit"
-                                underline="none"
-                            >
-                                Register
-                            </Link>
-                        </Button>
-                        <Button variant="contained">
-                            <Link href="/" color="inherit" underline="none">
-                                Logout
-                            </Link>
-                        </Button>
-                    </Box>
+
+                    {!!user ? (
+                        <Box sx={{ flexDirection: "row", ml: 5 }}>
+                            <Typography>Welcome {user.firstName}</Typography>
+                            <Button variant="contained">
+                                <Link href="/" color="inherit" underline="none">
+                                    Logout
+                                </Link>
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Box sx={{ flexDirection: "row-reverse", ml: 5 }}>
+                            <Button variant="contained">
+                                <Link
+                                    href="/login"
+                                    color="inherit"
+                                    underline="none"
+                                >
+                                    Login
+                                </Link>
+                            </Button>
+                            <Button variant="contained">
+                                <Link
+                                    href="/register"
+                                    color="inherit"
+                                    underline="none"
+                                >
+                                    Register
+                                </Link>
+                            </Button>{" "}
+                        </Box>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>

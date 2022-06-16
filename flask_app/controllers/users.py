@@ -45,27 +45,34 @@ def process_registration():
 @app.route("/login", methods=["POST"])
 def process_login():
     formData = request.get_json()
-    console.log("FORM DATA:", formData)
+    print("FORM DATA:", formData)
     # Check if email exists in database
-    email_data = {
-        "email": formData["email"]
+    username_data = {
+        "username": formData["username"]
     }
-    user_in_db = user.User.get_by_email(email_data)
+    user_in_db = user.User.get_by_username(username_data)
     # Redirect home if not a valid email
     if not user.User.validate_login(formData, user_in_db):
         return redirect("/login") 
     # Save session info
     session["first_name"] = user_in_db.first_name
     session["id"] = user_in_db.id
+    # Create user object
+    user_from_db = {
+        "firstName": user_in_db.first_name,
+        "lastName": user_in_db.last_name,
+        "id": user_in_db.id,
+        "username": user_in_db.username,
+    }
     # Redirect after submit
-    response = flask.jsonify({"message":"successfully logged in"})
+    response = jsonify({"message":"successfully logged in", "user" :user_from_db})
     return response
 
 # Route to logout
 @app.route("/logout")
 def process_logout():
     session.clear()
-    response = flask.jsonify({"message":"successfully logged out"})
+    response = jsonify({"message":"successfully logged out"})
     return response
 
 

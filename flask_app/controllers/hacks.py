@@ -17,10 +17,10 @@ def process_new_hack():
     # Create a hack dictionary
     data = {
         "title": formData["title"],
-        "category_name": formData["category_name"],
+        "category_id": formData["category_id"],
         "supplies": formData["supplies"],
         "instructions": formData["instructions"],
-        # "user_id": session["id"]
+        "user_id": formData["user_id"]
     }
     # Call add hack method
     hack.Hack.add_hack(data)

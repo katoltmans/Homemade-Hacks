@@ -11,17 +11,18 @@ import {
     Button,
 } from "@mui/material";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const { user, setUser } = props;
     //const [errors, setErrors] = useState([]);
 
     const login = (e) => {
         console.log("submitting");
         e.preventDefault();
         //make axios post request
-        console.log(user);
+        console.log("USERNAME: " + username);
         // Post request to create a new author
         axios
             .post("http://localhost:5000/login", {
@@ -31,6 +32,7 @@ const LoginForm = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
+                setUser(res.data.user);
                 //setIsLoggedIn
                 navigate("/");
             })

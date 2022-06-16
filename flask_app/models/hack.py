@@ -27,8 +27,8 @@ class Hack():
     # Method to add a hack (create)
     @classmethod
     def add_hack(cls, data):
-        query = "INSERT INTO homemade_hacks (title, supplies, instructions category_id) \
-        VALUES (%(title)s, %(supplies)s, %(instructions)s, %(category_id)s);"
+        query = "INSERT INTO homemade_hacks.hacks (title, supplies, instructions, category_id, user_id) \
+        VALUES (%(title)s, %(supplies)s, %(instructions)s, %(category_id)s, %(user_id)s);"
         # Will need to fix category
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)

@@ -1,4 +1,4 @@
-from flask import flash
+from flask import Flask
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask_bcrypt import Bcrypt
@@ -57,13 +57,13 @@ class User:
     
     # Method to check if a user's email is in the database when logging in
     @classmethod
-    def get_by_email(cls, data):
-        query = "SELECT * FROM homemade_hacks.users WHERE email = %(email)s;"
+    def get_by_username(cls, data):
+        query = "SELECT * FROM homemade_hacks.users WHERE username = %(username)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
-        # Action when no matching email is found
+        # Action when no matching username is found
         if len(results) <1: 
             return False
-        return cle(results[0])
+        return cls(results[0])
     
     # Static method to display flash messages for registration
     def validate_registration(form_data):

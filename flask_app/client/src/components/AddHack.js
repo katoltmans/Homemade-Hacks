@@ -3,23 +3,25 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
 
-const AddHack = () => {
-    //const navigate = useNavigate();
+const AddHack = (props) => {
+    const navigate = useNavigate();
+    const { user, setUser } = props;
     const [hack, setHack] = useState({
         title: "",
         supplies: [{ supply_name: "", quantity: "" }],
         instructions: "",
-        category_name: "",
-        first_name: "",
-        last_name: "",
+        category_id: "",
+        user_id: "",
     });
     const [supplies, setSupplies] = useState([]);
     const [instructions, setInstructions] = useState([]);
     const [errors, setErrors] = useState([]);
 
     const onChangeHandler = (e) => {
-        setUser({
-            ...user,
+        console.log(e.target.name);
+        console.log(e.target.value);
+        setHack({
+            ...hack,
             [e.target.name]: e.target.value,
         });
     };
@@ -38,8 +40,19 @@ const AddHack = () => {
         //make axios post request
         console.log(user);
         // Post request to create a new author
+        // Create hack object
+        let tempHack = { ...hack, user_id: user.id };
+        console.log(JSON.stringify(tempHack));
+        // let hack = {
+        //     title: title,
+        //     category_name: formData["category_name"],
+        //     supplies: formData["supplies"],
+        //     instructions: formData["instructions"],
+        //     user_id: user.id,
+        // };
+
         axios
-            .post("http://localhost:5000/api/hacks/new", user)
+            .post("http://localhost:5000/api/hacks/new", tempHack)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -49,6 +62,7 @@ const AddHack = () => {
                 } catch (error) {
                     console.error(error);
                 }
+                navigate("/");
             })
             .catch((err) => {
                 console.log(
@@ -80,7 +94,7 @@ const AddHack = () => {
                         <Grid item xs={6}>
                             <TextField
                                 fullWidth
-                                name="category_name"
+                                name="category_id"
                                 label="Category"
                                 variant="outlined"
                                 onChange={onChangeHandler}

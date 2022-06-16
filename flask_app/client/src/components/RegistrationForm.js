@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
 
-const RegistrationForm = () => {
+const RegistrationForm = (props) => {
     const navigate = useNavigate();
     const [user, setUser] = useState({
         first_name: "",
@@ -14,6 +14,7 @@ const RegistrationForm = () => {
         username: "",
         password: "",
     });
+    const { firstName, setFirstName } = props;
     const [errors, setErrors] = useState([]);
 
     const onChangeHandler = (e) => {
@@ -40,6 +41,9 @@ const RegistrationForm = () => {
                 } catch (error) {
                     console.error(error);
                 }
+                //setIsLoggedIn
+                setFirstName(res.data.first_name);
+                navigate("/");
             })
             .catch((err) => {
                 console.log(
