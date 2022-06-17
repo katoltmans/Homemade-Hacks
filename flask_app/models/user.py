@@ -67,27 +67,23 @@ class User:
     
     # Static method to display flash messages for registration
     def validate_registration(form_data):
-        is_valid = True
+        errorMessages = []
         # print(form_data['first_name'] + str(len(form_data['first_name'])))
         # Validate length of first and last name
         if len(form_data['first_name']) < 2:
             print("First name too short")
-            flash("First name must be at least 2 characters long", "register")
-            is_valid = False
+            errorMessages.append("First name must be at least 2 characters long")
         if len(form_data['last_name']) < 2:
             print("Last name too short")
-            flash("Last name must be at least 2 characters long", "register")
-            is_valid = False
+            errorMessages.append("Last name must be at least 2 characters long")
         
         # Compare email input to REGEX
         if not User.EMAIL_REGEX.match(form_data['email']):
             print("invalid email")
-            flash("Invalid email address. Bummer, try again!", "register")
-            is_valid = False
+            errorMessages.append("Invalid email address. Bummer, try again!")
         # Check for repeat emails
         if User.has_repeats(form_data):
-            flash("This email is already registered. Would you prefer to login?", "register")
-            is_valid = False
+            errorMessages.append("This email is already registered. Would you prefer to login?")
             
         
         # Check if birthdate is a valid date
@@ -96,27 +92,24 @@ class User:
         # Validate length of city, state & username
         if len(form_data['location']) < 5:
             print("Location too short")
-            flash("Location must be at least 5 characters long", "register")
-            is_valid = False
+            errorMessages.append("Location must be at least 5 characters long")
         if len(form_data['username']) < 5:
             print("Username name too short")
-            flash("Username name must be at least 5 characters long", "register")
-            is_valid = False
+            errorMessages.append("Username name must be at least 5 characters long")
         
         # Compare password input to REGEX
         if not User.PASSWORD_REGEX.match(form_data['password']):
             print("invalid password")
-            flash("Our users require the utmost security. Please use a password with 8-32 characters, 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 number.", "register")
-            is_valid - False
+            errorMessages.append("Our users require the utmost security. Please use a password with 8-32 characters, 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 number.")
         # Confirm reentered password matches
         if form_data['confirm_password'] != form_data['password']:
             print("Password does not match")
-            flash("Uh oh, passwords must match. Please try again!", "register")
-            is_valid = False
-        return is_valid
+            errorMessages.append("Uh oh, passwords must match. Please try again!")
+        return errorMessages
     
     # Static method to display flash messages for login
     def validate_login(form_data, user_in_db):
+        errorMessages = []
         print(form_data)
         is_valid = True
         if user_in_db == False:
@@ -129,5 +122,5 @@ class User:
                 is_valid = False
         # If either credential is false
         if not is_valid:
-            flash("Invalid credentials", "login")
-        return is_valid
+            errorMessages.append("Invalid credentials. Please try again.")
+        return errorMessages

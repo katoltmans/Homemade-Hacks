@@ -22,7 +22,8 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        window.localStorage.setItem("user", JSON.stringify(user));
+        let userStr = JSON.stringify(user);
+        if (!!userStr) window.localStorage.setItem("user", userStr);
     }, [user]);
     // Source: https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
 
@@ -54,6 +55,7 @@ const App = () => {
                         path="/hacks/new"
                         element={<AddHack user={user} setUser={setUser} />}
                     />
+
                     <Route
                         path="/hacks/view/:id"
                         element={

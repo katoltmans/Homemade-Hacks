@@ -16,7 +16,7 @@ const LoginForm = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { user, setUser } = props;
-    //const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     const login = (e) => {
         console.log("submitting");
@@ -32,9 +32,13 @@ const LoginForm = (props) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                setUser(res.data.user);
-                //setIsLoggedIn
-                navigate("/");
+                if (!res.data.errors) {
+                    //setIsLoggedIn
+                    setUser(res.data.user);
+                    navigate("/");
+                } else {
+                    setErrors(res.data.errors);
+                }
             })
             .catch((err) => {
                 console.log("Error with login post request (client)", err);
@@ -48,6 +52,11 @@ const LoginForm = (props) => {
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Login
             </Typography>
+            {errors ? (
+                <Typography sx={{ color: "error.main", mb: 5 }}>
+                    {errors}
+                </Typography>
+            ) : null}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid container item spacing={3}>
