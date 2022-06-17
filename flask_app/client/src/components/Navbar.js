@@ -1,6 +1,12 @@
 import React from "react";
 import { AppBar, Paper, Link, Button, Box } from "@mui/material";
-import { NavLink, Router, Routes } from "react-router-dom";
+import {
+    Navigate,
+    NavLink,
+    Router,
+    Routes,
+    useNavigate,
+} from "react-router-dom";
 import Container from "@mui/material/Container";
 import CountertopsIcon from "@mui/icons-material/Countertops";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,10 +14,12 @@ import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Navbar = (props) => {
+    const navigate = useNavigate();
     const { user, setUser } = props;
 
     const logoutHandler = () => {
         setUser({});
+        navigate("/");
     };
 
     return (
@@ -91,9 +99,7 @@ const Navbar = (props) => {
                                 onClick={logoutHandler}
                                 sx={{ ml: 3 }}
                             >
-                                <Link href="/" color="inherit" underline="none">
-                                    Logout
-                                </Link>
+                                Logout
                             </Button>
                         </Box>
                     ) : (
@@ -115,7 +121,7 @@ const Navbar = (props) => {
                                 >
                                     Register
                                 </Link>
-                            </Button>{" "}
+                            </Button>
                         </Box>
                     )}
                 </Toolbar>
