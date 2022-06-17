@@ -130,26 +130,26 @@ class Hack():
         if len(form_data['title']) < 1 or len(form_data['category']) < 1 \
             or len(form_data['supplies']) < 1 or len(form_data['instructions']) < 1:
             print("Missing data")
-            flash("All fields are required to create a hack. Please try again.", "tree_entry")
+            flash("All fields are required to create a hack. Please try again.", "hack_entry")
             is_valid = False
         # Check to make sure species has at least 5 characters
         if len(form_data['title']) < 2:
             print("title name too short")
-            flash("Please enter a title that contains at least 2 characters.", "tree_entry")
+            flash("Please enter a title that contains at least 2 characters.", "hack_entry")
             is_valid = False
         # Check to make sure location has at least 2 characters
-        if len(form_data['category']) < 2:
+        if len(form_data['category']) < 1:
             print("category not selected")
-            flash("Please select a category.", "tree_entry")
+            flash("Please select a category.", "hack_entry")
             is_valid = False
         # Check to make sure location has at least 2 characters
-        if len(form_data['supplies']) > 50:
+        if len(form_data['supplies']) <2 :
             print("supplies too short")
-            flash("We are brief summaries. Please limit your reason to a max of 50 characters.", "tree_entry")
+            flash("Please enter the supplies necessary for this hack.", "hack_entry")
             is_valid = False
         # Check to make sure location has at least 2 characters
-        if len(form_data['location']) > 50:
+        if len(form_data['location']) < 10:
             print("reason too long")
-            flash("We are brief summaries. Please limit your reason to a max of 50 characters.", "tree_entry")
+            flash("Please provide instructions for this hack. instructions must be at least 10 characters long.", "hack_entry")
             is_valid = False
         return is_valid
