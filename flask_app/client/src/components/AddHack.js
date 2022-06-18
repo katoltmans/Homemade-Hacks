@@ -64,7 +64,7 @@ const AddHack = (props) => {
     };
 
     const onSubmitHandler = (e) => {
-        console.log("submitting");
+        console.log("submitting hack");
         e.preventDefault();
         //make axios post request
         console.log(user);
@@ -85,13 +85,11 @@ const AddHack = (props) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                try {
-                    //navigate("/");
-                    console.log(res?.data?.message);
-                } catch (error) {
-                    console.error(error);
+                if (!res.data.errors) {
+                    navigate("/hacks/view");
+                } else {
+                    setErrors(res.data.errors);
                 }
-                navigate("/");
             })
             .catch((err) => {
                 console.log(
@@ -108,6 +106,11 @@ const AddHack = (props) => {
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Add A Hack
             </Typography>
+            {errors ? (
+                <Typography sx={{ color: "error.main", mb: 5 }}>
+                    {errors}
+                </Typography>
+            ) : null}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid container item spacing={1}>

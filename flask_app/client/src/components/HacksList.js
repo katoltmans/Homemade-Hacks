@@ -15,6 +15,7 @@ import {
     ListItemText,
     IconButton,
     Stack,
+    Divider,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -87,13 +88,16 @@ const HacksList = () => {
                                             .sort(sortList)
                                             .map((hackData, index) => {
                                                 return (
-                                                    <Link
-                                                        to={`/hacks/view/${hackData.id}`}
-                                                        underline="hover"
-                                                        key={index}
-                                                    >
-                                                        {hackData.title}
-                                                    </Link>
+                                                    <>
+                                                        <Link
+                                                            to={`/hacks/view/${hackData.id}`}
+                                                            underline="hover"
+                                                            key={index}
+                                                        >
+                                                            {hackData.title}
+                                                        </Link>
+                                                        <Divider />
+                                                    </>
                                                 );
                                             })}
                                     </List>

@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
-import {
-    Grid,
-    Paper,
-    Typography,
-    Button,
-    Card,
-    CardActionArea,
-    CardMedia,
-    CardContent,
-    List,
-    ListItem,
-    ListItemText,
-    IconButton,
-    Stack,
-} from "@mui/material";
+import { Grid, Paper, Typography, Button, MobileStepper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Box } from "@mui/system";
 
 const WelcomePage = () => {
     const [hacks, setHacks] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const maxSteps = categories.length;
 
     useEffect(() => {
         // GET request to find all hacks
@@ -30,6 +19,7 @@ const WelcomePage = () => {
                 console.log(res.data);
                 setHacks(res.data.all_hacks);
                 setCategories(res.data.all_categories);
+                console.log(categories);
             })
             .catch((err) => {
                 console.log(
@@ -43,67 +33,95 @@ const WelcomePage = () => {
         console.log("HACKS", hacks);
     }, [hacks]);
 
-    const sortList = (a, b) => {
-        if (a.title < b.title) {
-            return -1;
-        }
-        if (a.title > b.title) {
-            return 1;
-        }
-        return 0;
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleStepChange = (step, number) => {
+        setActiveStep(step);
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 5 }}>
-            <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
-                Explore Hacks
-            </Typography>
-            <Grid container spacing={5}>
-                {categories.map((categoryData, index) => {
-                    return (
-                        <Grid item xs={3} key={index}>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={categoryData.cat_img}
-                                    alt={categoryData.name}
-                                />
-                                <CardContent>
-                                    <Typography
-                                        gutterBottom
-                                        variant="h5"
-                                        component="div"
-                                    >
-                                        {categoryData.name}
-                                    </Typography>
-                                    <List>
-                                        {hacks
-                                            .filter(
-                                                (hack) =>
-                                                    hack.category_id ===
-                                                    categoryData.id
-                                            )
-                                            .sort(sortList)
-                                            .map((hackData, index) => {
-                                                return (
-                                                    <Link
-                                                        to={`/hacks/view/${hackData.id}`}
-                                                        underline="hover"
-                                                        key={index}
-                                                    >
-                                                        {hackData.title}
-                                                    </Link>
-                                                );
-                                            })}
-                                    </List>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        </Paper>
+        <Typography>Welcome Page</Typography>
+
+        // <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+        //     <Paper
+        //         square
+        //         elevation={0}
+        //         sx={{
+        //             display: "flex",
+        //             alignItems: "center",
+        //             height: 50,
+        //             pl: 2,
+        //             bgcolor: "background.default",
+        //         }}
+        //     >
+        //         <Typography>{categories.name[activeStep].label}</Typography>
+        //     </Paper>
+        //     <AutoPlaySwipeableViews
+        //         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+        //         index={activeStep}
+        //         onChangeIndex={handleStepChange}
+        //         enableMouseEvents
+        //     >
+        //         {categories.cat_img.map((step, index) => (
+        //             <div key={step.label}>
+        //                 {Math.abs(activeStep - index) <= 2 ? (
+        //                     <Box
+        //                         component="img"
+        //                         sx={{
+        //                             height: 255,
+        //                             display: "block",
+        //                             maxWidth: 400,
+        //                             overflow: "hidden",
+        //                             width: "100%",
+        //                         }}
+        //                         src={step.imgPath}
+        //                         alt={step.label}
+        //                     />
+        //                 ) : null}
+        //             </div>
+        //         ))}
+        //     </AutoPlaySwipeableViews>
+        //     <MobileStepper
+        //         steps={maxSteps}
+        //         position="static"
+        //         activeStep={activeStep}
+        //         nextButton={
+        //             <Button
+        //                 size="small"
+        //                 onClick={handleNext}
+        //                 disabled={activeStep === maxSteps - 1}
+        //             >
+        //                 Next
+        //                 {theme.direction === "rtl" ? (
+        //                     <KeyboardArrowLeft />
+        //                 ) : (
+        //                     <KeyboardArrowRight />
+        //                 )}
+        //             </Button>
+        //         }
+        //         backButton={
+        //             <Button
+        //                 size="small"
+        //                 onClick={handleBack}
+        //                 disabled={activeStep === 0}
+        //             >
+        //                 {/* {theme.direction === "rtl" ? ( */}
+        //                 <KeyboardArrowRight />
+        //                 {/* ) : ( */}
+        //                 <KeyboardArrowLeft />
+        //                 {/* )} */}
+        //                 Back
+        //             </Button>
+        //         }
+        //     />
+        // </Box>
+        // Source for base carousel code: https://mui.com/material-ui/react-stepper/#text-with-carousel-effect
     );
 };
 

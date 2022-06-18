@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
+import {
+    Box,
+    Grid,
+    Paper,
+    TextField,
+    Typography,
+    Button,
+    ListItem,
+    List,
+} from "@mui/material";
 
 const RegistrationForm = (props) => {
     const navigate = useNavigate();
@@ -13,6 +22,7 @@ const RegistrationForm = (props) => {
         location: "",
         username: "",
         password: "",
+        confirm_password: "",
     });
     const { firstName, setFirstName } = props;
     const [errors, setErrors] = useState([]);
@@ -25,7 +35,7 @@ const RegistrationForm = (props) => {
     };
 
     const onSubmitHandler = (e) => {
-        console.log("submitting");
+        console.log("submitting registration");
         e.preventDefault();
         //make axios post request
         console.log(user);
@@ -35,15 +45,14 @@ const RegistrationForm = (props) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                try {
-                    //navigate("/");
-                    console.log(res?.data?.message);
-                } catch (error) {
-                    console.error(error);
+                if (!res.data.errors) {
+                    //set user if successfully registered
+                    setFirstName(res.data.first_name);
+                    navigate("/hacks/view");
+                } else {
+                    // Add errors to be d
+                    setErrors(res.data.errors);
                 }
-                //setIsLoggedIn
-                setFirstName(res.data.first_name);
-                navigate("/");
             })
             .catch((err) => {
                 console.log(
@@ -60,6 +69,17 @@ const RegistrationForm = (props) => {
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Registration Form
             </Typography>
+            {errors ? (
+                <List sx={{ mb: 5 }}>
+                    {errors.map((error, index) => {
+                        return (
+                            <ListItem key={index} sx={{ color: "error.main" }}>
+                                {error}
+                            </ListItem>
+                        );
+                    })}
+                </List>
+            ) : null}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid container item spacing={1}>

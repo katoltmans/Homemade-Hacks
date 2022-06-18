@@ -10,21 +10,23 @@ from flask import Response
 @app.route("/api/hacks/new", methods=["POST"])
 def process_new_hack():
     formData = request.get_json()
-    print(formData)
-    # Redirect to dashboard if tree input is not valid
-    #if not tree.hack.validate_hack_entry(formData):
-    #    return redirect("/")
-    # Create a hack dictionary
-    data = {
-        "title": formData["title"],
-        "category_id": formData["category_id"],
-        "supplies": formData["supplies"],
-        "instructions": formData["instructions"],
-        "user_id": formData["user_id"]
-    }
-    # Call add hack method
-    hack.Hack.add_hack(data)
-    response = jsonify({"message":"hack successfully added"})
+    print("FORM DATA: ", formData)
+    # Display errors if not valid
+    errors = errors.hack.Hack.validate_hack_entry(formData)
+    if len(errors) > 0:
+        response = jsonify({"errors": errors})
+    else:
+        # Create a hack dictionary
+        data = {
+            "title": formData["title"],
+            "category_id": formData["category_id"],
+            "supplies": formData["supplies"],
+            "instructions": formData["instructions"],
+            "user_id": formData["user_id"]
+        }
+        # Call add hack method
+        hack.Hack.add_hack(data)
+        response = jsonify({"message":"hack successfully added"})
     return response
 
 

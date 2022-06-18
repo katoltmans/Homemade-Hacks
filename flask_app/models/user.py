@@ -67,8 +67,9 @@ class User:
     
     # Static method to display flash messages for registration
     def validate_registration(form_data):
+        # Array to hold all error messages
         errorMessages = []
-        # print(form_data['first_name'] + str(len(form_data['first_name'])))
+        
         # Validate length of first and last name
         if len(form_data['first_name']) < 2:
             print("First name too short")
@@ -87,10 +88,20 @@ class User:
             
         
         # Check if birthdate is a valid date
+        isValidDate = True
+        try:
+            year, month, day = form_data['birthdate'].split('/')
+            datetime.datetime(int(year),int(month),int(day))
+        except ValueError:
+            isValidDate = False
+        # Source: https://codedec.com/tutorials/write-a-python-program-to-validate-the-date-of-birth/#:~:text=not%20valid..%22-,import%20datetime%20inputDate%20%3D%20input(%22Enter%20the%20date%20of%20birth,%2Cint(day))%20datetime.
         
+        if not (isValidDate):
+            print("birthdate is not valid")
+            errorMessages.append("Please enter a valid birthdate in YYYY/MM/DD format")
         
         # Validate length of city, state & username
-        if len(form_data['location']) < 5:
+        if len(form_data['location']) < 4:
             print("Location too short")
             errorMessages.append("Location must be at least 5 characters long")
         if len(form_data['username']) < 5:

@@ -125,31 +125,28 @@ class Hack():
     # Static methods to validate hack entry
     @staticmethod
     def validate_hack_entry(form_data):
-        is_valid = True
-        # Check if all fields contain at least 2 characters
+        # Array to hold all error messages
+        errorMessages = []
+        
+        # Check if all fields contain data
         if len(form_data['title']) < 1 or len(form_data['category']) < 1 \
             or len(form_data['supplies']) < 1 or len(form_data['instructions']) < 1:
             print("Missing data")
-            flash("All fields are required to create a hack. Please try again.", "hack_entry")
-            is_valid = False
+            errorMessages.append("All fields are required to create a hack. Please try again.")
         # Check to make sure species has at least 5 characters
         if len(form_data['title']) < 2:
             print("title name too short")
-            flash("Please enter a title that contains at least 2 characters.", "hack_entry")
-            is_valid = False
+            errorMessages.append("Please enter a title that contains at least 2 characters.")
         # Check to make sure location has at least 2 characters
         if len(form_data['category']) < 1:
             print("category not selected")
-            flash("Please select a category.", "hack_entry")
-            is_valid = False
+            errorMessages.append("Please select a category.")
         # Check to make sure location has at least 2 characters
         if len(form_data['supplies']) <2 :
             print("supplies too short")
-            flash("Please enter the supplies necessary for this hack.", "hack_entry")
-            is_valid = False
+            errorMessages.append("Please enter the supplies necessary for this hack.")
         # Check to make sure location has at least 2 characters
-        if len(form_data['location']) < 10:
-            print("reason too long")
-            flash("Please provide instructions for this hack. instructions must be at least 10 characters long.", "hack_entry")
-            is_valid = False
-        return is_valid
+        if len(form_data['instructions']) < 10:
+            print("instructions too short")
+            errorMessages.append("Please provide instructions for this hack. instructions must be at least 10 characters long.")
+        return errorMessages

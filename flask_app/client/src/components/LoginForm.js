@@ -35,15 +35,13 @@ const LoginForm = (props) => {
                 if (!res.data.errors) {
                     //setIsLoggedIn
                     setUser(res.data.user);
-                    navigate("/");
+                    navigate("/hacks/view");
                 } else {
                     setErrors(res.data.errors);
                 }
             })
             .catch((err) => {
                 console.log("Error with login post request (client)", err);
-                //setErrors(err.response.data?.error?.errors);
-                //console.log("ERROR:", errors);
             });
     };
 
@@ -57,6 +55,14 @@ const LoginForm = (props) => {
                     {errors}
                 </Typography>
             ) : null}
+            {/* {errors ? (errors.map((errorMessage, index) => {
+                <>
+                <Typography sx={{ color: "error.main", mb: 5 }}>
+                    {errors}
+                </Typography>
+                <Divider/>
+                </>
+            }) : null} */}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid container item spacing={3}>
