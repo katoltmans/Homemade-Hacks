@@ -12,6 +12,8 @@ import {
     Select,
     MenuItem,
     InputLabel,
+    List,
+    ListItem,
 } from "@mui/material";
 
 const AddHack = (props) => {
@@ -107,9 +109,15 @@ const AddHack = (props) => {
                 Add A Hack
             </Typography>
             {errors ? (
-                <Typography sx={{ color: "error.main", mb: 5 }}>
-                    {errors}
-                </Typography>
+                <List sx={{ mb: 5 }}>
+                    {errors.map((error, index) => {
+                        return (
+                            <ListItem key={index} sx={{ color: "error.main" }}>
+                                {error}
+                            </ListItem>
+                        );
+                    })}
+                </List>
             ) : null}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>

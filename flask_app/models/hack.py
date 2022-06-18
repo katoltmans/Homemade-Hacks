@@ -138,7 +138,7 @@ class Hack():
             print("title name too short")
             errorMessages.append("Please enter a title that contains at least 2 characters.")
         # Check to make sure location has at least 2 characters
-        if len(form_data['category']) < 1:
+        if len(form_data['category_id']) < 1:
             print("category not selected")
             errorMessages.append("Please select a category.")
         # Check to make sure location has at least 2 characters

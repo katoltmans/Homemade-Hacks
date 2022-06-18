@@ -12,7 +12,7 @@ def process_new_hack():
     formData = request.get_json()
     print("FORM DATA: ", formData)
     # Display errors if not valid
-    errors = errors.hack.Hack.validate_hack_entry(formData)
+    errors = hack.Hack.validate_hack_entry(formData)
     if len(errors) > 0:
         response = jsonify({"errors": errors})
     else:
