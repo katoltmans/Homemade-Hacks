@@ -2,24 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
 import { Grid, Paper, Typography, Button, MobileStepper } from "@mui/material";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box } from "@mui/system";
+import SwipeableViews from "react-swipeable-views";
+import { autoPlay } from "react-swipeable-views-utils";
 
-const WelcomePage = () => {
+const WelcomePage = (props) => {
+    const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
     const [hacks, setHacks] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = categories.length;
+    const [activeStep, setActiveStep] = useState(0);
 
     useEffect(() => {
         // GET request to find all hacks
         axios
             .get("http://localhost:5000/api/hacks/view")
             .then((res) => {
-                console.log(res.data);
+                console.log(res);
                 setHacks(res.data.all_hacks);
                 setCategories(res.data.all_categories);
-                console.log(categories);
+                console.log(res.data.all_categories);
             })
             .catch((err) => {
                 console.log(
@@ -33,6 +37,10 @@ const WelcomePage = () => {
         console.log("HACKS", hacks);
     }, [hacks]);
 
+    useEffect(() => {
+        console.log("CATEGORIES: ", JSON.stringify(categories));
+    }, [categories]);
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -41,86 +49,85 @@ const WelcomePage = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleStepChange = (step, number) => {
+    const handleStepChange = (step) => {
         setActiveStep(step);
     };
 
     return (
-        <Typography>Welcome Page</Typography>
-
-        // <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-        //     <Paper
-        //         square
-        //         elevation={0}
-        //         sx={{
-        //             display: "flex",
-        //             alignItems: "center",
-        //             height: 50,
-        //             pl: 2,
-        //             bgcolor: "background.default",
-        //         }}
-        //     >
-        //         <Typography>{categories.name[activeStep].label}</Typography>
-        //     </Paper>
-        //     <AutoPlaySwipeableViews
-        //         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        //         index={activeStep}
-        //         onChangeIndex={handleStepChange}
-        //         enableMouseEvents
-        //     >
-        //         {categories.cat_img.map((step, index) => (
-        //             <div key={step.label}>
-        //                 {Math.abs(activeStep - index) <= 2 ? (
-        //                     <Box
-        //                         component="img"
-        //                         sx={{
-        //                             height: 255,
-        //                             display: "block",
-        //                             maxWidth: 400,
-        //                             overflow: "hidden",
-        //                             width: "100%",
-        //                         }}
-        //                         src={step.imgPath}
-        //                         alt={step.label}
-        //                     />
-        //                 ) : null}
-        //             </div>
-        //         ))}
-        //     </AutoPlaySwipeableViews>
-        //     <MobileStepper
-        //         steps={maxSteps}
-        //         position="static"
-        //         activeStep={activeStep}
-        //         nextButton={
-        //             <Button
-        //                 size="small"
-        //                 onClick={handleNext}
-        //                 disabled={activeStep === maxSteps - 1}
-        //             >
-        //                 Next
-        //                 {theme.direction === "rtl" ? (
-        //                     <KeyboardArrowLeft />
-        //                 ) : (
-        //                     <KeyboardArrowRight />
-        //                 )}
-        //             </Button>
-        //         }
-        //         backButton={
-        //             <Button
-        //                 size="small"
-        //                 onClick={handleBack}
-        //                 disabled={activeStep === 0}
-        //             >
-        //                 {/* {theme.direction === "rtl" ? ( */}
-        //                 <KeyboardArrowRight />
-        //                 {/* ) : ( */}
-        //                 <KeyboardArrowLeft />
-        //                 {/* )} */}
-        //                 Back
-        //             </Button>
-        //         }
-        //     />
-        // </Box>
+        <>
+            {categories.length > 0 ? (
+                <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+                    <Paper
+                        square
+                        elevation={0}
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            height: 50,
+                            pl: 2,
+                            bgcolor: "background.default",
+                        }}
+                    >
+                        {
+                            <Typography>
+                                {categories[activeStep]?.name}
+                            </Typography>
+                        }
+                    </Paper>
+                    <AutoPlaySwipeableViews
+                        index={activeStep}
+                        onChangeIndex={handleStepChange}
+                        enableMouseEvents
+                    >
+                        {categories.map((step, index) => (
+                            <div key={step.name}>
+                                {Math.abs(activeStep - index) <= 2 ? (
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            height: 255,
+                                            display: "block",
+                                            maxWidth: 400,
+                                            overflow: "hidden",
+                                            width: "100%",
+                                        }}
+                                        src={step.cat_img}
+                                        alt={step.name}
+                                    />
+                                ) : null}
+                            </div>
+                        ))}
+                    </AutoPlaySwipeableViews>
+                    <MobileStepper
+                        steps={categories.length}
+                        position="static"
+                        activeStep={activeStep}
+                        nextButton={
+                            <Button
+                                size="small"
+                                onClick={handleNext}
+                                disabled={activeStep === categories.length - 1}
+                            >
+                                Next
+                                <KeyboardArrowRight />
+                            </Button>
+                        }
+                        backButton={
+                            <Button
+                                size="small"
+                                onClick={handleBack}
+                                disabled={activeStep === 0}
+                            >
+                                <KeyboardArrowLeft />
+                                Back
+                            </Button>
+                        }
+                    />
+                </Box>
+            ) : (
+                <Typography>Welcome Page</Typography>
+            )}
+        </>
         // Source for base carousel code: https://mui.com/material-ui/react-stepper/#text-with-carousel-effect
     );
 };
