@@ -84,7 +84,7 @@ const UpdateHack = (props) => {
         // Post request to create a new author
         // Create hack object
         let tempHack = { ...hack, user_id: user.id };
-        console.log(JSON.stringify(tempHack));
+        console.log(tempHack);
         // let hack = {
         //     title: title,
         //     category_name: formData["category_name"],
@@ -94,12 +94,12 @@ const UpdateHack = (props) => {
         // };
 
         axios
-            .post("http://localhost:5000/api/hacks/update", tempHack)
+            .post("http://localhost:5000/api/hacks/update/" + id, tempHack)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
                 if (!res.data.errors) {
-                    navigate("/hacks/view");
+                    // navigate("/hacks/view");
                 } else {
                     setErrors(res.data.errors);
                 }
@@ -213,6 +213,7 @@ const UpdateHack = (props) => {
                                     fullWidth
                                     name="supplies"
                                     label="Supply, Quantity, etc."
+                                    value={hack.supplies}
                                     variant="outlined"
                                     onChange={onChangeHandler}
                                 />
@@ -297,6 +298,7 @@ const UpdateHack = (props) => {
                                 fullWidth
                                 name="instructions"
                                 label="Instruction step"
+                                value={hack.instructions}
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />

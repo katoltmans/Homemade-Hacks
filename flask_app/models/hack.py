@@ -118,7 +118,13 @@ class Hack():
 
     
     # Method to record favorites (?)
-    
+    @classmethod
+    def add_favorite(cls, data):
+        query = "INSERT INTO homemade_hacks.favorites (user_id, hack_id) \
+        VALUES ( %(user_id)s,  %(hack_id)s);"
+        results = connectToMySQL(cls.schema).query_db(query, data)
+        print(results)
+        return results
     
     # Method to display favorite hacks
     
@@ -131,7 +137,7 @@ class Hack():
         errorMessages = []
         
         # Check if all fields contain data
-        if len(form_data['title']) < 1 or len(form_data['category_id']) < 1 \
+        if len(form_data['title']) < 1 or len(str(form_data['category_id'])) < 1 \
             or len(form_data['supplies']) < 1 or len(form_data['instructions']) < 1:
             print("Missing data")
             errorMessages.append("All fields are required to create a hack. Please try again.")
@@ -140,7 +146,7 @@ class Hack():
             print("title name too short")
             errorMessages.append("Please enter a title that contains at least 2 characters.")
         # Check to make sure location has at least 2 characters
-        if len(form_data['category_id']) < 1:
+        if len(str(form_data['category_id'])) < 1:
             print("category not selected")
             errorMessages.append("Please select a category.")
         # Check to make sure location has at least 2 characters

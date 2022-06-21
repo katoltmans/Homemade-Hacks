@@ -45,6 +45,20 @@ const HackDetail = (props) => {
             });
     };
 
+    const addFavorite = () => {
+        axios
+            .post("http://localhost:5000/api/hacks/favorite", {
+                user_id: user.id,
+                hack_id: hack.id,
+            }) //Remember the slash at the end of the IP address!
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log("Error with view_one_hack request", err);
+            });
+    };
+
     return (
         <Paper elevation={2} sx={{ p: 5, m: 5 }}>
             <Box sx={{ flexGrow: 1 }}>
@@ -53,6 +67,14 @@ const HackDetail = (props) => {
                         <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                             {hack.title}
                         </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button
+                            variant="contained"
+                            onClick={() => addFavorite(hack.id)}
+                        >
+                            Add To Favorites
+                        </Button>
                     </Grid>
                     {user.id == hack.user_id ? (
                         <Grid item xs={3}>

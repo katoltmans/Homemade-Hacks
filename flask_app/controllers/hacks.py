@@ -48,12 +48,28 @@ def view_one_hack(num):
 
 
 # Route to update a hack
-@app.route("/api/hacks/update/<int:num>")
+@app.route("/api/hacks/update/<int:num>", methods=["POST"])
 def update_hack(num):
-    data = {
-        "id": num
-    }
-    return Response(jsonpickle.encode(hack.Hack.update_hack(data)), mimetype='application/json')
+    formData = request.get_json()
+    print("FORM DATA: ", formData)
+    # Display errors if not valid
+    errors = hack.Hack.validate_hack_entry(formData)
+    if len(errors) > 0:
+        response = jsonify({"errors": errors})
+    else:
+        # Create a hack dictionary
+        data = {
+            "id": num,
+            "title": formData["title"],
+            "category_id": formData["category_id"],
+            "supplies": formData["supplies"],
+            "instructions": formData["instructions"],
+            "user_id": formData["user_id"]
+        }
+        # Call add hack method
+        hack.Hack.update_hack(data)
+        response = jsonify({"message":"hack successfully updated"})
+    return response
     
 
 
@@ -66,4 +82,18 @@ def delete_hack(num):
     }
     return Response(jsonpickle.encode(hack.Hack.delete_hack_record(data)), mimetype='application/json')
 
-    
+# Route to add favorite
+@app.route("/api/hacks/favorite", methods=["POST"])
+def add_to_favorite_list():
+    formData = request.get_json()
+    print("FORM DATA: ", formData)
+    # Display errors if not valid
+    # Create a hack dictionary
+    data = {
+        "user_id": formData["user_id"],
+        "hack_id": formData["hack_id"]
+    }
+    # Call add hack method
+    hack.Hack.add_favorite(data)
+    response = jsonify({"message":"hack successfully favorited"})
+    return response
