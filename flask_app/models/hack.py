@@ -17,6 +17,7 @@ class Hack():
         self.category_id = data["category_id"]
         self.category_name = data["category_name"]
         self.cat_img = data["cat_img"]
+        self.hd_img = data["hd_img"]
         self.user_id = data["user_id"]
         self.first_name = data["first_name"]
         self.last_name = data["last_name"]
@@ -79,6 +80,7 @@ class Hack():
                     "id": row_from_db["id"],
                     "name": row_from_db["name"],
                     "cat_img": row_from_db["cat_img"],
+                    "hd_img": row_from_db["hd_img"]
                 }
                 all_categories.append(one_category)
         results_object["all_hacks"] = all_hacks
@@ -129,7 +131,7 @@ class Hack():
         errorMessages = []
         
         # Check if all fields contain data
-        if len(form_data['title']) < 1 or len(form_data['category']) < 1 \
+        if len(form_data['title']) < 1 or len(form_data['category_id']) < 1 \
             or len(form_data['supplies']) < 1 or len(form_data['instructions']) < 1:
             print("Missing data")
             errorMessages.append("All fields are required to create a hack. Please try again.")

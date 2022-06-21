@@ -36,7 +36,9 @@ const Navbar = (props) => {
                         }}
                     />
                     <Typography variant="h6" color="inherit" component="div">
-                        <h1>Homemade Hacks</h1>
+                        <Link href="/" color="inherit" underline="none">
+                            <h1>Homemade Hacks</h1>
+                        </Link>
                     </Typography>
                     <Typography
                         variant="h6"

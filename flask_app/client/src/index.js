@@ -11,6 +11,9 @@ import AddHack from "./components/AddHack";
 import HackDetail from "./components/HackDetail";
 import WelcomePage from "./components/WelcomePage";
 import FavoriteHackList from "./components/FavoriteHackList";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme, CssBaseline } from "@mui/material";
+import { grey, red } from "@mui/material/colors";
 
 const App = () => {
     // declare state
@@ -27,49 +30,80 @@ const App = () => {
     }, [user]);
     // Source: https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
 
+    const theme = createTheme({
+        palette: {
+            background: {
+                default: "#f4ecdb",
+            },
+            primary: {
+                main: "#478d95",
+            },
+            secondary: {
+                main: "#b0bec5",
+            },
+            text: {
+                primary: "#808e95",
+            },
+            text: {
+                secondary: "#478d95",
+            },
+        },
+    });
+
     return (
-        <BrowserRouter>
-            <div className="App">
-                <Navbar user={user} setUser={setUser} />
-                <Routes>
-                    {/* add routes - remember to pass state */}
-                    <Route path="/" element={<WelcomePage />} />
-                    <Route
-                        path="/register"
-                        element={
-                            <RegistrationForm user={user} setUser={setUser} />
-                        }
-                    />
-                    <Route
-                        path="/login"
-                        element={<LoginForm user={user} setUser={setUser} />}
-                    />
-                    {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
-                    <Route path="/hacks/view" element={<HacksList />} />
-                    <Route
-                        path="/hacks/favorite/"
-                        element={<FavoriteHackList />}
-                    />
-
-                    <Route
-                        path="/hacks/new"
-                        element={<AddHack user={user} setUser={setUser} />}
-                    />
-
-                    <Route
-                        path="/hacks/view/:id"
-                        element={
-                            <HackDetail
-                                hacks={hacks}
-                                setHacks={setHacks}
-                                user={user}
-                                setUser={setUser}
+        <ThemeProvider theme={theme}>
+            <CssBaseline>
+                <BrowserRouter>
+                    <div className="App">
+                        <Navbar user={user} setUser={setUser} />
+                        <Routes>
+                            {/* add routes - remember to pass state */}
+                            <Route path="/" element={<WelcomePage />} />
+                            <Route
+                                path="/register"
+                                element={
+                                    <RegistrationForm
+                                        user={user}
+                                        setUser={setUser}
+                                    />
+                                }
                             />
-                        }
-                    />
-                </Routes>
-            </div>
-        </BrowserRouter>
+                            <Route
+                                path="/login"
+                                element={
+                                    <LoginForm user={user} setUser={setUser} />
+                                }
+                            />
+                            {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
+                            <Route path="/hacks/view" element={<HacksList />} />
+                            <Route
+                                path="/hacks/favorite/"
+                                element={<FavoriteHackList />}
+                            />
+
+                            <Route
+                                path="/hacks/new"
+                                element={
+                                    <AddHack user={user} setUser={setUser} />
+                                }
+                            />
+
+                            <Route
+                                path="/hacks/view/:id"
+                                element={
+                                    <HackDetail
+                                        hacks={hacks}
+                                        setHacks={setHacks}
+                                        user={user}
+                                        setUser={setUser}
+                                    />
+                                }
+                            />
+                        </Routes>
+                    </div>
+                </BrowserRouter>
+            </CssBaseline>
+        </ThemeProvider>
     );
 };
 

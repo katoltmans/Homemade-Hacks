@@ -56,7 +56,13 @@ const WelcomePage = (props) => {
     return (
         <>
             {categories.length > 0 ? (
-                <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+                <Box
+                    sx={{
+                        maxWidth: 1000,
+                        flexGrow: 1,
+                        m: "auto",
+                    }}
+                >
                     <Paper
                         square
                         elevation={0}
@@ -66,11 +72,13 @@ const WelcomePage = (props) => {
                             height: 50,
                             pl: 2,
                             bgcolor: "background.default",
+                            color: "text.secondary",
+                            mt: 5,
                         }}
                     >
                         {
                             <Typography>
-                                {categories[activeStep]?.name}
+                                <h2>{categories[activeStep]?.name}</h2>
                             </Typography>
                         }
                     </Paper>
@@ -85,13 +93,13 @@ const WelcomePage = (props) => {
                                     <Box
                                         component="img"
                                         sx={{
-                                            height: 255,
+                                            height: 700,
                                             display: "block",
-                                            maxWidth: 400,
+                                            maxWidth: 1920,
                                             overflow: "hidden",
                                             width: "100%",
                                         }}
-                                        src={step.cat_img}
+                                        src={step.hd_img}
                                         alt={step.name}
                                     />
                                 ) : null}

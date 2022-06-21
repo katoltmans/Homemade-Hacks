@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Paper, Typography, Link, Grid, List } from "@mui/material";
+import {
+    Button,
+    Paper,
+    Typography,
+    Link,
+    Grid,
+    List,
+    ListItem,
+} from "@mui/material";
 import { Box } from "@mui/system";
 
 const HackDetail = (props) => {
@@ -30,7 +38,7 @@ const HackDetail = (props) => {
             .then((res) => {
                 console.log(res);
                 setHacks(hacks.filter((hack) => hack.id !== hackId));
-                navigate("/");
+                navigate("/hacks/view");
             })
             .catch((err) => {
                 console.log("Error with delete request (client)", err);
@@ -73,27 +81,32 @@ const HackDetail = (props) => {
                         <h3>Supplies Needed</h3>
                     </Typography>
                     <Grid container spacing={3} sx={{ display: "flex" }}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <Typography
                                 variant="h6"
                                 color="inherit"
                                 component="div"
                                 sx={{ ml: 3 }}
                             >
-                                Supply Name:
+                                Supply Name (Quantity):
                             </Typography>
-                            <List>{hack.supplies}</List>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography
-                                variant="h6"
-                                color="inherit"
-                                component="div"
-                                sx={{ ml: 3 }}
-                            >
-                                Quantity:
-                            </Typography>
-                            <List></List>
+                    </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <ul>
+                                {hack?.supplies
+                                    ?.split(";")
+                                    ?.map((supply, index) => {
+                                        let [item, quantity] =
+                                            supply.split(",");
+                                        return (
+                                            <li key={index}>
+                                                {item} ({quantity})
+                                            </li>
+                                        );
+                                    })}
+                            </ul>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -106,7 +119,17 @@ const HackDetail = (props) => {
                     >
                         <h3>Instructions</h3>
                     </Typography>
-                    <List>{hack.instructions}</List>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <ul>
+                            {hack?.instructions
+                                ?.split(",")
+                                ?.map((step, index) => {
+                                    return <li key={index}>{step}</li>;
+                                })}
+                        </ul>
+                    </Grid>
                 </Grid>
             </Box>
         </Paper>

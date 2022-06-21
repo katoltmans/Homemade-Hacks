@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -21,49 +21,53 @@ const AddHack = (props) => {
     const { user, setUser } = props;
     const [hack, setHack] = useState({
         title: "",
-        supplies: [{ supply_name: "", quantity: "" }],
+        supplies: "",
+        //supplies: [{ supply_name: "", quantity: "" }],
         instructions: "",
         category_id: "",
         user_id: "",
     });
-    const [supplies, setSupplies] = useState([]);
-    const [instructions, setInstructions] = useState([]);
+    // const [supplies, setSupplies] = useState([]);
+    // const [instructions, setInstructions] = useState([]);
     const [errors, setErrors] = useState([]);
 
     const onChangeHandler = (e) => {
         console.log(e.target.name);
-        console.log(e.target.value);
         setHack({
             ...hack,
             [e.target.name]: e.target.value,
         });
     };
 
-    const onChangeHandlerSupplies = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-        setHack({
-            ...hack,
-            [e.target.name]: e.target.value,
-        });
-    };
+    // const onChangeHandlerSupplies = (e) => {
+    //     console.log(e.target.name);
+    //     console.log(e.target.value);
+    //     setHack({
+    //         ...hack,
+    //         [e.target.name]: e.target.value,
+    //     });
+    // };
 
-    const onChangeHandlerInstructions = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-        setHack({
-            ...hack,
-            [e.target.name]: e.target.value,
-        });
-    };
+    // useEffect(() => {
+    //     console.log("INSTRUCTIONS", instructions);
+    // }, [instructions]);
 
-    const addSuppliesHandler = () => {
-        setSupplies([...supplies, ""]);
-    };
+    // const onChangeHandlerInstructions = (e) => {
+    //     console.log(e.target.name);
+    //     console.log(e.target.value);
+    //     setHack({
+    //         ...hack,
+    //         [e.target.name]: e.target.value,
+    //     });
+    // };
 
-    const addInstructionHandler = () => {
-        setInstructions([...instructions, ""]);
-    };
+    // const addSuppliesHandler = () => {
+    //     setSupplies([...supplies, ""]);
+    // };
+
+    // const addInstructionHandler = () => {
+    //     setInstructions([...instructions, ""]);
+    // };
 
     const onSubmitHandler = (e) => {
         console.log("submitting hack");
@@ -105,11 +109,11 @@ const AddHack = (props) => {
 
     return (
         <Paper elevation={2} sx={{ p: 5, m: 5 }}>
-            <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
+            <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
                 Add A Hack
             </Typography>
             {errors ? (
-                <List sx={{ mb: 5 }}>
+                <List sx={{ mb: 3 }}>
                     {errors.map((error, index) => {
                         return (
                             <ListItem key={index} sx={{ color: "error.main" }}>
@@ -142,6 +146,7 @@ const AddHack = (props) => {
                                     name="category_id"
                                     label="Category"
                                     onChange={onChangeHandler}
+                                    defaultValue={hack.category_id}
                                 >
                                     <MenuItem value={1}>Cleaning</MenuItem>
                                     <MenuItem value={2}>Wardrobe</MenuItem>
@@ -157,25 +162,45 @@ const AddHack = (props) => {
                             </FormControl>
                         </Grid>
                     </Grid>
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        component="div"
-                        sx={{ ml: 3 }}
+                    <Grid
+                        container
+                        item
+                        spacing={1}
+                        sx={{ flexDirection: "column" }}
                     >
-                        <h3>Supplies Needed</h3>
-                    </Typography>
+                        <Typography
+                            variant="h6"
+                            color="inherit"
+                            component="div"
+                            sx={{ ml: 3 }}
+                        >
+                            <h3>Supplies Names And Quantities</h3>
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            color="text.secondary"
+                            component="div"
+                            sx={{ ml: 3 }}
+                        >
+                            <p>
+                                Please enter supply names and related quantity
+                                separated by commas, and unrelated supplies by
+                                semicolons. <br /> (Example: baking soda, 1 cup;
+                                water, 1 gallon; etc.)
+                            </p>
+                        </Typography>
+                    </Grid>
                     <Grid container item spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 fullWidth
                                 name="supplies"
-                                label="Supply Name"
+                                label="Supply, Quantity, etc."
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                             <TextField
                                 fullWidth
                                 name="supplies"
@@ -183,9 +208,9 @@ const AddHack = (props) => {
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
-                        </Grid>
+                        </Grid> */}
 
-                        {supplies.map((supply_item, index) => {
+                        {/* {supplies.map((supply_item, index) => {
                             return (
                                 <Grid container item spacing={3} key={index}>
                                     <Grid item xs={6}>
@@ -212,24 +237,43 @@ const AddHack = (props) => {
                                     </Grid>
                                 </Grid>
                             );
-                        })}
+                        })} */}
                     </Grid>
-                    <Button
+                    {/* <Button
                         variant="contained"
                         sx={{ ml: 3, mt: 1 }}
                         onClick={addSuppliesHandler}
                     >
                         Add Supplies
-                    </Button>
+                    </Button> */}
                 </Grid>
-                <Typography
-                    variant="h6"
-                    color="inherit"
-                    component="div"
-                    sx={{ ml: 3 }}
+                <Grid
+                    container
+                    item
+                    spacing={1}
+                    sx={{ flexDirection: "column" }}
                 >
-                    <h3>Instructions</h3>
-                </Typography>
+                    <Typography
+                        variant="h6"
+                        color="inherit"
+                        component="div"
+                        sx={{ ml: 3 }}
+                    >
+                        <h3>Instructions</h3>
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        color="text.secondary"
+                        component="div"
+                        sx={{ ml: 3 }}
+                    >
+                        <p>
+                            Please separate instruction steps with a semi colon.{" "}
+                            <br /> (Example: measure materials; mix materials
+                            together; etc.)
+                        </p>
+                    </Typography>
+                </Grid>
                 <Grid container item spacing={3}>
                     <Grid item xs={12}>
                         <TextField
@@ -240,13 +284,13 @@ const AddHack = (props) => {
                             onChange={onChangeHandler}
                         />
                     </Grid>
-                    {instructions.map((step, index) => {
+                    {/* {instructions.map((step, index) => {
                         return (
                             <Grid item xs={12} key={index}>
                                 <TextField
                                     fullWidth
                                     key={step}
-                                    name="instructions"
+                                    name={`instructions_${index}`}
                                     value={step}
                                     label="Instruction step"
                                     variant="outlined"
@@ -261,7 +305,7 @@ const AddHack = (props) => {
                         onClick={addInstructionHandler}
                     >
                         Add Step
-                    </Button>
+                    </Button> */}
                 </Grid>
                 <Button
                     variant="contained"
