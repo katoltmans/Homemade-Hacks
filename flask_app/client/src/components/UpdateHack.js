@@ -99,7 +99,7 @@ const UpdateHack = (props) => {
                 console.log(res);
                 console.log(res.data);
                 if (!res.data.errors) {
-                    // navigate("/hacks/view");
+                    navigate("/hacks/view/" + id);
                 } else {
                     setErrors(res.data.errors);
                 }

@@ -24,7 +24,6 @@ const RegistrationForm = (props) => {
         password: "",
         confirm_password: "",
     });
-    const { firstName, setFirstName } = props;
     const [errors, setErrors] = useState([]);
 
     const onChangeHandler = (e) => {
@@ -45,9 +44,9 @@ const RegistrationForm = (props) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                if (!res.data.errors) {
+                if (!res.data?.errors) {
                     //set user if successfully registered
-                    setFirstName(res.data.first_name);
+                    setUser(user);
                     navigate("/hacks/view");
                 } else {
                     // Add errors to be d

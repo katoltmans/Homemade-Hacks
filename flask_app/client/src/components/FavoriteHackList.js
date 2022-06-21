@@ -25,6 +25,7 @@ const FavoriteHackList = (props) => {
     const { user, setUser } = props;
 
     useEffect(() => {
+        //Source:https://javascript.plainenglish.io/3-uses-of-in-javascript-why-pro-developers-love-using-javascript-operator-565bc8b235a4
         if (!!user?.id) {
             console.log("PROPS", props);
             // GET request to find all hacks

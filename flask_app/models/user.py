@@ -12,7 +12,7 @@ class User:
     
     # Create regular expressions used to validate emails and passwords
     EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-    PASSWORD_REGEX = re.compile(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,32}$')
+    PASSWORD_REGEX = re.compile(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}\[:;<>,.?/~_+-=|\]]).{8,32}$')
     
     # Set attributes of the User class
     def __init__(self, data):
@@ -69,7 +69,7 @@ class User:
     def validate_registration(form_data):
         # Array to hold all error messages
         errorMessages = []
-        
+
         # Validate length of first and last name
         if len(form_data['first_name']) < 2:
             print("First name too short")
@@ -110,7 +110,7 @@ class User:
         
         # Compare password input to REGEX
         if not User.PASSWORD_REGEX.match(form_data['password']):
-            print("invalid password")
+            print("invalid password: "+form_data['password'])
             errorMessages.append("Our users require the utmost security. Please use a password with 8-32 characters, 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 number.")
         # Confirm reentered password matches
         if form_data['confirm_password'] != form_data['password']:

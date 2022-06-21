@@ -36,6 +36,7 @@ const App = () => {
         }
     }, [user]);
     // Source: https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
+    // Source: https://betterprogramming.pub/javascript-bang-bang-i-shot-you-down-use-of-double-bangs-in-javascript-7c9d94446054
     // Additional help from James Oltmans
 
     const theme = createTheme({
