@@ -9,6 +9,7 @@ import LoginForm from "./components/LoginForm";
 import HacksList from "./components/HacksList";
 import AddHack from "./components/AddHack";
 import HackDetail from "./components/HackDetail";
+import UpdateHack from "./components/UpdateHack";
 import WelcomePage from "./components/WelcomePage";
 import FavoriteHackList from "./components/FavoriteHackList";
 import { ThemeProvider } from "@emotion/react";
@@ -97,6 +98,12 @@ const App = () => {
                                         user={user}
                                         setUser={setUser}
                                     />
+                                }
+                            />
+                            <Route
+                                path="/hacks/update/:id"
+                                element={
+                                    <UpdateHack user={user} setUser={setUser} />
                                 }
                             />
                         </Routes>

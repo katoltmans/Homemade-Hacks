@@ -1,53 +1,107 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Box, Grid, Paper, TextField, Typography, Button } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+    Box,
+    Grid,
+    Paper,
+    TextField,
+    Typography,
+    Button,
+    FormControl,
+    Select,
+    MenuItem,
+    InputLabel,
+    List,
+    ListItem,
+} from "@mui/material";
 
-const AddHack = () => {
+const UpdateHack = (props) => {
     const navigate = useNavigate();
-    const [hack, setHack] = useState({
-        title: "",
-        supplies: [{ supply_name: "", quantity: "" }],
-        instructions: "",
-        category_name: "",
-        first_name: "",
-        last_name: "",
-    });
-    const [supplies, setSupplies] = useState([]);
-    const [instructions, setInstructions] = useState([]);
+    const { user, setUser } = props;
+    const [hack, setHack] = useState(null);
+    const { id } = useParams();
+    // const [supplies, setSupplies] = useState([]);
+    // const [instructions, setInstructions] = useState([]);
     const [errors, setErrors] = useState([]);
 
+    useEffect(() => {
+        console.log(id);
+        axios
+            .get("http://localhost:5000/api/hacks/view/" + id) //Remember the slash at the end of the IP address!
+            .then((res) => {
+                console.log(res.data);
+                setHack(res.data);
+            })
+            .catch((err) => {
+                console.log("Error with view_one_hack request", err);
+            });
+    }, []);
+
     const onChangeHandler = (e) => {
-        setUser({
-            ...user,
+        console.log(e.target.name);
+        setHack({
+            ...hack,
             [e.target.name]: e.target.value,
         });
     };
 
-    const addSuppliesHandler = () => {
-        setSupplies([...supplies, ""]);
-    };
+    // const onChangeHandlerSupplies = (e) => {
+    //     console.log(e.target.name);
+    //     console.log(e.target.value);
+    //     setHack({
+    //         ...hack,
+    //         [e.target.name]: e.target.value,
+    //     });
+    // };
 
-    const addInstructionHandler = () => {
-        setInstructions([...instructions, ""]);
-    };
+    // useEffect(() => {
+    //     console.log("INSTRUCTIONS", instructions);
+    // }, [instructions]);
+
+    // const onChangeHandlerInstructions = (e) => {
+    //     console.log(e.target.name);
+    //     console.log(e.target.value);
+    //     setHack({
+    //         ...hack,
+    //         [e.target.name]: e.target.value,
+    //     });
+    // };
+
+    // const addSuppliesHandler = () => {
+    //     setSupplies([...supplies, ""]);
+    // };
+
+    // const addInstructionHandler = () => {
+    //     setInstructions([...instructions, ""]);
+    // };
 
     const onSubmitHandler = (e) => {
-        console.log("submitting");
+        console.log("submitting hack");
         e.preventDefault();
         //make axios post request
         console.log(user);
         // Post request to create a new author
+        // Create hack object
+        let tempHack = { ...hack, user_id: user.id };
+        console.log(JSON.stringify(tempHack));
+        // let hack = {
+        //     title: title,
+        //     category_name: formData["category_name"],
+        //     supplies: formData["supplies"],
+        //     instructions: formData["instructions"],
+        //     user_id: user.id,
+        // };
+
         axios
-            .post("http://localhost:5000/api/hacks/update/:id", user)
+            .post("http://localhost:5000/api/hacks/update", tempHack)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                try {
-                    //navigate("/");
-                    console.log(res?.data?.message);
-                } catch (error) {
-                    console.error(error);
+                if (!res.data.errors) {
+                    navigate("/hacks/view");
+                } else {
+                    setErrors(res.data.errors);
                 }
             })
             .catch((err) => {
@@ -62,50 +116,108 @@ const AddHack = () => {
 
     return (
         <Paper elevation={2} sx={{ p: 5, m: 5 }}>
-            <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
-                Add A Hack
+            <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
+                Update Hack
             </Typography>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3}>
-                    <Grid container item spacing={1}>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="title"
-                                label="Title"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
+            {errors ? (
+                <List sx={{ mb: 3 }}>
+                    {errors.map((error, index) => {
+                        return (
+                            <ListItem key={index} sx={{ color: "error.main" }}>
+                                {error}
+                            </ListItem>
+                        );
+                    })}
+                </List>
+            ) : null}
+            {!!hack ? (
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={3}>
+                        <Grid container item spacing={1}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    fullWidth
+                                    name="title"
+                                    label="Title"
+                                    defaultValue={hack.title}
+                                    variant="outlined"
+                                    onChange={onChangeHandler}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">
+                                        Category
+                                    </InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        name="category_id"
+                                        label="Category"
+                                        onChange={onChangeHandler}
+                                        defaultValue={hack.category_id}
+                                    >
+                                        <MenuItem value={1}>Cleaning</MenuItem>
+                                        <MenuItem value={2}>Wardrobe</MenuItem>
+                                        <MenuItem value={3}>
+                                            Item Repair
+                                        </MenuItem>
+                                        <MenuItem value={4}>
+                                            Pest Control
+                                        </MenuItem>
+                                        <MenuItem value={5}>
+                                            Home Repair
+                                        </MenuItem>
+                                        <MenuItem value={6}>
+                                            Lawn And Garden
+                                        </MenuItem>
+                                        <MenuItem value={7}>
+                                            Organization
+                                        </MenuItem>
+                                        <MenuItem value={8}>Travel</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="category_name"
-                                label="Category"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
+                        <Grid
+                            container
+                            item
+                            spacing={1}
+                            sx={{ flexDirection: "column" }}
+                        >
+                            <Typography
+                                variant="h6"
+                                color="inherit"
+                                component="div"
+                                sx={{ ml: 3 }}
+                            >
+                                <h3>Supplies Names And Quantities</h3>
+                            </Typography>
+                            <Typography
+                                variant="h6"
+                                color="text.secondary"
+                                component="div"
+                                sx={{ ml: 3 }}
+                            >
+                                <p>
+                                    Please enter supply names and related
+                                    quantity separated by commas, and unrelated
+                                    supplies by semicolons. <br /> (Example:
+                                    baking soda, 1 cup; water, 1 gallon; etc.)
+                                </p>
+                            </Typography>
                         </Grid>
-                    </Grid>
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        component="div"
-                        sx={{ ml: 3 }}
-                    >
-                        <h3>Supplies Needed</h3>
-                    </Typography>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="supplies"
-                                label="Supply Name"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
+                        <Grid container item spacing={3}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="supplies"
+                                    label="Supply, Quantity, etc."
+                                    variant="outlined"
+                                    onChange={onChangeHandler}
+                                />
+                            </Grid>
+                            {/* <Grid item xs={6}>
                             <TextField
                                 fullWidth
                                 name="supplies"
@@ -113,16 +225,18 @@ const AddHack = () => {
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
-                        </Grid>
-                        {supplies.map((supply_name, quantity) => {
+                        </Grid> */}
+
+                            {/* {supplies.map((supply_item, index) => {
                             return (
-                                <>
+                                <Grid container item spacing={3} key={index}>
                                     <Grid item xs={6}>
                                         <TextField
                                             fullWidth
-                                            key={supply_name}
                                             name="supplies"
-                                            value={supply_name}
+                                            defaultValue={
+                                                supply_item.supply_name
+                                            }
                                             label="Supply Name"
                                             variant="outlined"
                                             onChange={onChangeHandler}
@@ -131,53 +245,69 @@ const AddHack = () => {
                                     <Grid item xs={6}>
                                         <TextField
                                             fullWidth
-                                            key={quantity}
                                             name="supplies"
-                                            value={quantity}
+                                            defaultValue={supply_item.quantity}
                                             label="Quantity"
                                             variant="outlined"
                                             onChange={onChangeHandler}
                                         />
                                     </Grid>
-                                </>
+                                </Grid>
                             );
-                        })}
-                    </Grid>
-                    <Button
+                        })} */}
+                        </Grid>
+                        {/* <Button
                         variant="contained"
-                        sx={{ ml: 3 }}
+                        sx={{ ml: 3, mt: 1 }}
                         onClick={addSuppliesHandler}
                     >
                         Add Supplies
-                    </Button>
-                </Grid>
-                <Typography
-                    variant="h6"
-                    color="inherit"
-                    component="div"
-                    sx={{ ml: 3 }}
-                >
-                    <h3>Instructions</h3>
-                </Typography>
-                <Grid container item spacing={3}>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            name="instructions"
-                            label="Instruction step"
-                            variant="outlined"
-                            onChange={onChangeHandler}
-                        />
+                    </Button> */}
                     </Grid>
-                </Grid>
-                <Grid container item spacing={3}>
-                    {instructions.map((step) => {
+                    <Grid
+                        container
+                        item
+                        spacing={1}
+                        sx={{ flexDirection: "column" }}
+                    >
+                        <Typography
+                            variant="h6"
+                            color="inherit"
+                            component="div"
+                            sx={{ ml: 3 }}
+                        >
+                            <h3>Instructions</h3>
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            color="text.secondary"
+                            component="div"
+                            sx={{ ml: 3 }}
+                        >
+                            <p>
+                                Please separate instruction steps with a semi
+                                colon. <br /> (Example: measure materials; mix
+                                materials together; etc.)
+                            </p>
+                        </Typography>
+                    </Grid>
+                    <Grid container item spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="instructions"
+                                label="Instruction step"
+                                variant="outlined"
+                                onChange={onChangeHandler}
+                            />
+                        </Grid>
+                        {/* {instructions.map((step, index) => {
                         return (
-                            <Grid item xs={12}>
+                            <Grid item xs={12} key={index}>
                                 <TextField
                                     fullWidth
                                     key={step}
-                                    name="instructions"
+                                    name={`instructions_${index}`}
                                     value={step}
                                     label="Instruction step"
                                     variant="outlined"
@@ -188,22 +318,25 @@ const AddHack = () => {
                     })}
                     <Button
                         variant="contained"
-                        sx={{ ml: 3, mt: 3 }}
+                        sx={{ ml: 3, mt: 1 }}
                         onClick={addInstructionHandler}
                     >
                         Add Step
+                    </Button> */}
+                    </Grid>
+                    <Button
+                        variant="contained"
+                        sx={{ mt: 5 }}
+                        onClick={onSubmitHandler}
+                    >
+                        Submit
                     </Button>
-                </Grid>
-                <Button
-                    variant="contained"
-                    sx={{ mt: 3 }}
-                    onClick={onSubmitHandler}
-                >
-                    Submit
-                </Button>
-            </Box>
+                </Box>
+            ) : (
+                <Box> Loading...</Box>
+            )}
         </Paper>
     );
 };
 
-export default AddHack;
+export default UpdateHack;

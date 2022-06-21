@@ -57,7 +57,11 @@ const HackDetail = (props) => {
                     {user.id == hack.user_id ? (
                         <Grid item xs={3}>
                             <Button variant="contained">
-                                <Link href="/" color="inherit" underline="none">
+                                <Link
+                                    href={`/hacks/update/${hack.id}`}
+                                    color="inherit"
+                                    underline="none"
+                                >
                                     Update Hack
                                 </Link>
                             </Button>
@@ -70,7 +74,6 @@ const HackDetail = (props) => {
                         </Grid>
                     ) : null}
                 </Grid>
-
                 <Grid item xs={12}>
                     <Typography
                         variant="h6"
