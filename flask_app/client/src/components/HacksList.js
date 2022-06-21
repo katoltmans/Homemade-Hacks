@@ -55,7 +55,7 @@ const HacksList = () => {
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 5, backgroundColor: "#fcf3e2" }}>
+        <Paper elevation={2} sx={{ p: 5, m: 5 }}>
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Explore Hacks
             </Typography>
