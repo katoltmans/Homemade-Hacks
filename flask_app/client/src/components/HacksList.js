@@ -88,16 +88,15 @@ const HacksList = () => {
                                             .sort(sortList)
                                             .map((hackData, index) => {
                                                 return (
-                                                    <>
+                                                    <div key={index}>
                                                         <Link
                                                             to={`/hacks/view/${hackData.id}`}
                                                             underline="hover"
-                                                            key={index}
                                                         >
                                                             {hackData.title}
                                                         </Link>
                                                         <Divider />
-                                                    </>
+                                                    </div>
                                                 );
                                             })}
                                     </List>

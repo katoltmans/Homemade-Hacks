@@ -72,8 +72,6 @@ def update_hack(num):
     return response
     
 
-
-
 # Route to delete a hack
 @app.route("/api/hacks/delete/<int:num>", methods=["DELETE"])
 def delete_hack(num):
@@ -97,3 +95,12 @@ def add_to_favorite_list():
     hack.Hack.add_favorite(data)
     response = jsonify({"message":"hack successfully favorited"})
     return response
+
+# Route to view favorited hacks
+@app.route("/api/hacks/view/favorites/<int:num>")
+def view_favorite_hacks(num):
+    # Create a hack dictionary
+    data = {
+        "user_id": num,
+    }
+    return Response(jsonpickle.encode(hack.Hack.get_all_favorited_hacks_with_category_and_user(data)), mimetype='application/json')

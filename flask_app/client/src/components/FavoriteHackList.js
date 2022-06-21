@@ -19,26 +19,34 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const HacksList = () => {
+const FavoriteHackList = (props) => {
     const [hacks, setHacks] = useState([]);
     const [categories, setCategories] = useState([]);
+    const { user, setUser } = props;
 
     useEffect(() => {
-        // GET request to find all hacks
-        axios
-            .get("http://localhost:5000/api/hacks/view")
-            .then((res) => {
-                console.log(res.data);
-                setHacks(res.data.all_hacks);
-                setCategories(res.data.all_categories);
-            })
-            .catch((err) => {
-                console.log(
-                    "Error with get_all_hacks_with_category_and_user request",
-                    err
-                );
-            });
-    }, []);
+        if (!!user?.id) {
+            console.log("PROPS", props);
+            // GET request to find all hacks
+            console.log(user);
+            let url =
+                "http://localhost:5000/api/hacks/view/favorites/" + user?.id;
+            console.log(url);
+            axios
+                .get(url)
+                .then((res) => {
+                    console.log("got data:", res.data);
+                    setHacks(res.data.all_hacks);
+                    setCategories(res.data.all_categories);
+                })
+                .catch((err) => {
+                    console.log(
+                        "Error with get_all_hacks_with_category_and_user request",
+                        err
+                    );
+                });
+        }
+    }, [user]);
 
     useEffect(() => {
         console.log("HACKS", hacks);
@@ -88,16 +96,15 @@ const HacksList = () => {
                                             .sort(sortList)
                                             .map((hackData, index) => {
                                                 return (
-                                                    <>
+                                                    <div key={index}>
                                                         <Link
                                                             to={`/hacks/view/${hackData.id}`}
                                                             underline="hover"
-                                                            key={index}
                                                         >
                                                             {hackData.title}
                                                         </Link>
                                                         <Divider />
-                                                    </>
+                                                    </div>
                                                 );
                                             })}
                                     </List>
@@ -111,4 +118,4 @@ const HacksList = () => {
     );
 };
 
-export default HacksList;
+export default FavoriteHackList;

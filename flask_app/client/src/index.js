@@ -27,9 +27,16 @@ const App = () => {
 
     useEffect(() => {
         let userStr = JSON.stringify(user);
-        if (!!userStr) window.localStorage.setItem("user", userStr);
+        if (!!user?.username) {
+            console.log("Changing user: ", user);
+            window.localStorage.setItem("user", userStr);
+        } else if (!!user?.logout) {
+            console.log("logout user: ", user);
+            window.localStorage.setItem("user", "{}");
+        }
     }, [user]);
     // Source: https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
+    // Additional help from James Oltmans
 
     const theme = createTheme({
         palette: {
@@ -76,10 +83,20 @@ const App = () => {
                                 }
                             />
                             {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
-                            <Route path="/hacks/view" element={<HacksList />} />
+                            <Route
+                                path="/hacks/view"
+                                element={
+                                    <HacksList user={user} setUser={setUser} />
+                                }
+                            />
                             <Route
                                 path="/hacks/favorite/"
-                                element={<FavoriteHackList />}
+                                element={
+                                    <FavoriteHackList
+                                        user={user}
+                                        setUser={setUser}
+                                    />
+                                }
                             />
 
                             <Route

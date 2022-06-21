@@ -5,6 +5,7 @@ import {
     NavLink,
     Router,
     Routes,
+    Link as RouterLink,
     useNavigate,
 } from "react-router-dom";
 import Container from "@mui/material/Container";
@@ -18,7 +19,7 @@ const Navbar = (props) => {
     const { user, setUser } = props;
 
     const logoutHandler = () => {
-        setUser({});
+        setUser({ logout: true });
         navigate("/");
     };
 
@@ -36,7 +37,12 @@ const Navbar = (props) => {
                         }}
                     />
                     <Typography variant="h6" color="inherit" component="div">
-                        <Link href="/" color="inherit" underline="none">
+                        <Link
+                            component={RouterLink}
+                            to="/"
+                            color="inherit"
+                            underline="none"
+                        >
                             <h1>Homemade Hacks</h1>
                         </Link>
                     </Typography>
@@ -47,7 +53,8 @@ const Navbar = (props) => {
                         sx={{ ml: 5 }}
                     >
                         <Link
-                            href="/hacks/view"
+                            component={RouterLink}
+                            to="/hacks/view"
                             color="inherit"
                             underline="none"
                         >
@@ -61,7 +68,8 @@ const Navbar = (props) => {
                         sx={{ ml: 5 }}
                     >
                         <Link
-                            href="/hacks/favorite/"
+                            component={RouterLink}
+                            to="/hacks/favorite/"
                             color="inherit"
                             underline="none"
                         >
@@ -75,7 +83,8 @@ const Navbar = (props) => {
                         sx={{ ml: 5 }}
                     >
                         <Link
-                            href="/hacks/new"
+                            component={RouterLink}
+                            to="/hacks/new"
                             color="inherit"
                             underline="none"
                         >
@@ -108,7 +117,8 @@ const Navbar = (props) => {
                         <Box sx={{ flexDirection: "row-reverse", ml: 5 }}>
                             <Button variant="contained">
                                 <Link
-                                    href="/login"
+                                    component={RouterLink}
+                                    to="/login"
                                     color="inherit"
                                     underline="none"
                                 >
@@ -117,7 +127,8 @@ const Navbar = (props) => {
                             </Button>
                             <Button variant="contained">
                                 <Link
-                                    href="/register"
+                                    component={RouterLink}
+                                    to="/register"
                                     color="inherit"
                                     underline="none"
                                 >

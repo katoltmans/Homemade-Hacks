@@ -57,17 +57,6 @@ class Hack():
             for row_from_db in results:
                 
                 one_hack = cls(row_from_db)
-                # TODO: THIS NEEDS HELP!!!!!!!
-                #one_hack_favorites_user = {
-                #    "id" : row_from_db["users.id"],
-                #    "first_name": row_from_db["first_name"],
-                #    "last_name": row_from_db["last_name"],
-                #}
-                # Creates a user object and associates the creator with the hack
-                #one_hack.creator = user.User(one_hack_creator)
-                # Access the single visitor_count value from the row
-                #one_hack.user_count = row_from_db["user_count"]
-                # Each hack that is created is appended to the all_hacks list
                 all_hacks.append(one_hack)
         if not category_results or len(category_results) == 0:  
             print("no results")
@@ -127,7 +116,48 @@ class Hack():
         return results
     
     # Method to display favorite hacks
-    
+    @classmethod
+    def get_all_favorited_hacks_with_category_and_user(cls, data):
+        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.favorites
+        LEFT JOIN homemade_hacks.hacks ON homemade_hacks.favorites.hack_id = homemade_hacks.hacks.id
+        LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
+        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id 
+        WHERE users.id =  %(user_id)s;"""
+        results = connectToMySQL(cls.schema).query_db(query, data)
+        print(results)
+        category_query = "SELECT * FROM categories;"
+        category_results = connectToMySQL(cls.schema).query_db(category_query)
+        all_categories = []
+        results_object = {}
+        all_hacks = []
+        # Return None if no hacks are registered
+        if not results or len(results) == 0:  
+            print("no results")
+            return ""
+        else:
+            
+            for row_from_db in results:
+                
+                one_hack = cls(row_from_db)
+                all_hacks.append(one_hack)
+        if not category_results or len(category_results) == 0:  
+            print("no results")
+            return ""
+        else:
+            
+            for row_from_db in category_results:
+                
+                one_category = {
+                    "id": row_from_db["id"],
+                    "name": row_from_db["name"],
+                    "cat_img": row_from_db["cat_img"],
+                    "hd_img": row_from_db["hd_img"]
+                }
+                all_categories.append(one_category)
+        results_object["all_hacks"] = all_hacks
+        results_object["all_categories"] = all_categories
+        
+        return results_object
     
     
     # Static methods to validate hack entry

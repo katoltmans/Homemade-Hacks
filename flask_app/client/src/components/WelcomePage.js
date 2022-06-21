@@ -77,8 +77,8 @@ const WelcomePage = (props) => {
                         }}
                     >
                         {
-                            <Typography>
-                                <h2>{categories[activeStep]?.name}</h2>
+                            <Typography variant="h3" sx={{ mb: 2 }}>
+                                {categories[activeStep]?.name}
                             </Typography>
                         }
                     </Paper>
