@@ -24,28 +24,38 @@ const Navbar = (props) => {
     };
 
     return (
-        <AppBar position="static">
-            <Container
-                maxWidth="xl"
-                sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-                <Toolbar disableGutters>
-                    <CountertopsIcon
-                        sx={{
-                            display: { xs: "none", md: "flex" },
-                            mr: 1,
-                        }}
-                    />
-                    <Typography variant="h6" color="inherit" component="div">
-                        <Link
-                            component={RouterLink}
-                            to="/"
+        <Box sx={{ display: "flex", width: "100%" }}>
+            <AppBar position="static">
+                <Toolbar
+                    disableGutters
+                    sx={{
+                        justifyContent: "space-around",
+                        textAlign: "center",
+                    }}
+                >
+                    <Box sx={{ display: "flex", ml: 5, alignItems: "center" }}>
+                        <CountertopsIcon
+                            sx={{
+                                fontSize: "45px",
+                                mr: 1,
+                            }}
+                        />
+                        <Typography
+                            variant="h6"
                             color="inherit"
-                            underline="none"
+                            component="div"
                         >
-                            <h1>Homemade Hacks</h1>
-                        </Link>
-                    </Typography>
+                            <Link
+                                component={RouterLink}
+                                to="/"
+                                color="inherit"
+                                underline="none"
+                            >
+                                <h1>Homemade Hacks</h1>
+                            </Link>
+                        </Typography>
+                    </Box>
+
                     <Typography
                         variant="h6"
                         color="inherit"
@@ -101,7 +111,11 @@ const Navbar = (props) => {
                             }}
                         >
                             <Typography
-                                sx={{ pt: 1, fontSize: 30, fontWeight: "bold" }}
+                                sx={{
+                                    pt: 1,
+                                    fontSize: 30,
+                                    fontWeight: "bold",
+                                }}
                             >
                                 Welcome {user.firstName}
                             </Typography>
@@ -138,8 +152,8 @@ const Navbar = (props) => {
                         </Box>
                     )}
                 </Toolbar>
-            </Container>
-        </AppBar>
+            </AppBar>
+        </Box>
     );
 };
 

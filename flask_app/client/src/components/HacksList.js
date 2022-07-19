@@ -62,7 +62,7 @@ const HacksList = () => {
             <Grid container spacing={5}>
                 {categories.map((categoryData, index) => {
                     return (
-                        <Grid item xs={3} key={index}>
+                        <Grid item xs={12} sm={4} lg={3} key={index}>
                             <Card sx={{ maxWidth: 345 }}>
                                 <CardMedia
                                     component="img"

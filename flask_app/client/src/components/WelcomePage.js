@@ -63,25 +63,6 @@ const WelcomePage = (props) => {
                         m: "auto",
                     }}
                 >
-                    <Paper
-                        square
-                        elevation={0}
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            height: 50,
-                            pl: 2,
-                            bgcolor: "background.default",
-                            color: "text.secondary",
-                            mt: 5,
-                        }}
-                    >
-                        {
-                            <Typography variant="h3" sx={{ mb: 2 }}>
-                                {categories[activeStep]?.name}
-                            </Typography>
-                        }
-                    </Paper>
                     <AutoPlaySwipeableViews
                         index={activeStep}
                         onChangeIndex={handleStepChange}
@@ -91,17 +72,46 @@ const WelcomePage = (props) => {
                             <div key={step.name}>
                                 {Math.abs(activeStep - index) <= 2 ? (
                                     <Box
-                                        component="img"
                                         sx={{
                                             height: 700,
                                             display: "block",
                                             maxWidth: 1920,
                                             overflow: "hidden",
                                             width: "100%",
+                                            backgroundImage: `url(${step.hd_img})`,
+                                            backgroundAttachment: "fixed",
+                                            backgroundRepeat: "no-repeat",
+                                            backgroundSize: "cover",
+                                            backgroundPosition: "center",
                                         }}
-                                        src={step.hd_img}
-                                        alt={step.name}
-                                    />
+                                    >
+                                        <Paper
+                                            square
+                                            elevation={0}
+                                            sx={{
+                                                alignItems: "center",
+                                                padding: "5px",
+                                                pl: 2,
+                                                bgcolor:
+                                                    "rgba(71, 141, 149, 0.3)",
+
+                                                color: "#fff",
+                                                mt: 5,
+                                            }}
+                                        >
+                                            {
+                                                <Typography
+                                                    variant="h3"
+                                                    sx={{ mb: 2 }}
+                                                >
+                                                    {
+                                                        categories[activeStep]
+                                                            ?.name
+                                                    }
+                                                </Typography>
+                                            }
+                                        </Paper>
+                                    </Box>
                                 ) : null}
                             </div>
                         ))}

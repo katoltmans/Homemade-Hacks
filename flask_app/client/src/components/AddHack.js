@@ -195,7 +195,7 @@ const AddHack = (props) => {
                             <TextField
                                 fullWidth
                                 name="supplies"
-                                label="Supply, Quantity, etc."
+                                label="Supply, Quantity; etc."
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
