@@ -1,5 +1,14 @@
-import React from "react";
-import { AppBar, Paper, Link, Button, Box } from "@mui/material";
+import React, { useState } from "react";
+import {
+    AppBar,
+    Paper,
+    Link,
+    Button,
+    Box,
+    IconButton,
+    Menu,
+    MenuItem,
+} from "@mui/material";
 import {
     Navigate,
     NavLink,
@@ -12,20 +21,53 @@ import Container from "@mui/material/Container";
 import CountertopsIcon from "@mui/icons-material/Countertops";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
+
+const pages = [
+    { title: "Explore", link: "/hacks/view" },
+    { title: "Favorite Hacks", link: "/hacks/favorite" },
+    { title: "Add A Hack", link: "/hacks/new" },
+];
 
 const Navbar = (props) => {
     const navigate = useNavigate();
     const { user, setUser } = props;
+
+    const styles = {
+        color: "#fff",
+        "&:hover": {
+            color: "#f5ccb7",
+        },
+    };
+
+    const menuStyles = {
+        color: "#375656",
+        "&:hover": {
+            color: "#478d95",
+        },
+    };
+
+    //Style of nav links
 
     const logoutHandler = () => {
         setUser({ logout: true });
         navigate("/");
     };
 
+    const [anchorElNav, setAnchorElNav] = useState(null);
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
     return (
-        <Box sx={{ display: "flex", width: "100%" }}>
-            <AppBar position="static">
+        // <Box sx={{ display: "flex", width: "100%" }}>
+        <AppBar position="static">
+            <Container maxWidth="xl">
                 <Toolbar
                     disableGutters
                     sx={{
@@ -33,7 +75,13 @@ const Navbar = (props) => {
                         textAlign: "center",
                     }}
                 >
-                    <Box sx={{ display: "flex", ml: 5, alignItems: "center" }}>
+                    <Box
+                        sx={{
+                            display: { xs: "none", md: "flex" },
+                            ml: 5,
+                            alignItems: "center",
+                        }}
+                    >
                         <CountertopsIcon
                             sx={{
                                 fontSize: "45px",
@@ -42,8 +90,10 @@ const Navbar = (props) => {
                         />
                         <Typography
                             variant="h6"
+                            noWrap
                             color="inherit"
                             component="div"
+                            sx={{ mr: 3 }}
                         >
                             <Link
                                 component={RouterLink}
@@ -55,63 +105,108 @@ const Navbar = (props) => {
                             </Link>
                         </Typography>
                     </Box>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "flex", md: "none" },
+                        }}
+                    >
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "left",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "left",
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: "block", md: "none" },
+                            }}
+                        >
+                            {pages.map((page, index) => (
+                                <MenuItem
+                                    key={index}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        color="inherit"
+                                        // component="div"
+                                        sx={{ ml: 5 }}
+                                    >
+                                        <Link
+                                            component={RouterLink}
+                                            to={page.link}
+                                            underline="none"
+                                            sx={menuStyles}
+                                        >
+                                            {page.title}
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: {
+                                xs: "none",
+                                md: "flex",
+                                justifyContent: "space-around",
+                            },
+                        }}
+                    >
+                        {pages.map((page, index) => {
+                            return (
+                                <Typography
+                                    variant="h6"
+                                    color="#fff"
+                                    key={index}
+                                    sx={{ mx: 2 }}
+                                >
+                                    <Link
+                                        to={page.link}
+                                        component={RouterLink}
+                                        color="inherit"
+                                        underline="none"
+                                        sx={styles}
+                                    >
+                                        {page.title}
+                                    </Link>
+                                </Typography>
+                            );
+                        })}
+                    </Box>
 
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        component="div"
-                        sx={{ ml: 5 }}
-                    >
-                        <Link
-                            component={RouterLink}
-                            to="/hacks/view"
-                            color="inherit"
-                            underline="none"
-                        >
-                            Explore
-                        </Link>
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        component="div"
-                        sx={{ ml: 5 }}
-                    >
-                        <Link
-                            component={RouterLink}
-                            to="/hacks/favorite/"
-                            color="inherit"
-                            underline="none"
-                        >
-                            Favorite Hacks
-                        </Link>
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        component="div"
-                        sx={{ ml: 5 }}
-                    >
-                        <Link
-                            component={RouterLink}
-                            to="/hacks/new"
-                            color="inherit"
-                            underline="none"
-                        >
-                            Add A Hack
-                        </Link>
-                    </Typography>
-                    {/* Source: help from James Oltmans for !!user?.firstName*/}
                     {!!user?.firstName ? (
                         <Box
                             sx={{
                                 display: "flex",
+                                textALign: "center",
                                 // justifyContent: "flex-end",
                                 ml: 5,
                             }}
                         >
                             <Typography
                                 sx={{
+                                    display: { xs: "none", md: "flex" },
                                     pt: 1,
                                     fontSize: 30,
                                     fontWeight: "bold",
@@ -152,8 +247,9 @@ const Navbar = (props) => {
                         </Box>
                     )}
                 </Toolbar>
-            </AppBar>
-        </Box>
+            </Container>
+        </AppBar>
+        // </Box>
     );
 };
 

@@ -14,7 +14,6 @@ import WelcomePage from "./components/WelcomePage";
 import FavoriteHackList from "./components/FavoriteHackList";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
-import { grey, red } from "@mui/material/colors";
 
 const App = () => {
     // declare state
@@ -42,7 +41,7 @@ const App = () => {
     const theme = createTheme({
         palette: {
             background: {
-                default: "#f4ecdb",
+                default: "#CBDEDF",
             },
             primary: {
                 main: "#478d95",
