@@ -16,10 +16,10 @@ import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
 
 const App = () => {
-    // declare state
     const [hacks, setHacks] = useState([]);
     const [user, setUser] = useState({});
 
+    // Sets user on login
     useEffect(() => {
         setUser(JSON.parse(window.localStorage.getItem("user")));
     }, []);
@@ -36,7 +36,6 @@ const App = () => {
     }, [user]);
     // Source: https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
     // Source: https://betterprogramming.pub/javascript-bang-bang-i-shot-you-down-use-of-double-bangs-in-javascript-7c9d94446054
-    // Additional help from James Oltmans
 
     const theme = createTheme({
         palette: {
@@ -65,7 +64,6 @@ const App = () => {
                     <div className="App">
                         <Navbar user={user} setUser={setUser} />
                         <Routes>
-                            {/* add routes - remember to pass state */}
                             <Route path="/" element={<WelcomePage />} />
                             <Route
                                 path="/register"
@@ -82,7 +80,6 @@ const App = () => {
                                     <LoginForm user={user} setUser={setUser} />
                                 }
                             />
-                            {/*<Route path="/hacks/new" element={<LoginForm />} /> */}
                             <Route
                                 path="/hacks/view"
                                 element={
