@@ -81,8 +81,8 @@ const RegistrationForm = (props) => {
             ) : null}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
-                    <Grid container item spacing={1}>
-                        <Grid item xs={6}>
+                    <Grid container item spacing={3}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="first_name"
@@ -91,7 +91,7 @@ const RegistrationForm = (props) => {
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="last_name"
@@ -113,7 +113,7 @@ const RegistrationForm = (props) => {
                         </Grid>
                     </Grid>
                     <Grid container item spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="birthdate"
@@ -122,7 +122,7 @@ const RegistrationForm = (props) => {
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="location"
@@ -133,7 +133,7 @@ const RegistrationForm = (props) => {
                         </Grid>
                     </Grid>
                     <Grid container item spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="username"
@@ -144,7 +144,7 @@ const RegistrationForm = (props) => {
                         </Grid>
                     </Grid>
                     <Grid container item spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="password"
@@ -154,7 +154,7 @@ const RegistrationForm = (props) => {
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="confirm_password"

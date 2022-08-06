@@ -62,13 +62,13 @@ const HackDetail = (props) => {
     return (
         <Paper elevation={2} sx={{ p: 5, m: 5 }}>
             <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3}>
-                    <Grid item xs={9}>
+                <Grid container spacing={3} sx={{ display: "flex" }}>
+                    <Grid item xs={12} sm={9}>
                         <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                             {hack.title}
                         </Typography>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2} sm={3}>
                         <Button
                             variant="contained"
                             onClick={() => addFavorite(hack.id)}
@@ -76,8 +76,12 @@ const HackDetail = (props) => {
                             Add To Favorites
                         </Button>
                     </Grid>
-                    {user.id == hack.user_id ? (
-                        <Grid item xs={3}>
+                </Grid>
+
+                {/* Update and Delete buttons appear only for Hack creator */}
+                {user.id == hack.user_id ? (
+                    <Grid container spacing={3} sx={{ display: "flex" }}>
+                        <Grid item xs={12} sm={3}>
                             <Button variant="contained">
                                 <Link
                                     href={`/hacks/update/${hack.id}`}
@@ -87,6 +91,7 @@ const HackDetail = (props) => {
                                     Update Hack
                                 </Link>
                             </Button>
+                            <Grid item xs={12} sm={3}></Grid>
                             <Button
                                 variant="contained"
                                 onClick={() => handleDelete(hack.id)}
@@ -94,8 +99,9 @@ const HackDetail = (props) => {
                                 Delete Hack
                             </Button>
                         </Grid>
-                    ) : null}
-                </Grid>
+                    </Grid>
+                ) : null}
+
                 <Grid item xs={12}>
                     <Typography
                         variant="h6"

@@ -22,13 +22,13 @@ const AddHack = (props) => {
     const [hack, setHack] = useState({
         title: "",
         supplies: "",
-        //supplies: [{ supply_name: "", quantity: "" }],
+        supplies: [{ supply_name: "", quantity: "" }],
         instructions: "",
         category_id: "",
         user_id: "",
     });
-    // const [supplies, setSupplies] = useState([]);
-    // const [instructions, setInstructions] = useState([]);
+    const [supplies, setSupplies] = useState([]);
+    const [instructions, setInstructions] = useState([]);
     const [errors, setErrors] = useState([]);
 
     const onChangeHandler = (e) => {
@@ -39,42 +39,42 @@ const AddHack = (props) => {
         });
     };
 
-    // const onChangeHandlerSupplies = (e) => {
-    //     console.log(e.target.name);
-    //     console.log(e.target.value);
-    //     setHack({
-    //         ...hack,
-    //         [e.target.name]: e.target.value,
-    //     });
-    // };
+    const onChangeHandlerSupplies = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        setHack({
+            ...hack,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-    // useEffect(() => {
-    //     console.log("INSTRUCTIONS", instructions);
-    // }, [instructions]);
+    useEffect(() => {
+        console.log("INSTRUCTIONS", instructions);
+    }, [instructions]);
 
-    // const onChangeHandlerInstructions = (e) => {
-    //     console.log(e.target.name);
-    //     console.log(e.target.value);
-    //     setHack({
-    //         ...hack,
-    //         [e.target.name]: e.target.value,
-    //     });
-    // };
+    const onChangeHandlerInstructions = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        setHack({
+            ...hack,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-    // const addSuppliesHandler = () => {
-    //     setSupplies([...supplies, ""]);
-    // };
+    const addSuppliesHandler = () => {
+        setSupplies([...supplies, ""]);
+    };
 
-    // const addInstructionHandler = () => {
-    //     setInstructions([...instructions, ""]);
-    // };
+    const addInstructionHandler = () => {
+        setInstructions([...instructions, ""]);
+    };
 
     const onSubmitHandler = (e) => {
         console.log("submitting hack");
         e.preventDefault();
         //make axios post request
         console.log(user);
-        // Post request to create a new author
+        // Post request to create a new hack
         // Create hack object
         let tempHack = { ...hack, user_id: user.id };
         console.log(JSON.stringify(tempHack));
@@ -126,7 +126,7 @@ const AddHack = (props) => {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid container item spacing={1}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="title"
@@ -135,7 +135,7 @@ const AddHack = (props) => {
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">
                                     Category
@@ -146,7 +146,7 @@ const AddHack = (props) => {
                                     name="category_id"
                                     label="Category"
                                     onChange={onChangeHandler}
-                                    defaultValue={hack.category_id}
+                                    value={hack.category_id}
                                 >
                                     <MenuItem value={1}>Cleaning</MenuItem>
                                     <MenuItem value={2}>Wardrobe</MenuItem>
@@ -191,16 +191,16 @@ const AddHack = (props) => {
                         </Typography>
                     </Grid>
                     <Grid container item spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
                                 name="supplies"
-                                label="Supply, Quantity; etc."
+                                label="Supply"
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
                         </Grid>
-                        {/* <Grid item xs={6}>
+                        <Grid item xs={6}>
                             <TextField
                                 fullWidth
                                 name="supplies"
@@ -208,12 +208,12 @@ const AddHack = (props) => {
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
-                        </Grid> */}
+                        </Grid>
 
-                        {/* {supplies.map((supply_item, index) => {
+                        {supplies.map((supply_item, index) => {
                             return (
                                 <Grid container item spacing={3} key={index}>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <TextField
                                             fullWidth
                                             name="supplies"
@@ -237,15 +237,16 @@ const AddHack = (props) => {
                                     </Grid>
                                 </Grid>
                             );
-                        })} */}
+                        })}
                     </Grid>
-                    {/* <Button
+
+                    <Button
                         variant="contained"
                         sx={{ ml: 3, mt: 1 }}
                         onClick={addSuppliesHandler}
                     >
                         Add Supplies
-                    </Button> */}
+                    </Button>
                 </Grid>
                 <Grid
                     container
@@ -284,7 +285,7 @@ const AddHack = (props) => {
                             onChange={onChangeHandler}
                         />
                     </Grid>
-                    {/* {instructions.map((step, index) => {
+                    {instructions.map((step, index) => {
                         return (
                             <Grid item xs={12} key={index}>
                                 <TextField
@@ -305,7 +306,7 @@ const AddHack = (props) => {
                         onClick={addInstructionHandler}
                     >
                         Add Step
-                    </Button> */}
+                    </Button>
                 </Grid>
                 <Button
                     variant="contained"

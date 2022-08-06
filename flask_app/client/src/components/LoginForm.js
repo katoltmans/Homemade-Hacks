@@ -66,7 +66,7 @@ const LoginForm = (props) => {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid container item spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="username"
@@ -77,7 +77,7 @@ const LoginForm = (props) => {
                         </Grid>
                     </Grid>
                     <Grid container item spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
                                 name="password"

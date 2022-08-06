@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
     AppBar,
-    Paper,
     Link,
     Button,
     Box,
@@ -9,14 +8,7 @@ import {
     Menu,
     MenuItem,
 } from "@mui/material";
-import {
-    Navigate,
-    NavLink,
-    Router,
-    Routes,
-    Link as RouterLink,
-    useNavigate,
-} from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import CountertopsIcon from "@mui/icons-material/Countertops";
 import Toolbar from "@mui/material/Toolbar";
@@ -32,7 +24,9 @@ const pages = [
 const Navbar = (props) => {
     const navigate = useNavigate();
     const { user, setUser } = props;
+    const [anchorElNav, setAnchorElNav] = useState(null);
 
+    //Style of nav links
     const styles = {
         color: "#fff",
         "&:hover": {
@@ -40,6 +34,7 @@ const Navbar = (props) => {
         },
     };
 
+    //Style of menu items
     const menuStyles = {
         color: "#375656",
         "&:hover": {
@@ -47,14 +42,10 @@ const Navbar = (props) => {
         },
     };
 
-    //Style of nav links
-
     const logoutHandler = () => {
         setUser({ logout: true });
         navigate("/");
     };
-
-    const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -65,20 +56,18 @@ const Navbar = (props) => {
     };
 
     return (
-        // <Box sx={{ display: "flex", width: "100%" }}>
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar
                     disableGutters
                     sx={{
-                        justifyContent: "space-around",
+                        justifyContent: "space-evenly",
                         textAlign: "center",
                     }}
                 >
                     <Box
                         sx={{
                             display: { xs: "none", md: "flex" },
-                            ml: 5,
                             alignItems: "center",
                         }}
                     >
@@ -147,7 +136,6 @@ const Navbar = (props) => {
                                     <Typography
                                         variant="h6"
                                         color="inherit"
-                                        // component="div"
                                         sx={{ ml: 5 }}
                                     >
                                         <Link
@@ -161,8 +149,84 @@ const Navbar = (props) => {
                                     </Typography>
                                 </MenuItem>
                             ))}
+                            {!!user?.firstName ? (
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={logoutHandler}
+                                        sx={{ ml: 3 }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </MenuItem>
+                            ) : (
+                                <>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography
+                                            variant="h6"
+                                            color="inherit"
+                                            sx={{ ml: 5 }}
+                                        >
+                                            <Link
+                                                component={RouterLink}
+                                                to="/login"
+                                                underline="none"
+                                                sx={menuStyles}
+                                            >
+                                                Login
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography
+                                            variant="h6"
+                                            color="inherit"
+                                            sx={{ ml: 5 }}
+                                        >
+                                            <Link
+                                                component={RouterLink}
+                                                to="/register"
+                                                underline="none"
+                                                sx={menuStyles}
+                                            >
+                                                Register
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+                                </>
+                            )}
                         </Menu>
+                        <Box
+                            sx={{
+                                ml: 5,
+                                alignItems: "center",
+                            }}
+                        >
+                            <CountertopsIcon
+                                sx={{
+                                    fontSize: "30px",
+                                    mr: 1,
+                                }}
+                            />
+                            <Typography
+                                variant="body1"
+                                noWrap
+                                color="inherit"
+                                component="h1"
+                                sx={{ mr: 3 }}
+                            >
+                                <Link
+                                    component={RouterLink}
+                                    to="/"
+                                    color="inherit"
+                                    underline="none"
+                                >
+                                    Homemade Hacks
+                                </Link>
+                            </Typography>
+                        </Box>
                     </Box>
+
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -198,9 +262,8 @@ const Navbar = (props) => {
                     {!!user?.firstName ? (
                         <Box
                             sx={{
-                                display: "flex",
-                                textALign: "center",
-                                // justifyContent: "flex-end",
+                                display: { xs: "none", md: "flex" },
+                                textAlign: "center",
                                 ml: 5,
                             }}
                         >
@@ -223,7 +286,13 @@ const Navbar = (props) => {
                             </Button>
                         </Box>
                     ) : (
-                        <Box sx={{ flexDirection: "row-reverse", ml: 5 }}>
+                        <Box
+                            sx={{
+                                flexDirection: "row-reverse",
+                                ml: 5,
+                                display: { xs: "none", md: "flex" },
+                            }}
+                        >
                             <Button variant="contained">
                                 <Link
                                     component={RouterLink}
@@ -249,7 +318,6 @@ const Navbar = (props) => {
                 </Toolbar>
             </Container>
         </AppBar>
-        // </Box>
     );
 };
 

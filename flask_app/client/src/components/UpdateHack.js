@@ -115,7 +115,7 @@ const UpdateHack = (props) => {
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 5 }}>
+        <Paper elevation={2} sx={{ p: 5, m: 3 }}>
             <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
                 Update Hack
             </Typography>
@@ -134,7 +134,7 @@ const UpdateHack = (props) => {
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={3}>
                         <Grid container item spacing={1}>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
                                     name="title"
@@ -144,7 +144,7 @@ const UpdateHack = (props) => {
                                     onChange={onChangeHandler}
                                 />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">
                                         Category
@@ -301,6 +301,7 @@ const UpdateHack = (props) => {
                                 value={hack.instructions}
                                 variant="outlined"
                                 onChange={onChangeHandler}
+                                sx={{}}
                             />
                         </Grid>
                         {/* {instructions.map((step, index) => {
