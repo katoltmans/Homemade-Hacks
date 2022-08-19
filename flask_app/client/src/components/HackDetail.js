@@ -60,17 +60,18 @@ const HackDetail = (props) => {
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 5 }}>
-            <Box sx={{ flexGrow: 1 }}>
+        <Paper elevation={5} sx={{ p: 5, m: 5 }}>
+            <Box>
                 <Grid container spacing={3} sx={{ display: "flex" }}>
-                    <Grid item xs={12} sm={9}>
+                    <Grid item xs={12} sm={10}>
                         <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                             {hack.title}
                         </Typography>
                     </Grid>
-                    <Grid item xs={2} sm={3}>
+                    <Grid item xs={12} sm={2}>
                         <Button
                             variant="contained"
+                            sx={{ width: "170px" }}
                             onClick={() => addFavorite(hack.id)}
                         >
                             Add To Favorites
@@ -80,13 +81,20 @@ const HackDetail = (props) => {
 
                 {/* Update and Delete buttons appear only for Hack creator */}
                 {user.id == hack.user_id ? (
-                    <Grid container spacing={3} sx={{ display: "flex" }}>
-                        <Grid item xs={12} sm={3}>
+                    <Grid
+                        container
+                        direction="row"
+                        spacing={6}
+                        rowSPacing={2}
+                        columnSpacing={{ xs: 1 }}
+                    >
+                        <Grid item xs={12} sm={6}>
                             <Button variant="contained">
                                 <Link
                                     href={`/hacks/update/${hack.id}`}
                                     color="inherit"
                                     underline="none"
+                                    sx={{ width: "140px" }}
                                 >
                                     Update Hack
                                 </Link>
@@ -94,6 +102,7 @@ const HackDetail = (props) => {
                             <Grid item xs={12} sm={3}></Grid>
                             <Button
                                 variant="contained"
+                                sx={{ width: "170px" }}
                                 onClick={() => handleDelete(hack.id)}
                             >
                                 Delete Hack
