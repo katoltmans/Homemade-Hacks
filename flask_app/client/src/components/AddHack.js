@@ -21,9 +21,8 @@ const AddHack = (props) => {
     const { user, setUser } = props;
     const [hack, setHack] = useState({
         title: "",
-        supplies: "",
         supplies: [{ supply_name: "", quantity: "" }],
-        instructions: "",
+        instructions: [""],
         category_id: "",
         user_id: "",
     });
@@ -39,53 +38,51 @@ const AddHack = (props) => {
         });
     };
 
-    const onChangeHandlerSupplies = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-        setHack({
-            ...hack,
-            [e.target.name]: e.target.value,
-        });
-    };
-
     useEffect(() => {
         console.log("INSTRUCTIONS", instructions);
     }, [instructions]);
 
-    const onChangeHandlerInstructions = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-        setHack({
-            ...hack,
-            [e.target.name]: e.target.value,
-        });
-    };
-
+    // Handlers to add supplies/instructions for later parsing into list
     const addSuppliesHandler = () => {
-        setSupplies([...supplies, ""]);
+        setSupplies([...supplies, { supply_name: "", quantity: "" }]);
     };
 
     const addInstructionHandler = () => {
         setInstructions([...instructions, ""]);
     };
+    const onChangeHandlerSupplies = (e, index, type) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        let newSupplies = [...supplies];
+        newSupplies[index][type] = e.target.value;
+        setSupplies(newSupplies);
+    };
 
+    const onChangeHandlerInstructions = (e, index) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        let newInstructions = [...instructions];
+        newInstructions[index] = e.target.value;
+        setInstructions(newInstructions);
+    };
+
+    // Handler to post hack with hack details connected to creator's user ID
     const onSubmitHandler = (e) => {
         console.log("submitting hack");
         e.preventDefault();
         //make axios post request
         console.log(user);
-        // Post request to create a new hack
-        // Create hack object
-        let tempHack = { ...hack, user_id: user.id };
-        console.log(JSON.stringify(tempHack));
-        // let hack = {
-        //     title: title,
-        //     category_name: formData["category_name"],
-        //     supplies: formData["supplies"],
-        //     instructions: formData["instructions"],
-        //     user_id: user.id,
-        // };
 
+        // Create hack object
+        let tempHack = {
+            ...hack,
+            instructions: JSON.stringify(instructions),
+            supplies: JSON.stringify(supplies),
+            user_id: user.id,
+        };
+        console.log(JSON.stringify(tempHack));
+
+        // Post request to create a new hack
         axios
             .post("http://localhost:5000/api/hacks/new", tempHack)
             .then((res) => {
@@ -183,15 +180,12 @@ const AddHack = (props) => {
                             sx={{ ml: 3 }}
                         >
                             <p>
-                                Please enter supply names and related quantity
-                                separated by commas, and unrelated supplies by
-                                semicolons. <br /> (Example: baking soda, 1 cup;
-                                water, 1 gallon; etc.)
+                                Please enter supply names and related quantity:
                             </p>
                         </Typography>
                     </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} md={6}>
+                    {/* <Grid container item spacing={3}> */}
+                    {/* <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
                                 name="supplies"
@@ -208,46 +202,56 @@ const AddHack = (props) => {
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
-                        </Grid>
+                        </Grid> */}
 
-                        {supplies.map((supply_item, index) => {
-                            return (
-                                <Grid container item spacing={3} key={index}>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            name="supplies"
-                                            defaultValue={
-                                                supply_item.supply_name
-                                            }
-                                            label="Supply Name"
-                                            variant="outlined"
-                                            onChange={onChangeHandler}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            fullWidth
-                                            name="supplies"
-                                            defaultValue={supply_item.quantity}
-                                            label="Quantity"
-                                            variant="outlined"
-                                            onChange={onChangeHandler}
-                                        />
-                                    </Grid>
+                    {supplies.map((supply_item, index) => {
+                        return (
+                            <Grid container item spacing={3} key={index}>
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        fullWidth
+                                        name="supplies"
+                                        defaultValue={supply_item.supply_name}
+                                        label="Supply Name"
+                                        variant="outlined"
+                                        onChange={(e) =>
+                                            onChangeHandlerSupplies(
+                                                e,
+                                                index,
+                                                "supply_name"
+                                            )
+                                        }
+                                    />
                                 </Grid>
-                            );
-                        })}
-                    </Grid>
-
-                    <Button
-                        variant="contained"
-                        sx={{ ml: 3, mt: 1 }}
-                        onClick={addSuppliesHandler}
-                    >
-                        Add Supplies
-                    </Button>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        fullWidth
+                                        name="supplies"
+                                        defaultValue={supply_item.quantity}
+                                        label="Quantity"
+                                        variant="outlined"
+                                        onChange={(e) =>
+                                            onChangeHandlerSupplies(
+                                                e,
+                                                index,
+                                                "quantity"
+                                            )
+                                        }
+                                    />
+                                </Grid>
+                            </Grid>
+                        );
+                    })}
                 </Grid>
+
+                <Button
+                    variant="contained"
+                    sx={{ ml: 3, mt: 1 }}
+                    onClick={addSuppliesHandler}
+                >
+                    Add Supplies
+                </Button>
+                {/* </Grid> */}
                 <Grid
                     container
                     item
@@ -268,15 +272,11 @@ const AddHack = (props) => {
                         component="div"
                         sx={{ ml: 3 }}
                     >
-                        <p>
-                            Please separate instruction steps with a semi colon.{" "}
-                            <br /> (Example: measure materials; mix materials
-                            together; etc.)
-                        </p>
+                        <p>Please enter step by step instructions:</p>
                     </Typography>
                 </Grid>
                 <Grid container item spacing={3}>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <TextField
                             fullWidth
                             name="instructions"
@@ -284,18 +284,19 @@ const AddHack = (props) => {
                             variant="outlined"
                             onChange={onChangeHandler}
                         />
-                    </Grid>
+                    </Grid> */}
                     {instructions.map((step, index) => {
                         return (
                             <Grid item xs={12} key={index}>
                                 <TextField
                                     fullWidth
-                                    key={step}
-                                    name={`instructions_${index}`}
+                                    name="instructions"
                                     value={step}
                                     label="Instruction step"
                                     variant="outlined"
-                                    onChange={onChangeHandler}
+                                    onChange={(e) =>
+                                        onChangeHandlerInstructions(e, index)
+                                    }
                                 />
                             </Grid>
                         );

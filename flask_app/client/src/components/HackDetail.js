@@ -62,7 +62,7 @@ const HackDetail = (props) => {
     return (
         <Paper elevation={5} sx={{ p: 5, m: 5 }}>
             <Box>
-                <Grid container spacing={3} sx={{ display: "flex" }}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} sm={10}>
                         <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                             {hack.title}
@@ -85,7 +85,7 @@ const HackDetail = (props) => {
                         container
                         direction="row"
                         spacing={6}
-                        rowSPacing={2}
+                        rowSpacing={2}
                         columnSpacing={{ xs: 1 }}
                     >
                         <Grid item xs={12} sm={6}>
@@ -135,17 +135,18 @@ const HackDetail = (props) => {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <ul>
-                                {hack?.supplies
-                                    ?.split(";")
-                                    ?.map((supply, index) => {
-                                        let [item, quantity] =
-                                            supply.split(",");
-                                        return (
-                                            <li key={index}>
-                                                {item} ({quantity})
-                                            </li>
-                                        );
-                                    })}
+                                {!!hack?.supplies
+                                    ? JSON.parse(hack.supplies)?.map(
+                                          (supply, index) => {
+                                              return (
+                                                  <li key={index}>
+                                                      {supply.supply_name} (
+                                                      {supply.quantity})
+                                                  </li>
+                                              );
+                                          }
+                                      )
+                                    : null}
                             </ul>
                         </Grid>
                     </Grid>
@@ -163,11 +164,13 @@ const HackDetail = (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <ul>
-                            {hack?.instructions
-                                ?.split(",")
-                                ?.map((step, index) => {
-                                    return <li key={index}>{step}</li>;
-                                })}
+                            {!!hack?.instructions
+                                ? JSON.parse(hack.instructions)?.map(
+                                      (step, index) => {
+                                          return <li key={index}>{step}</li>;
+                                      }
+                                  )
+                                : null}
                         </ul>
                     </Grid>
                 </Grid>

@@ -42,25 +42,14 @@ class Hack():
 	LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
     LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id;"""
         results = connectToMySQL(cls.schema).query_db(query)
-        print(results)
+        #print(results)
         category_query = "SELECT * FROM categories;"
         category_results = connectToMySQL(cls.schema).query_db(category_query)
         all_categories = []
         results_object = {}
-        all_hacks = []
-        # Return None if no hacks are registered
-        if not results or len(results) == 0:  
-            print("no results")
-            return ""
-        else:
-            
-            for row_from_db in results:
-                
-                one_hack = cls(row_from_db)
-                all_hacks.append(one_hack)
         if not category_results or len(category_results) == 0:  
             print("no results")
-            return ""
+            return results_object
         else:
             
             for row_from_db in category_results:
@@ -72,8 +61,20 @@ class Hack():
                     "hd_img": row_from_db["hd_img"]
                 }
                 all_categories.append(one_category)
-        results_object["all_hacks"] = all_hacks
         results_object["all_categories"] = all_categories
+        all_hacks = []
+        # Return None if no hacks are registered
+        if not results or len(results) == 0:  
+            print("no results")
+            return results_object
+        else:
+            
+            for row_from_db in results:
+                
+                one_hack = cls(row_from_db)
+                all_hacks.append(one_hack)
+        
+        results_object["all_hacks"] = all_hacks
         
         return results_object
     
@@ -180,7 +181,7 @@ class Hack():
             print("category not selected")
             errorMessages.append("Please select a category.")
         # Check to make sure location has at least 2 characters
-        if len(form_data['supplies']) <2 :
+        if len(form_data['supplies']) < 20 :
             print("supplies too short")
             errorMessages.append("Please enter the supplies necessary for this hack.")
         # Check to make sure location has at least 2 characters
