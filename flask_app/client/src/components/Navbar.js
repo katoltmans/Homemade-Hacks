@@ -160,40 +160,40 @@ const Navbar = (props) => {
                                     </Button>
                                 </MenuItem>
                             ) : (
-                                <>
-                                    <MenuItem onClick={handleCloseNavMenu}>
-                                        <Typography
-                                            variant="h6"
-                                            color="inherit"
-                                            sx={{ ml: 5 }}
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Typography
+                                        variant="h6"
+                                        color="inherit"
+                                        sx={{ ml: 5 }}
+                                    >
+                                        <Link
+                                            component={RouterLink}
+                                            to="/login"
+                                            underline="none"
+                                            sx={menuStyles}
                                         >
-                                            <Link
-                                                component={RouterLink}
-                                                to="/login"
-                                                underline="none"
-                                                sx={menuStyles}
-                                            >
-                                                Login
-                                            </Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleCloseNavMenu}>
-                                        <Typography
-                                            variant="h6"
-                                            color="inherit"
-                                            sx={{ ml: 5 }}
+                                            Login
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            )}
+                            {!!user?.firstName ? null : (
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Typography
+                                        variant="h6"
+                                        color="inherit"
+                                        sx={{ ml: 5 }}
+                                    >
+                                        <Link
+                                            component={RouterLink}
+                                            to="/register"
+                                            underline="none"
+                                            sx={menuStyles}
                                         >
-                                            <Link
-                                                component={RouterLink}
-                                                to="/register"
-                                                underline="none"
-                                                sx={menuStyles}
-                                            >
-                                                Register
-                                            </Link>
-                                        </Typography>
-                                    </MenuItem>
-                                </>
+                                            Register
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
                             )}
                         </Menu>
                         <Box
