@@ -121,7 +121,7 @@ class Hack():
     @classmethod
     def unfavorite(cls, data):
         query = "DELETE FROM homemade_hacks.favorites \
-        WHERE user_id = %(user_id)s and hack_id = %(hack_id)s);"
+        WHERE user_id = %(user_id)s and hack_id = %(hack_id)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         return results

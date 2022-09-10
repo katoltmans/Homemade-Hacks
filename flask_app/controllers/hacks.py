@@ -97,6 +97,22 @@ def add_to_favorite_list():
     response = jsonify({"message":"hack successfully favorited"})
     return response
 
+# Route to unfavorite a hack
+@app.route("/api/hacks/unfavorite", methods=["POST"])
+def delete_from_favorite_list():
+    formData = request.get_json()
+    print("FORM DATA: ", formData)
+    # Display errors if not valid
+    # Create a hack dictionary
+    data = {
+        "user_id": formData["user_id"],
+        "hack_id": formData["hack_id"]
+    }
+    # Call add hack method
+    hack.Hack.unfavorite(data)
+    response = jsonify({"message":"hack successfully unfavorited"})
+    return response
+
 # Route to check if hack is favorited
 @app.route("/api/user/<int:user_id>/favorites/<int:hack_id>")
 def favorite_status(user_id, hack_id):
@@ -116,18 +132,3 @@ def view_favorite_hacks(num):
     }
     return Response(jsonpickle.encode(hack.Hack.get_all_favorited_hacks_with_category_and_user(data)), mimetype='application/json')
 
-# Route to unfavorite a hack
-@app.route("/api/hacks/unfavorite", methods=["POST"])
-def delete_from_favorite_list():
-    formData = request.get_json()
-    print("FORM DATA: ", formData)
-    # Display errors if not valid
-    # Create a hack dictionary
-    data = {
-        "user_id": formData["user_id"],
-        "hack_id": formData["hack_id"]
-    }
-    # Call add hack method
-    hack.Hack.unfavorite(data)
-    response = jsonify({"message":"hack successfully unfavorited"})
-    return response
