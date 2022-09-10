@@ -65,6 +65,16 @@ class User:
             return False
         return cls(results[0])
     
+    # Method to check if hack is favorited by a user
+    @classmethod
+    def check_if_favorite(cls, data):
+        query = """SELECT COUNT(*) > 0 AS favorite_status FROM homemade_hacks.favorites 
+        WHERE homemade_hacks.favorites.user_id = %(user_id)s AND homemade_hacks.favorites.hack_id = %(hack_id)s;"""
+        results = connectToMySQL(cls.schema).query_db(query, data)
+        print(results)
+        is_favorite = results[0]
+        return is_favorite
+    
     # Static method to display flash messages for registration
     def validate_registration(form_data):
         # Array to hold all error messages

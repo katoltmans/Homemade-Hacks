@@ -89,7 +89,8 @@ class Hack():
         print(results)
         this_hack = cls(results[0])
         return this_hack
-        
+    
+    
     
     # Method to update a hack
     @classmethod
@@ -107,7 +108,7 @@ class Hack():
         return results
 
     
-    # Method to record favorites (?)
+    # Method to favorite a hack 
     @classmethod
     def add_favorite(cls, data):
         query = "INSERT INTO homemade_hacks.favorites (user_id, hack_id) \
@@ -116,14 +117,23 @@ class Hack():
         print(results)
         return results
     
+    # Method to unfavorite a hack 
+    @classmethod
+    def unfavorite(cls, data):
+        query = "DELETE FROM homemade_hacks.favorites \
+        WHERE user_id = %(user_id)s and hack_id = %(hack_id)s);"
+        results = connectToMySQL(cls.schema).query_db(query, data)
+        print(results)
+        return results
+    
     # Method to display favorite hacks
     @classmethod
     def get_all_favorited_hacks_with_category_and_user(cls, data):
-        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.favorites
+        query = """SELECT *, homemade_hacks.favorites.user_id AS favorites_user_id, homemade_hacks.categories.name AS category_name FROM homemade_hacks.favorites
         LEFT JOIN homemade_hacks.hacks ON homemade_hacks.favorites.hack_id = homemade_hacks.hacks.id
-        LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
-        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id 
-        WHERE users.id =  %(user_id)s;"""
+        LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id
+        LEFT JOIN homemade_hacks.users ON users.id = homemade_hacks.favorites.user_id
+        WHERE users.id = %(user_id)s;"""
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         category_query = "SELECT * FROM categories;"
@@ -133,7 +143,7 @@ class Hack():
         all_hacks = []
         # Return None if no hacks are registered
         if not results or len(results) == 0:  
-            print("no results")
+            print("no hack results")
             return ""
         else:
             
@@ -142,7 +152,7 @@ class Hack():
                 one_hack = cls(row_from_db)
                 all_hacks.append(one_hack)
         if not category_results or len(category_results) == 0:  
-            print("no results")
+            print("no category results")
             return ""
         else:
             

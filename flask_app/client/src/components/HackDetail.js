@@ -16,17 +16,28 @@ const HackDetail = (props) => {
     const navigate = useNavigate();
     const [hack, setHack] = useState({});
     const { hacks, setHacks } = props;
+    const [favorite, setFavorite] = useState(false);
     const { user, setUser } = props;
     const { id } = useParams();
 
     useEffect(() => {
         console.log(id);
         axios
-            .get("http://localhost:5000/api/hacks/view/" + id) //Remember the slash at the end of the IP address!
-            .then((res) => {
-                console.log(res.data);
-                setHack(res.data);
-            })
+            .all([
+                axios.get("http://localhost:5000/api/hacks/view/" + id),
+                axios.get(
+                    `http://localhost:5000/api/user/${user.id}/favorites/${id}`
+                ),
+            ])
+            .then(
+                axios.spread((...responses) => {
+                    console.log(responses);
+                    console.log(responses[0].data);
+                    setHack(responses[0].data);
+                    console.log(responses[1].data);
+                    setFavorite(responses[1].data.favorite_status > 0);
+                })
+            )
             .catch((err) => {
                 console.log("Error with view_one_hack request", err);
             });
@@ -53,9 +64,25 @@ const HackDetail = (props) => {
             }) //Remember the slash at the end of the IP address!
             .then((res) => {
                 console.log(res.data);
+                setFavorite(true);
             })
             .catch((err) => {
-                console.log("Error with view_one_hack request", err);
+                console.log("Error with favorite request", err);
+            });
+    };
+
+    const unfavorite = () => {
+        axios
+            .post("http://localhost:5000/api/hacks/unfavorite", {
+                user_id: user.id,
+                hack_id: hack.id,
+            }) //Remember the slash at the end of the IP address!
+            .then((res) => {
+                console.log(res.data);
+                setFavorite(false);
+            })
+            .catch((err) => {
+                console.log("Error with unfavorite request", err);
             });
     };
 
@@ -69,13 +96,23 @@ const HackDetail = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={2}>
-                        <Button
-                            variant="contained"
-                            sx={{ width: "170px" }}
-                            onClick={() => addFavorite(hack.id)}
-                        >
-                            Add To Favorites
-                        </Button>
+                        {!favorite ? (
+                            <Button
+                                variant="contained"
+                                sx={{ width: "170px" }}
+                                onClick={() => addFavorite(hack.id)}
+                            >
+                                Add To Favorites
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                sx={{ width: "170px" }}
+                                onClick={() => unfavorite(hack.id)}
+                            >
+                                Unfavorite
+                            </Button>
+                        )}
                     </Grid>
                 </Grid>
 
