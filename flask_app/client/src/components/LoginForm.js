@@ -46,7 +46,15 @@ const LoginForm = (props) => {
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 3 }}>
+        <Paper
+            elevation={2}
+            sx={{
+                p: { xs: 2, sm: 5 },
+                mx: { xs: 0, sm: 20 },
+                mt: { xs: 0, sm: 3 },
+                // backgroundColor: { xs: "#CBDEDF", sm: "#FFF" },
+            }}
+        >
             <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
                 Login
             </Typography>
