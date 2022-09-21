@@ -2,6 +2,11 @@
     text-align: left;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 /* * {
-    border: solid red 1px;
+    border: dotted red 1px;
 } */

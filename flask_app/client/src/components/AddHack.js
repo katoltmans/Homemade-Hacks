@@ -14,7 +14,10 @@ import {
     InputLabel,
     List,
     ListItem,
+    makeStyles,
 } from "@mui/material";
+
+// Photo by Kaboompics .com: https://www.pexels.com/photo/flour-in-a-jar-5765/
 
 const AddHack = (props) => {
     const navigate = useNavigate();
@@ -105,10 +108,33 @@ const AddHack = (props) => {
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 3 }}>
-            <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
-                Add A Hack
-            </Typography>
+        <Paper
+            elevation={2}
+            sx={{
+                p: { xs: 2, sm: 5 },
+                mx: { xs: 0, sm: 10, md: 20, lg: 30 },
+                mt: { xs: 0, sm: 3 },
+                // backgroundColor: { xs: "#CBDEDF", sm: "#FFF" },
+            }}
+        >
+            <Box
+                sx={{
+                    height: 250,
+                    display: "block",
+                    maxWidth: 1920,
+                    overflow: "hidden",
+                    width: "100%",
+                    backgroundImage: "url('/static/img/bakingSoda.jpg')",
+                    // backgroundAttachment: "fixed",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                }}
+            >
+                <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
+                    Add A Hack
+                </Typography>
+            </Box>
             {errors ? (
                 <List sx={{ mb: 3 }}>
                     {errors.map((error, index) => {

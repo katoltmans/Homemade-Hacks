@@ -63,6 +63,7 @@ const Navbar = (props) => {
                     sx={{
                         justifyContent: "space-evenly",
                         textAlign: "center",
+                        p: 0,
                     }}
                 >
                     <Box

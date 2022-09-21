@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
     Grid,
     Paper,
     Typography,
-    Button,
     Card,
-    CardActionArea,
     CardMedia,
     CardContent,
     List,
-    ListItem,
-    ListItemText,
-    IconButton,
-    Stack,
     Divider,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
