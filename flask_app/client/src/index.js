@@ -40,7 +40,8 @@ const App = () => {
     const theme = createTheme({
         palette: {
             background: {
-                default: "#CBDEDF",
+                default: "#eaeeed",
+                // "#CBDEDF"
             },
             primary: {
                 main: "#478d95",

@@ -15,9 +15,8 @@ import {
     List,
     ListItem,
     makeStyles,
+    Stack,
 } from "@mui/material";
-
-// Photo by Kaboompics .com: https://www.pexels.com/photo/flour-in-a-jar-5765/
 
 const AddHack = (props) => {
     const navigate = useNavigate();
@@ -111,27 +110,35 @@ const AddHack = (props) => {
         <Paper
             elevation={2}
             sx={{
-                p: { xs: 2, sm: 5 },
                 mx: { xs: 0, sm: 10, md: 20, lg: 30 },
-                mt: { xs: 0, sm: 3 },
-                // backgroundColor: { xs: "#CBDEDF", sm: "#FFF" },
+                mt: { xs: 0, sm: 2 },
+                height: { xs: "100%", md: "auto" },
             }}
         >
             <Box
                 sx={{
-                    height: 250,
+                    height: { xs: 150, sm: 250 },
                     display: "block",
                     maxWidth: 1920,
                     overflow: "hidden",
                     width: "100%",
                     backgroundImage: "url('/static/img/bakingSoda.jpg')",
-                    // backgroundAttachment: "fixed",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}
             >
-                <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
+                {/* Photo by Kaboompics .com: https://www.pexels.com/photo/flour-in-a-jar-5765/ */}
+                <Typography
+                    variant="h3"
+                    component="h1"
+                    sx={{
+                        mb: 2,
+                        color: "#FFF",
+                        textShadow: "2px 2px 6px #000000",
+                        p: { xs: 1, sm: 2 },
+                    }}
+                >
                     Add A Hack
                 </Typography>
             </Box>
@@ -146,93 +153,69 @@ const AddHack = (props) => {
                     })}
                 </List>
             ) : null}
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3}>
-                    <Grid container item spacing={1}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="title"
-                                label="Title"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">
-                                    Category
-                                </InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    name="category_id"
-                                    label="Category"
-                                    onChange={onChangeHandler}
-                                    value={hack.category_id}
-                                >
-                                    <MenuItem value={1}>Cleaning</MenuItem>
-                                    <MenuItem value={2}>Wardrobe</MenuItem>
-                                    <MenuItem value={3}>Item Repair</MenuItem>
-                                    <MenuItem value={4}>Pest Control</MenuItem>
-                                    <MenuItem value={5}>Home Repair</MenuItem>
-                                    <MenuItem value={6}>
-                                        Lawn And Garden
-                                    </MenuItem>
-                                    <MenuItem value={7}>Organization</MenuItem>
-                                    <MenuItem value={8}>Travel</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
+            <Stack spacing={2} sx={{ p: 2 }}>
+                <Grid container item spacing={1}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            fullWidth
+                            name="title"
+                            label="Title"
+                            variant="outlined"
+                            onChange={onChangeHandler}
+                        />
                     </Grid>
-                    <Grid
-                        container
-                        item
-                        spacing={1}
-                        sx={{ flexDirection: "column" }}
+                    <Grid item xs={12} sm={6}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">
+                                Category
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                name="category_id"
+                                label="Category"
+                                onChange={onChangeHandler}
+                                value={hack.category_id}
+                            >
+                                <MenuItem value={1}>Cleaning</MenuItem>
+                                <MenuItem value={2}>Wardrobe</MenuItem>
+                                <MenuItem value={3}>Item Repair</MenuItem>
+                                <MenuItem value={4}>Pest Control</MenuItem>
+                                <MenuItem value={5}>Home Repair</MenuItem>
+                                <MenuItem value={6}>Lawn And Garden</MenuItem>
+                                <MenuItem value={7}>Organization</MenuItem>
+                                <MenuItem value={8}>Travel</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+                <Grid
+                    container
+                    item
+                    spacing={0}
+                    sx={{ flexDirection: "column", mt: 3 }}
+                >
+                    <Typography
+                        variant="h5"
+                        color="inherit"
+                        component="h3"
+                        sx={{ my: 0, fontWeight: "bold" }}
                     >
-                        <Typography
-                            variant="h6"
-                            color="inherit"
-                            component="div"
-                            sx={{ ml: 3 }}
-                        >
-                            <h3>Supplies Names And Quantities</h3>
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            color="text.secondary"
-                            component="div"
-                            sx={{ ml: 3 }}
-                        >
-                            <p>
-                                Please enter supply names and related quantity:
-                            </p>
-                        </Typography>
-                    </Grid>
-                    {/* <Grid container item spacing={3}> */}
-                    {/* <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                name="supplies"
-                                label="Supply"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                name="supplies"
-                                label="Quantity"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid> */}
-
+                        Supplies Names And Quantities
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        component="p"
+                        sx={{ mt: 0 }}
+                    >
+                        Please enter supply names and related quantity:
+                    </Typography>
+                </Grid>
+                <Grid container rowSpacing={1}>
                     {supplies.map((supply_item, index) => {
                         return (
-                            <Grid container item spacing={3} key={index}>
+                            <Grid container item spacing={1} key={index}>
                                 <Grid item xs={12} md={6}>
                                     <TextField
                                         fullWidth
@@ -269,48 +252,34 @@ const AddHack = (props) => {
                         );
                     })}
                 </Grid>
+                <Grid container item>
+                    <Button variant="contained" onClick={addSuppliesHandler}>
+                        Add Supplies
+                    </Button>
+                </Grid>
 
-                <Button
-                    variant="contained"
-                    sx={{ ml: 3, mt: 1 }}
-                    onClick={addSuppliesHandler}
-                >
-                    Add Supplies
-                </Button>
-                {/* </Grid> */}
                 <Grid
                     container
-                    item
-                    spacing={1}
-                    sx={{ flexDirection: "column" }}
+                    spacing={0}
+                    sx={{ flexDirection: "column", mt: 3 }}
                 >
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         color="inherit"
-                        component="div"
-                        sx={{ ml: 3 }}
+                        component="h3"
+                        sx={{ mt: 5, fontWeight: "bold" }}
                     >
-                        <h3>Instructions</h3>
+                        Instructions
                     </Typography>
                     <Typography
-                        variant="h6"
+                        variant="body1"
                         color="text.secondary"
-                        component="div"
-                        sx={{ ml: 3 }}
+                        component="p"
                     >
-                        <p>Please enter step by step instructions:</p>
+                        Please enter step by step instructions:
                     </Typography>
                 </Grid>
-                <Grid container item spacing={3}>
-                    {/* <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            name="instructions"
-                            label="Instruction step"
-                            variant="outlined"
-                            onChange={onChangeHandler}
-                        />
-                    </Grid> */}
+                <Grid container rowSpacing={1}>
                     {instructions.map((step, index) => {
                         return (
                             <Grid item xs={12} key={index}>
@@ -327,22 +296,22 @@ const AddHack = (props) => {
                             </Grid>
                         );
                     })}
-                    <Button
-                        variant="contained"
-                        sx={{ ml: 3, mt: 1 }}
-                        onClick={addInstructionHandler}
-                    >
+                </Grid>
+                <Grid container item>
+                    <Button variant="contained" onClick={addInstructionHandler}>
                         Add Step
                     </Button>
                 </Grid>
-                <Button
-                    variant="contained"
-                    sx={{ mt: 5 }}
-                    onClick={onSubmitHandler}
-                >
-                    Submit
-                </Button>
-            </Box>
+                <Stack sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <Button
+                        variant="contained"
+                        sx={{ my: 5, width: "25%" }}
+                        onClick={onSubmitHandler}
+                    >
+                        Submit
+                    </Button>
+                </Stack>
+            </Stack>
         </Paper>
     );
 };

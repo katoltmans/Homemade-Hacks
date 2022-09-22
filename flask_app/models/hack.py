@@ -185,7 +185,7 @@ class Hack():
         # Check to make sure species has at least 5 characters
         if len(form_data['title']) < 2:
             print("title name too short")
-            errorMessages.append("Please enter a title that contains at least 2 characters.")
+            errorMessages.append("Title must be at least 2 characters long.")
         # Check to make sure location has at least 2 characters
         if len(str(form_data['category_id'])) < 1:
             print("category not selected")
@@ -193,9 +193,9 @@ class Hack():
         # Check to make sure location has at least 2 characters
         if len(form_data['supplies']) < 20 :
             print("supplies too short")
-            errorMessages.append("Please enter the supplies necessary for this hack.")
+            errorMessages.append("Please enter the supplies (with quantity) necessary for this hack.")
         # Check to make sure location has at least 2 characters
         if len(form_data['instructions']) < 10:
             print("instructions too short")
-            errorMessages.append("Please provide instructions for this hack. instructions must be at least 10 characters long.")
+            errorMessages.append("Instructions must be at least 10 characters long.")
         return errorMessages
