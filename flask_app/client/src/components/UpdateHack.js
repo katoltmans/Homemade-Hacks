@@ -15,6 +15,7 @@ import {
     List,
     ListItem,
     Stack,
+    Skeleton,
 } from "@mui/material";
 
 const UpdateHack = (props) => {
@@ -25,6 +26,7 @@ const UpdateHack = (props) => {
     const [supplies, setSupplies] = useState([]);
     const [instructions, setInstructions] = useState([]);
     const [errors, setErrors] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // USeEffect to request and autofill data
     useEffect(() => {
@@ -34,6 +36,7 @@ const UpdateHack = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setHack(res.data);
+                setLoading(false);
             })
             .catch((err) => {
                 console.log("Error with view_one_hack request", err);
@@ -158,168 +161,204 @@ const UpdateHack = (props) => {
                     })}
                 </List>
             ) : null}
-            <Stack spacing={2} sx={{ p: 2 }}>
-                <Grid container item spacing={1}>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            fullWidth
-                            name="title"
-                            label="Title"
-                            // defaultValue={hack.title}
-                            variant="outlined"
-                            onChange={onChangeHandler}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">
-                                Category
-                            </InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                name="category_id"
-                                label="Category"
-                                // defaultValue={hack.category_id}
-                                onChange={onChangeHandler}
-                                // value={hack.category_id}
-                            >
-                                <MenuItem value={1}>Cleaning</MenuItem>
-                                <MenuItem value={2}>Wardrobe</MenuItem>
-                                <MenuItem value={3}>Item Repair</MenuItem>
-                                <MenuItem value={4}>Pest Control</MenuItem>
-                                <MenuItem value={5}>Home Repair</MenuItem>
-                                <MenuItem value={6}>Lawn And Garden</MenuItem>
-                                <MenuItem value={7}>Organization</MenuItem>
-                                <MenuItem value={8}>Travel</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </Grid>
-                <Grid
-                    container
-                    item
-                    spacing={0}
-                    sx={{ flexDirection: "column", mt: 3 }}
-                >
-                    <Typography
-                        variant="h5"
-                        color="inherit"
-                        component="h3"
-                        sx={{ my: 0, fontWeight: "bold" }}
-                    >
-                        Supplies Names And Quantities
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        component="p"
-                        sx={{ mt: 0 }}
-                    >
-                        Please enter supply names and related quantity:
-                    </Typography>
-                </Grid>
-                <Grid container rowSpacing={1}>
-                    {supplies.map((supply_item, index) => {
-                        return (
-                            <Grid container item spacing={1} key={index}>
-                                <Grid item xs={12} md={6}>
-                                    <TextField
-                                        fullWidth
-                                        name="supplies"
-                                        // defaultValue={supply_item.supply_name}
-                                        label="Supply Name"
-                                        variant="outlined"
-                                        onChange={(e) =>
-                                            onChangeHandlerSupplies(
-                                                e,
-                                                index,
-                                                "supply_name"
-                                            )
-                                        }
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        fullWidth
-                                        name="supplies"
-                                        // defaultValue={supply_item.quantity}
-                                        label="Quantity"
-                                        variant="outlined"
-                                        onChange={(e) =>
-                                            onChangeHandlerSupplies(
-                                                e,
-                                                index,
-                                                "quantity"
-                                            )
-                                        }
-                                    />
-                                </Grid>
-                            </Grid>
-                        );
-                    })}
-                </Grid>
-                <Grid container item>
-                    <Button variant="contained" onClick={addSuppliesHandler}>
-                        Add Supplies
-                    </Button>
-                </Grid>
-
-                <Grid
-                    container
-                    spacing={0}
-                    sx={{ flexDirection: "column", mt: 3 }}
-                >
-                    <Typography
-                        variant="h5"
-                        color="inherit"
-                        component="h3"
-                        sx={{ mt: 5, fontWeight: "bold" }}
-                    >
-                        Instructions
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        component="p"
-                    >
-                        Please enter step by step instructions:
-                    </Typography>
-                </Grid>
-                <Grid container rowSpacing={1}>
-                    {instructions.map((step, index) => {
-                        return (
-                            <Grid item xs={12} key={index}>
+            {loading ? (
+                <Box sx={{ height: "100%" }}>
+                    <p>Loading...</p>
+                </Box>
+            ) : (
+                <>
+                    <Stack spacing={2} sx={{ p: 2 }}>
+                        <Grid container item spacing={1}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth
-                                    name="instructions"
-                                    value={step}
-                                    label="Instruction step"
-                                    // defaultValue={hack.instructions}
+                                    name="title"
+                                    label="Title"
+                                    defaultValue={hack.title}
                                     variant="outlined"
-                                    onChange={(e) =>
-                                        onChangeHandlerInstructions(e, index)
-                                    }
+                                    onChange={onChangeHandler}
                                 />
                             </Grid>
-                        );
-                    })}
-                </Grid>
-                <Grid container item>
-                    <Button variant="contained" onClick={addInstructionHandler}>
-                        Add Step
-                    </Button>
-                </Grid>
-                <Stack sx={{ display: "flex", alignItems: "flex-end" }}>
-                    <Button
-                        variant="contained"
-                        sx={{ my: 5, width: "25%" }}
-                        onClick={onSubmitHandler}
-                    >
-                        Submit
-                    </Button>
-                </Stack>
-            </Stack>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">
+                                        Category
+                                    </InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        name="category_id"
+                                        label="Category"
+                                        defaultValue={hack.category_id}
+                                        onChange={onChangeHandler}
+                                        // value={hack.category_id}
+                                    >
+                                        <MenuItem value={1}>Cleaning</MenuItem>
+                                        <MenuItem value={2}>Wardrobe</MenuItem>
+                                        <MenuItem value={3}>
+                                            Item Repair
+                                        </MenuItem>
+                                        <MenuItem value={4}>
+                                            Pest Control
+                                        </MenuItem>
+                                        <MenuItem value={5}>
+                                            Home Repair
+                                        </MenuItem>
+                                        <MenuItem value={6}>
+                                            Lawn And Garden
+                                        </MenuItem>
+                                        <MenuItem value={7}>
+                                            Organization
+                                        </MenuItem>
+                                        <MenuItem value={8}>Travel</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            container
+                            item
+                            spacing={0}
+                            sx={{ flexDirection: "column", mt: 3 }}
+                        >
+                            <Typography
+                                variant="h5"
+                                color="inherit"
+                                component="h3"
+                                sx={{ my: 0, fontWeight: "bold" }}
+                            >
+                                Supplies Names And Quantities
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                component="p"
+                                sx={{ mt: 0 }}
+                            >
+                                Please enter supply names and related quantity:
+                            </Typography>
+                        </Grid>
+                        <Grid container rowSpacing={1}>
+                            {supplies.map((supply_item, index) => {
+                                return (
+                                    <Grid
+                                        container
+                                        item
+                                        spacing={1}
+                                        key={index}
+                                    >
+                                        <Grid item xs={12} md={6}>
+                                            <TextField
+                                                fullWidth
+                                                name="supplies"
+                                                defaultValue={
+                                                    supply_item.supply_name
+                                                }
+                                                label="Supply Name"
+                                                variant="outlined"
+                                                onChange={(e) =>
+                                                    onChangeHandlerSupplies(
+                                                        e,
+                                                        index,
+                                                        "supply_name"
+                                                    )
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                fullWidth
+                                                name="supplies"
+                                                defaultValue={
+                                                    supply_item.quantity
+                                                }
+                                                label="Quantity"
+                                                variant="outlined"
+                                                onChange={(e) =>
+                                                    onChangeHandlerSupplies(
+                                                        e,
+                                                        index,
+                                                        "quantity"
+                                                    )
+                                                }
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                );
+                            })}
+                        </Grid>
+                        <Grid container item>
+                            <Button
+                                variant="contained"
+                                onClick={addSuppliesHandler}
+                            >
+                                Add Supplies
+                            </Button>
+                        </Grid>
+
+                        <Grid
+                            container
+                            spacing={0}
+                            sx={{ flexDirection: "column", mt: 3 }}
+                        >
+                            <Typography
+                                variant="h5"
+                                color="inherit"
+                                component="h3"
+                                sx={{ mt: 5, fontWeight: "bold" }}
+                            >
+                                Instructions
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                component="p"
+                            >
+                                Please enter step by step instructions:
+                            </Typography>
+                        </Grid>
+                        <Grid container rowSpacing={1}>
+                            {instructions.map((step, index) => {
+                                return (
+                                    <Grid item xs={12} key={index}>
+                                        <TextField
+                                            fullWidth
+                                            name="instructions"
+                                            value={step}
+                                            label="Instruction step"
+                                            defaultValue={hack.instructions}
+                                            variant="outlined"
+                                            onChange={(e) =>
+                                                onChangeHandlerInstructions(
+                                                    e,
+                                                    index
+                                                )
+                                            }
+                                        />
+                                    </Grid>
+                                );
+                            })}
+                        </Grid>
+                        <Grid container item>
+                            <Button
+                                variant="contained"
+                                onClick={addInstructionHandler}
+                            >
+                                Add Step
+                            </Button>
+                        </Grid>
+                        <Stack sx={{ display: "flex", alignItems: "flex-end" }}>
+                            <Button
+                                variant="contained"
+                                sx={{ my: 5, width: "25%" }}
+                                onClick={onSubmitHandler}
+                            >
+                                Submit
+                            </Button>
+                        </Stack>
+                    </Stack>
+                </>
+            )}
         </Paper>
     );
 };
