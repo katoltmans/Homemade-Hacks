@@ -40,11 +40,11 @@ const AddHack = (props) => {
         });
     };
 
+    // Handlers to add supplies/instructions for later parsing into list
     useEffect(() => {
         console.log("INSTRUCTIONS", instructions);
     }, [instructions]);
 
-    // Handlers to add supplies/instructions for later parsing into list
     const addSuppliesHandler = () => {
         setSupplies([...supplies, { supply_name: "", quantity: "" }]);
     };
@@ -97,10 +97,7 @@ const AddHack = (props) => {
                 }
             })
             .catch((err) => {
-                console.log(
-                    "Error with post registration request (client)",
-                    err
-                );
+                console.log("Error with post Add a Hack request (client)", err);
                 setErrors(err.response.data?.error?.errors);
                 console.log("ERROR:", errors);
             });
