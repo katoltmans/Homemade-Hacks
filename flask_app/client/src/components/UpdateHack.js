@@ -15,7 +15,6 @@ import {
     List,
     ListItem,
     Stack,
-    Skeleton,
 } from "@mui/material";
 
 const UpdateHack = (props) => {
@@ -324,9 +323,9 @@ const UpdateHack = (props) => {
                                         <TextField
                                             fullWidth
                                             name="instructions"
-                                            value={step}
+                                            value={hack.instructions}
                                             label="Instruction step"
-                                            defaultValue={hack.instructions}
+                                            // defaultValue={}
                                             variant="outlined"
                                             onChange={(e) =>
                                                 onChangeHandlerInstructions(
