@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-    Button,
-    Paper,
-    Typography,
-    Link,
-    Grid,
-    List,
-    ListItem,
-    Stack,
-} from "@mui/material";
+import { Button, Paper, Typography, Link, Grid, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 
 const HackDetail = (props) => {
@@ -18,6 +9,7 @@ const HackDetail = (props) => {
     const [hack, setHack] = useState({});
     const { hacks, setHacks } = props;
     const [favorite, setFavorite] = useState(false);
+    const [categoryImg, setCategoryImg] = useState();
     const { user, setUser } = props;
     const { id } = useParams();
 
@@ -37,6 +29,7 @@ const HackDetail = (props) => {
                     setHack(responses[0].data);
                     console.log(responses[1].data);
                     setFavorite(responses[1].data.favorite_status > 0);
+                    setCategoryImg(responses[0].data.cat_img);
                 })
             )
             .catch((err) => {
@@ -98,12 +91,12 @@ const HackDetail = (props) => {
         >
             <Box
                 sx={{
-                    height: { xs: 150, sm: 250 },
+                    height: { xs: 100, sm: 150 },
                     display: "block",
                     maxWidth: 1920,
                     overflow: "hidden",
                     width: "100%",
-                    backgroundImage: "url('/static/img/bakingSoda.jpg')",
+                    backgroundImage: `url(${categoryImg})`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -193,7 +186,7 @@ const HackDetail = (props) => {
                             component="h3"
                             sx={{ my: 0 }}
                         >
-                            <h3>Supplies Needed</h3>
+                            Supplies Needed
                         </Typography>
                         <Typography
                             variant="body1"
