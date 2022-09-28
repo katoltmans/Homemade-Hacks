@@ -100,6 +100,7 @@ const HackDetail = (props) => {
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
+                    // opacity: "0.6",
                 }}
             >
                 {/* Photo by Kaboompics .com: https://www.pexels.com/photo/flour-in-a-jar-5765/ */}
@@ -111,6 +112,7 @@ const HackDetail = (props) => {
                         color: "#FFF",
                         textShadow: "2px 2px 6px #000000",
                         p: { xs: 1, sm: 2 },
+                        // backgroundColor: "#478D95",
                     }}
                 >
                     {hack.title}
@@ -122,12 +124,22 @@ const HackDetail = (props) => {
                     <Grid
                         container
                         direction="row"
-                        spacing={2}
-                        rowSpacing={2}
+                        rowSpacing={{ xs: 2 }}
                         columnSpacing={{ xs: 1 }}
                         sx={{ display: "flex" }}
                     >
-                        <Grid item xs={12} sm={6}>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={9}
+                            sx={{
+                                display: "flex",
+                                justifyContent: {
+                                    xs: "center",
+                                    sm: "flex-start",
+                                },
+                            }}
+                        >
                             <Button variant="contained">
                                 <Link
                                     href={`/hacks/update/${hack.id}`}
@@ -138,7 +150,6 @@ const HackDetail = (props) => {
                                     Update Hack
                                 </Link>
                             </Button>
-                            <Grid item xs={12} sm={3}></Grid>
                             <Button
                                 variant="contained"
                                 sx={{ width: "170px" }}
@@ -150,7 +161,7 @@ const HackDetail = (props) => {
                         <Grid
                             item
                             xs={12}
-                            sm={2}
+                            sm={3}
                             sx={{ alignSelf: "flex-end" }}
                         >
                             {!favorite ? (
@@ -184,17 +195,17 @@ const HackDetail = (props) => {
                             variant="h6"
                             color="inherit"
                             component="h3"
-                            sx={{ my: 0 }}
+                            sx={{ my: 0, fontWeight: "bold" }}
                         >
                             Supplies Needed
                         </Typography>
                         <Typography
-                            variant="body1"
+                            variant="body2"
                             color="#478D95"
                             component="p"
-                            sx={{ fontWeight: "bold", mt: 0 }}
+                            sx={{ mt: 0 }}
                         >
-                            Supply Name (Quantity):
+                            Supply Name (Quantity)
                         </Typography>
                     </Grid>
                 </Stack>
@@ -210,8 +221,13 @@ const HackDetail = (props) => {
                           })
                         : null}
                 </ul>
-                <Typography variant="h6" color="inherit" component="div">
-                    <h3>Instructions</h3>
+                <Typography
+                    variant="h5"
+                    color="inherit"
+                    component="h3"
+                    sx={{ fontWeight: "bold" }}
+                >
+                    Instructions
                 </Typography>
                 <ul>
                     {!!hack?.instructions
