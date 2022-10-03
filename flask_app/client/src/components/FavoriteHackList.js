@@ -64,58 +64,76 @@ const FavoriteHackList = (props) => {
     };
 
     return (
-        <Paper elevation={2} sx={{ p: 5, m: 3 }}>
-            <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
-                Favorite Hacks
-            </Typography>
-            <Grid container spacing={5}>
-                {categories.map((categoryData, index) => {
-                    return (
-                        <Grid item xs={12} sm={4} lg={3} key={index}>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={categoryData.cat_img}
-                                    alt={categoryData.name}
-                                />
-                                <CardContent>
-                                    <Typography
-                                        gutterBottom
-                                        variant="h5"
-                                        component="div"
-                                    >
-                                        {categoryData.name}
-                                    </Typography>
-                                    <List>
-                                        {hacks
-                                            .filter(
-                                                (hack) =>
-                                                    hack.category_id ===
-                                                    categoryData.id
-                                            )
-                                            .sort(sortList)
-                                            .map((hackData, index) => {
-                                                return (
-                                                    <div key={index}>
-                                                        <Link
-                                                            to={`/hacks/view/${hackData.id}`}
-                                                            underline="hover"
-                                                        >
-                                                            {hackData.title}
-                                                        </Link>
-                                                        <Divider />
-                                                    </div>
-                                                );
-                                            })}
-                                    </List>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        </Paper>
+        <>
+            {!!hacks && hacks.length > 0 ? (
+                <Paper elevation={2} sx={{ p: 5, m: 3 }}>
+                    <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
+                        Favorite Hacks
+                    </Typography>
+                    <Grid container spacing={5}>
+                        {categories.map((categoryData, index) => {
+                            return (
+                                <Grid item xs={12} sm={4} lg={3} key={index}>
+                                    <Card sx={{ maxWidth: 345 }}>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image={categoryData.cat_img}
+                                            alt={categoryData.name}
+                                        />
+                                        <CardContent>
+                                            <Typography
+                                                gutterBottom
+                                                variant="h5"
+                                                component="div"
+                                            >
+                                                {categoryData.name}
+                                            </Typography>
+                                            <List>
+                                                {hacks
+                                                    .filter(
+                                                        (hack) =>
+                                                            hack.category_id ===
+                                                            categoryData.id
+                                                    )
+                                                    .sort(sortList)
+                                                    .map((hackData, index) => {
+                                                        return (
+                                                            <div key={index}>
+                                                                <Link
+                                                                    to={`/hacks/view/${hackData.id}`}
+                                                                    underline="hover"
+                                                                >
+                                                                    {
+                                                                        hackData.title
+                                                                    }
+                                                                </Link>
+                                                                <Divider />
+                                                            </div>
+                                                        );
+                                                    })}
+                                            </List>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            );
+                        })}
+                    </Grid>
+                </Paper>
+            ) : (
+                <Paper
+                    elevation={2}
+                    sx={{
+                        p: 5,
+                        m: 3,
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    <h2> Please favorite a hack to display</h2>
+                </Paper>
+            )}
+        </>
     );
 };
 
