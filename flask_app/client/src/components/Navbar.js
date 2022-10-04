@@ -57,7 +57,7 @@ const Navbar = (props) => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Box sx={{ mx: 2 }}>
                 <Toolbar
                     disableGutters
                     sx={{
@@ -79,11 +79,11 @@ const Navbar = (props) => {
                             }}
                         />
                         <Typography
-                            variant="h6"
+                            variant="h3"
                             noWrap
                             color="inherit"
-                            component="div"
-                            sx={{ mr: 3 }}
+                            component="h1"
+                            sx={{ mr: 3, fontWeight: "bold" }}
                         >
                             <Link
                                 component={RouterLink}
@@ -91,7 +91,7 @@ const Navbar = (props) => {
                                 color="inherit"
                                 underline="none"
                             >
-                                <h1>Homemade Hacks</h1>
+                                Homemade Hacks
                             </Link>
                         </Typography>
                     </Box>
@@ -137,7 +137,7 @@ const Navbar = (props) => {
                                     <Typography
                                         variant="h6"
                                         color="inherit"
-                                        sx={{ ml: 5 }}
+                                        sx={{ ml: 2 }}
                                     >
                                         <Link
                                             component={RouterLink}
@@ -155,45 +155,37 @@ const Navbar = (props) => {
                                     <Button
                                         variant="contained"
                                         onClick={logoutHandler}
-                                        sx={{ ml: 3 }}
+                                        sx={{ ml: 2 }}
                                     >
                                         Logout
                                     </Button>
                                 </MenuItem>
                             ) : (
                                 <MenuItem onClick={handleCloseNavMenu}>
-                                    <Typography
-                                        variant="h6"
-                                        color="inherit"
-                                        sx={{ ml: 5 }}
-                                    >
+                                    <Button variant="contained" sx={{ ml: 2 }}>
                                         <Link
                                             component={RouterLink}
                                             to="/login"
                                             underline="none"
-                                            sx={menuStyles}
+                                            sx={{ color: "#FFF" }}
                                         >
                                             Login
                                         </Link>
-                                    </Typography>
+                                    </Button>
                                 </MenuItem>
                             )}
                             {!!user?.firstName ? null : (
                                 <MenuItem onClick={handleCloseNavMenu}>
-                                    <Typography
-                                        variant="h6"
-                                        color="inherit"
-                                        sx={{ ml: 5 }}
-                                    >
+                                    <Button variant="contained" sx={{ ml: 2 }}>
                                         <Link
                                             component={RouterLink}
                                             to="/register"
                                             underline="none"
-                                            sx={menuStyles}
+                                            sx={{ color: "#FFF" }}
                                         >
                                             Register
                                         </Link>
-                                    </Typography>
+                                    </Button>
                                 </MenuItem>
                             )}
                         </Menu>
@@ -317,7 +309,7 @@ const Navbar = (props) => {
                         </Box>
                     )}
                 </Toolbar>
-            </Container>
+            </Box>
         </AppBar>
     );
 };
