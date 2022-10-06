@@ -74,12 +74,12 @@ const Navbar = (props) => {
                     >
                         <CountertopsIcon
                             sx={{
-                                fontSize: "45px",
+                                fontSize: "40px",
                                 mr: 1,
                             }}
                         />
                         <Typography
-                            variant="h3"
+                            variant="h4"
                             noWrap
                             color="inherit"
                             component="h1"
@@ -264,16 +264,16 @@ const Navbar = (props) => {
                                 sx={{
                                     display: { xs: "none", md: "flex" },
                                     pt: 1,
-                                    fontSize: 30,
+                                    fontSize: 14,
                                     fontWeight: "bold",
                                 }}
                             >
-                                Welcome {user.firstName}
+                                Welcome, {user.firstName}
                             </Typography>
                             <Button
                                 variant="contained"
                                 onClick={logoutHandler}
-                                sx={{ ml: 3 }}
+                                sx={{ ml: 2, p: 1 }}
                             >
                                 Logout
                             </Button>
