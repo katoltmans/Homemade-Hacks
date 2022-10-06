@@ -68,11 +68,17 @@ const HacksList = () => {
                                     <Typography
                                         gutterBottom
                                         variant="h5"
-                                        component="div"
+                                        component="h5"
                                     >
                                         {categoryData.name}
                                     </Typography>
-                                    <List>
+                                    <List
+                                        sx={{
+                                            overflowY: "auto",
+                                            scrollbarWidth: "none",
+                                            height: "150px",
+                                        }}
+                                    >
                                         {!!hacks
                                             ? hacks
                                                   .filter(
