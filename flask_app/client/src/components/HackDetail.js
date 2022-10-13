@@ -11,6 +11,7 @@ const HackDetail = (props) => {
     const [favorite, setFavorite] = useState(false);
     const [categoryImg, setCategoryImg] = useState();
     const { user, setUser } = props;
+    // const [loggedIn, setLoggedIn] = useParams();
     const { id } = useParams();
 
     useEffect(() => {
@@ -91,7 +92,7 @@ const HackDetail = (props) => {
         >
             <Box
                 sx={{
-                    height: { xs: 100, sm: 150 },
+                    height: { xs: 100, sm: 200 },
                     display: "block",
                     maxWidth: 1920,
                     overflow: "hidden",

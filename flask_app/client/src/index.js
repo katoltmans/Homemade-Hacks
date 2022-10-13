@@ -12,6 +12,7 @@ import HackDetail from "./components/HackDetail";
 import UpdateHack from "./components/UpdateHack";
 import WelcomePage from "./components/WelcomePage";
 import FavoriteHackList from "./components/FavoriteHackList";
+import CategoryPage from "./components/CategoryPage";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
 
@@ -119,6 +120,15 @@ const App = () => {
                                 path="/hacks/update/:id"
                                 element={
                                     <UpdateHack user={user} setUser={setUser} />
+                                }
+                            />
+                            <Route
+                                path="/hacks/category/:id"
+                                element={
+                                    <CategoryPage
+                                        hacks={hacks}
+                                        setHacks={setHacks}
+                                    />
                                 }
                             />
                         </Routes>
