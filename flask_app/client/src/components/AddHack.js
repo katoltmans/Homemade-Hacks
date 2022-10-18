@@ -31,6 +31,7 @@ const AddHack = (props) => {
     const [instructions, setInstructions] = useState([]);
     const [errors, setErrors] = useState([]);
 
+    // Handler to update hack on input change
     const onChangeHandler = (e) => {
         console.log(e.target.name);
         setHack({
@@ -39,18 +40,7 @@ const AddHack = (props) => {
         });
     };
 
-    // Handlers to add supplies/instructions for later parsing into list
-    useEffect(() => {
-        console.log("INSTRUCTIONS", instructions);
-    }, [instructions]);
-
-    const addSuppliesHandler = () => {
-        setSupplies([...supplies, { supply_name: "", quantity: "" }]);
-    };
-
-    const addInstructionHandler = () => {
-        setInstructions([...instructions, ""]);
-    };
+    // Handler to update supplies on input change
     const onChangeHandlerSupplies = (e, index, type) => {
         console.log(e.target.name);
         console.log(e.target.value);
@@ -59,6 +49,7 @@ const AddHack = (props) => {
         setSupplies(newSupplies);
     };
 
+    // Handler to update instructions on input change
     const onChangeHandlerInstructions = (e, index) => {
         console.log(e.target.name);
         console.log(e.target.value);
@@ -67,11 +58,25 @@ const AddHack = (props) => {
         setInstructions(newInstructions);
     };
 
+    // Handlers to add supplies/instructions for later parsing into list
+    useEffect(() => {
+        console.log("INSTRUCTIONS", instructions);
+    }, [instructions]);
+
+    // Handler to add supplies and quantities to supplies object when field is added
+    const addSuppliesHandler = () => {
+        setSupplies([...supplies, { supply_name: "", quantity: "" }]);
+    };
+
+    // Handler to add instructions to instructions array when field is added
+    const addInstructionHandler = () => {
+        setInstructions([...instructions, ""]);
+    };
+
     // Handler to post hack with hack details connected to creator's user ID
     const onSubmitHandler = (e) => {
         console.log("submitting hack");
         e.preventDefault();
-        //make axios post request
         console.log(user);
 
         // Create hack object
