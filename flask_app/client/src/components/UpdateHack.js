@@ -16,6 +16,7 @@ import {
     ListItem,
     Stack,
 } from "@mui/material";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const UpdateHack = (props) => {
     const navigate = useNavigate();
@@ -35,6 +36,8 @@ const UpdateHack = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setHack(res.data);
+                setSupplies(JSON.parse(res.data.supplies));
+                setInstructions(JSON.parse(res.data.instructions));
                 setLoading(false);
             })
             .catch((err) => {
@@ -51,10 +54,6 @@ const UpdateHack = (props) => {
     };
 
     // Handlers to add supplies/instructions for later parsing into list
-    useEffect(() => {
-        console.log("INSTRUCTIONS", instructions);
-    }, [instructions]);
-
     const addSuppliesHandler = () => {
         setSupplies([...supplies, { supply_name: "", quantity: "" }]);
     };
@@ -111,6 +110,14 @@ const UpdateHack = (props) => {
                 setErrors(err.response.data?.error?.errors);
                 console.log("ERROR:", errors);
             });
+    };
+
+    // const deleteRowHandler = (index) => {
+    //     setInstructions(instructions.filter((elem, i) => i !== index));
+    // };
+
+    const deleteRowHandler = (index, setFunction, elemArray) => {
+        setFunction(elemArray.filter((elem, i) => i !== index));
     };
 
     return (
@@ -237,55 +244,61 @@ const UpdateHack = (props) => {
                                 Please enter supply names and related quantity:
                             </Typography>
                         </Grid>
-                        <Grid container rowSpacing={1}>
-                            {supplies.map((supply_item, index) => {
-                                return (
-                                    <Grid
-                                        container
-                                        item
-                                        spacing={1}
-                                        key={index}
-                                    >
-                                        <Grid item xs={12} md={6}>
-                                            <TextField
-                                                fullWidth
-                                                name="supplies"
-                                                defaultValue={
-                                                    supply_item.supply_name
-                                                }
-                                                label="Supply Name"
-                                                variant="outlined"
-                                                onChange={(e) =>
-                                                    onChangeHandlerSupplies(
-                                                        e,
-                                                        index,
-                                                        "supply_name"
-                                                    )
-                                                }
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                fullWidth
-                                                name="supplies"
-                                                defaultValue={
-                                                    supply_item.quantity
-                                                }
-                                                label="Quantity"
-                                                variant="outlined"
-                                                onChange={(e) =>
-                                                    onChangeHandlerSupplies(
-                                                        e,
-                                                        index,
-                                                        "quantity"
-                                                    )
-                                                }
-                                            />
-                                        </Grid>
+
+                        {supplies.map((supply_item, index) => {
+                            return (
+                                <Grid container rowSpacing={1} key={index}>
+                                    <Grid item xs={11} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            name="supplies"
+                                            defaultValue={
+                                                supply_item.supply_name
+                                            }
+                                            label="Supply Name"
+                                            variant="outlined"
+                                            onChange={(e) =>
+                                                onChangeHandlerSupplies(
+                                                    e,
+                                                    index,
+                                                    "supply_name"
+                                                )
+                                            }
+                                        />
                                     </Grid>
-                                );
-                            })}
-                        </Grid>
+                                    <Grid item xs={5}>
+                                        <TextField
+                                            fullWidth
+                                            name="supplies"
+                                            defaultValue={supply_item.quantity}
+                                            label="Quantity"
+                                            variant="outlined"
+                                            onChange={(e) =>
+                                                onChangeHandlerSupplies(
+                                                    e,
+                                                    index,
+                                                    "quantity"
+                                                )
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <Button
+                                            sx={{ color: "#C64040" }}
+                                            onClick={() =>
+                                                deleteRowHandler(
+                                                    index,
+                                                    setSupplies,
+                                                    supplies
+                                                )
+                                            }
+                                        >
+                                            <HighlightOffIcon />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            );
+                        })}
                         <Grid container item>
                             <Button
                                 variant="contained"
@@ -316,14 +329,15 @@ const UpdateHack = (props) => {
                                 Please enter step by step instructions:
                             </Typography>
                         </Grid>
-                        <Grid container rowSpacing={1}>
-                            {instructions.map((step, index) => {
-                                return (
-                                    <Grid item xs={12} key={index}>
+
+                        {instructions.map((step, index) => {
+                            return (
+                                <Grid container rowSpacing={1} key={index}>
+                                    <Grid item xs={11}>
                                         <TextField
                                             fullWidth
                                             name="instructions"
-                                            value={hack.instructions}
+                                            value={step}
                                             label="Instruction step"
                                             // defaultValue={}
                                             variant="outlined"
@@ -335,9 +349,24 @@ const UpdateHack = (props) => {
                                             }
                                         />
                                     </Grid>
-                                );
-                            })}
-                        </Grid>
+                                    <Grid item xs={1}>
+                                        <Button
+                                            sx={{ color: "#C64040" }}
+                                            onClick={() =>
+                                                deleteRowHandler(
+                                                    index,
+                                                    setInstructions,
+                                                    instructions
+                                                )
+                                            }
+                                        >
+                                            <HighlightOffIcon />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            );
+                        })}
+
                         <Grid container item>
                             <Button
                                 variant="contained"

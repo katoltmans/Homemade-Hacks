@@ -39,8 +39,8 @@ class Hack():
     @classmethod
     def get_all_hacks_with_category_and_user(cls):
         query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
-	LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
-    LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id;"""
+	    LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
+        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id;"""
         results = connectToMySQL(cls.schema).query_db(query)
         #print(results)
         category_query = "SELECT * FROM categories;"
@@ -69,6 +69,30 @@ class Hack():
             return results_object
         else:
             
+            for row_from_db in results:
+                
+                one_hack = cls(row_from_db)
+                all_hacks.append(one_hack)
+        
+        results_object["all_hacks"] = all_hacks
+        
+        return results_object
+    
+    # Method to get all hacks of a particular category
+    @classmethod
+    def get_all_hacks_of_one_category(cls, data):
+        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
+	    LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
+        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id
+        WHERE homemade_hacks.hacks.category_id = %(category_id)s; """
+        results = connectToMySQL(cls.schema).query_db(query, data)
+        results_object = {}
+        all_hacks = []
+        # Return none if no hacks are assigned to category
+        if not results or len(results) == 0:  
+            print("no results")
+            return results_object
+        else:
             for row_from_db in results:
                 
                 one_hack = cls(row_from_db)

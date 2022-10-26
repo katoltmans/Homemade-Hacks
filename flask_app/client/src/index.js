@@ -123,7 +123,7 @@ const App = () => {
                                 }
                             />
                             <Route
-                                path="/hacks/category/:id"
+                                path="/hacks/category/:category_id"
                                 element={
                                     <CategoryPage
                                         hacks={hacks}

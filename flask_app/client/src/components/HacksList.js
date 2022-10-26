@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import {
     Grid,
     Paper,
@@ -10,8 +10,9 @@ import {
     CardContent,
     List,
     Divider,
+    Link,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import "../components/HackListStyles.css";
 
 const HacksList = () => {
     const [hacks, setHacks] = useState([]);
@@ -57,21 +58,38 @@ const HacksList = () => {
                 {categories.map((categoryData, index) => {
                     return (
                         <Grid item xs={12} sm={4} lg={3} key={index}>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={categoryData.cat_img}
-                                    alt={categoryData.name}
-                                />
-                                <CardContent>
+                            <Card
+                                sx={{
+                                    maxWidth: 345,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <Link
+                                    component={RouterLink}
+                                    to={`/hacks/category/${categoryData.id}`}
+                                    underline="none"
+                                >
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image={categoryData.cat_img}
+                                        alt={categoryData.name}
+                                        className="catImgs"
+                                    />
                                     <Typography
                                         gutterBottom
                                         variant="h5"
                                         component="h5"
+                                        color="#478D95"
+                                        className="catTitles"
+                                        sx={{ mx: 2, mt: 2 }}
                                     >
                                         {categoryData.name}
                                     </Typography>
+                                </Link>
+                                <CardContent>
                                     <List
                                         sx={{
                                             overflowY: "auto",
@@ -91,9 +109,19 @@ const HacksList = () => {
                                                       return (
                                                           <div key={index}>
                                                               <Link
+                                                                  component={
+                                                                      RouterLink
+                                                                  }
                                                                   to={`/hacks/view/${hackData.id}`}
                                                                   underline="hover"
+                                                                  className="hackItems"
                                                               >
+                                                                  <span
+                                                                      data-content={
+                                                                          hackData.title
+                                                                      }
+                                                                      aria-hidden="true"
+                                                                  ></span>
                                                                   {
                                                                       hackData.title
                                                                   }

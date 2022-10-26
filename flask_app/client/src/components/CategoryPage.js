@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import { List, Paper, Stack, Typography, Link, Divider } from "@mui/material";
-import { useParams } from "react-router-dom";
 import "../components/HackListStyles.css";
 
 const CategoryPage = (props) => {
@@ -54,36 +53,54 @@ const CategoryPage = (props) => {
                 mx: { xs: 0, sm: 10, md: 20, lg: 30 },
                 mt: { xs: 0, sm: 2 },
                 height: { xs: "100%", md: "auto" },
-                p: 2,
             }}
         >
-            <Typography variant="h3" component="h1" sx={{ mb: 3 }}>
-                {catName}
-            </Typography>
-            <img href={catImg} />
-            <Stack direction="row">
-                <List>
-                    {!!hacks
-                        ? hacks.sort(sortList).map((hackData, index) => {
-                              return (
-                                  <div key={index}>
-                                      <Link
-                                          to={`/hacks/view/${hackData.id}`}
-                                          underline="hover"
-                                          className="hackItems"
-                                      >
-                                          <span
-                                              data-content={`${hackData.title} Hover`}
-                                              aria-hidden="true"
-                                          ></span>
-                                          {hackData.title}
-                                      </Link>
-                                      <Divider />
-                                  </div>
-                              );
-                          })
-                        : null}
-                </List>
+            <Stack
+                direction="row"
+                sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+                <div>
+                    <Typography
+                        variant="h3"
+                        component="h1"
+                        sx={{
+                            mb: 3,
+                            mt: 2,
+                            mx: 2,
+                            color: "#478D95",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {catName}
+                    </Typography>
+
+                    <List sx={{ mx: 2 }}>
+                        {!!hacks
+                            ? hacks.sort(sortList).map((hackData, index) => {
+                                  return (
+                                      <div key={index}>
+                                          <Link
+                                              component={RouterLink}
+                                              to={`/hacks/view/${hackData.id}`}
+                                              underline="hover"
+                                              className="hackItems"
+                                          >
+                                              <span
+                                                  data-content={`${hackData.title} Hover`}
+                                                  aria-hidden="true"
+                                              ></span>
+                                              {hackData.title}
+                                          </Link>
+                                          <Divider />
+                                      </div>
+                                  );
+                              })
+                            : null}
+                    </List>
+                </div>
+                <div className="catPageDiv">
+                    <img src={catImg} alt={catName} className="catPage" />
+                </div>
             </Stack>
         </Paper>
     );

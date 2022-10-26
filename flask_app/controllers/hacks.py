@@ -37,6 +37,14 @@ def view_all_hacks():
 #Source for jsonpickle to serialize and deserialize data to JSON: http://jsonpickle.github.io/
 
 
+# Route to view all hacks of a particular category
+@app.route("/api/hacks/category/<int:num>")
+def view_hacks_in_category(num):
+    data = {
+        "category_id" : num
+    }
+    return Response(jsonpickle.encode(hack.Hack.get_all_hacks_of_one_category(data)), mimetype='application/json')
+
 
 # Route to view one hack
 @app.route("/api/hacks/view/<int:num>")

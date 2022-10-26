@@ -1,21 +1,20 @@
-/* Style of category titles */
-.catTitles {
-    color: #478d95;
-    font-weight: normal;
-}
-
+/* Style for category titles on hover*/
 .catTitles:hover {
     color: #375656;
     font-weight: bold;
+    text-shadow: 1.5px 1.5px 3px #478d95;
+}
+
+.catImgs:hover {
+    box-shadow: 0 2px 6px 0 #478d95, 0 4px 16px 0 #375656;
 }
 
 /* Style of listed hack items */
 .hackItems {
     position: relative;
     display: inline-block;
-    font-size: 2em;
     color: royalblue;
-    font-weight: 800;
+    /* font-weight: 800; */
     text-decoration: underline;
     overflow: hidden;
 }
@@ -30,7 +29,8 @@
 .hackItems span::before {
     display: inline-block;
     content: attr(data-content);
-    color: midnightblue;
+    color: #375656;
+    font-weight: "bold";
     transform: translateX(100%);
     transition: transform 275ms ease;
     text-decoration: underline;
@@ -41,31 +41,19 @@
 .hackItems:hover span::before {
     transform: translateX(0);
 }
-
-/* span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    transform: translateX(-100%);
-    transition: transform 275ms ease;
-}
-
-.hackItems:hover span {
-    transform: translateX(0);
-}
-
-span::before {
-    display: inline-block;
-    content: attr(data-content);
-    color: midnightblue;
-    transform: translateX(100%);
-    transition: transform 275ms ease;
-    text-decoration: underline;
-}
-
-.hackItems:hover span::before {
-    transform: translateX(0);
-} */
 
 /* Source: https://css-tricks.com/4-ways-to-animate-the-color-of-a-text-link-on-hover/ */
+
+.catPageDiv {
+    overflow: hidden;
+    /* outline: 1px solid red; */
+}
+
+.catPage {
+    border-radius: 50%;
+    position: relative;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%) scale(2);
+    box-shadow: inset 0px 0px 10px 20px white;
+}

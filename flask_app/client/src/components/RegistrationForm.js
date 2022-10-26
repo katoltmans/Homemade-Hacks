@@ -67,10 +67,10 @@ const RegistrationForm = (props) => {
         <Paper
             elevation={2}
             sx={{
-                p: { xs: 2, sm: 5 },
-                mx: { xs: 0, sm: 20 },
-                mt: { xs: 0, sm: 3 },
-                // backgroundColor: { xs: "#CBDEDF", sm: "#FFF" },
+                mx: { xs: 0, sm: 10, md: 20, lg: 30 },
+                mt: { xs: 0, sm: 2 },
+                height: { xs: "100%", md: "auto" },
+                p: 2,
             }}
         >
             <Typography
