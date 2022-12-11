@@ -149,6 +149,18 @@ const FavoriteHackList = (props) => {
                         })}
                     </Grid>
                 </Paper>
+            ) : !!user.username ? (
+                <Paper
+                    elevation={2}
+                    sx={{
+                        p: 5,
+                        m: 3,
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    <h2> Please favorite a hack to display.</h2>
+                </Paper>
             ) : (
                 <Paper
                     elevation={2}
@@ -159,7 +171,10 @@ const FavoriteHackList = (props) => {
                         justifyContent: "center",
                     }}
                 >
-                    <h2> Please favorite a hack to display</h2>
+                    <h2>
+                        {" "}
+                        Please log in to select and display favorite hacks.
+                    </h2>
                 </Paper>
             )}
         </>

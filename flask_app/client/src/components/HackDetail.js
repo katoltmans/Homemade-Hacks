@@ -120,7 +120,7 @@ const HackDetail = (props) => {
                 </Typography>
             </Box>
             <Stack spacing={2} sx={{ p: 2 }}>
-                {!!user ? (
+                {!!user.username ? (
                     <Grid
                         container
                         direction="row"
