@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./NavbarStyles.css";
 import {
     AppBar,
     Link,
@@ -25,6 +26,7 @@ const Navbar = (props) => {
     const navigate = useNavigate();
     const { user, setUser } = props;
     const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElProfile, setAnchorElProfile] = useState(null);
 
     //Style of nav links
     const styles = {
@@ -53,6 +55,15 @@ const Navbar = (props) => {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+    };
+
+    const handleOpenProfileMenu = (event) => {
+        setAnchorElProfile(event.currentTarget);
+        console.log("TARGET", event.currentTarget);
+    };
+
+    const handleCloseProfileMenu = () => {
+        setAnchorElProfile(null);
     };
 
     return (
@@ -260,23 +271,41 @@ const Navbar = (props) => {
                                 ml: 5,
                             }}
                         >
-                            <Typography
-                                sx={{
-                                    display: { xs: "none", md: "flex" },
-                                    pt: 1,
-                                    fontSize: 14,
-                                    fontWeight: "bold",
+                            <Button
+                                id="initials"
+                                onClick={handleOpenProfileMenu}
+                                aria-controls="menu-profile"
+                                aria-haspopup="true"
+                            >
+                                {user.firstName.slice(0, 1)}
+                                {user.lastName.slice(0, 1)}
+                            </Button>
+                            <Menu
+                                id="menu-profile"
+                                anchorEl={anchorElProfile}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                }}
+                                open={!!anchorElProfile}
+                                onClose={handleCloseProfileMenu}
+                                MenuListProps={{
+                                    "aria-labelledby": "initials",
                                 }}
                             >
-                                Welcome, {user.firstName}
-                            </Typography>
-                            <Button
-                                variant="contained"
-                                onClick={logoutHandler}
-                                sx={{ ml: 2, p: 1 }}
-                            >
-                                Logout
-                            </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={logoutHandler}
+                                    sx={{ ml: 2, p: 1 }}
+                                >
+                                    Logout
+                                </Button>
+                            </Menu>
                         </Box>
                     ) : (
                         <Box
