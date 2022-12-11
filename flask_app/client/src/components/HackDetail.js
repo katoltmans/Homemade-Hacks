@@ -36,7 +36,7 @@ const HackDetail = (props) => {
             .catch((err) => {
                 console.log("Error with view_one_hack request", err);
             });
-    }, []);
+    }, [console.log("USER STATUS:", user)]);
 
     const handleDelete = (hackId) => {
         axios
@@ -120,8 +120,7 @@ const HackDetail = (props) => {
                 </Typography>
             </Box>
             <Stack spacing={2} sx={{ p: 2 }}>
-                {/* Update and Delete buttons appear only for Hack creator */}
-                {user.id == hack.user_id ? (
+                {!!user ? (
                     <Grid
                         container
                         direction="row"
@@ -129,36 +128,39 @@ const HackDetail = (props) => {
                         columnSpacing={{ xs: 1 }}
                         sx={{ display: "flex" }}
                     >
-                        <Grid
-                            item
-                            xs={12}
-                            sm={9}
-                            sx={{
-                                display: "flex",
-                                justifyContent: {
-                                    xs: "center",
-                                    sm: "flex-start",
-                                },
-                            }}
-                        >
-                            <Button variant="contained">
-                                <Link
-                                    href={`/hacks/update/${hack.id}`}
-                                    color="inherit"
-                                    underline="none"
-                                    sx={{ width: "140px" }}
-                                >
-                                    Update Hack
-                                </Link>
-                            </Button>
-                            <Button
-                                variant="contained"
-                                sx={{ width: "170px" }}
-                                onClick={() => handleDelete(hack.id)}
+                        {/* Update and Delete buttons appear only for Hack creator */}
+                        {user.id == hack.user_id ? (
+                            <Grid
+                                item
+                                xs={12}
+                                sm={9}
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: {
+                                        xs: "center",
+                                        sm: "flex-start",
+                                    },
+                                }}
                             >
-                                Delete Hack
-                            </Button>
-                        </Grid>
+                                <Button variant="contained">
+                                    <Link
+                                        href={`/hacks/update/${hack.id}`}
+                                        color="inherit"
+                                        underline="none"
+                                        sx={{ width: "140px" }}
+                                    >
+                                        Update Hack
+                                    </Link>
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    sx={{ width: "170px" }}
+                                    onClick={() => handleDelete(hack.id)}
+                                >
+                                    Delete Hack
+                                </Button>
+                            </Grid>
+                        ) : null}
                         <Grid
                             item
                             xs={12}
