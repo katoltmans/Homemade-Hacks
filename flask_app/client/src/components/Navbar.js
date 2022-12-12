@@ -8,6 +8,7 @@ import {
     IconButton,
     Menu,
     MenuItem,
+    Stack,
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
@@ -298,13 +299,24 @@ const Navbar = (props) => {
                                     "aria-labelledby": "initials",
                                 }}
                             >
-                                <Button
-                                    variant="contained"
-                                    onClick={logoutHandler}
-                                    sx={{ ml: 2, p: 1 }}
-                                >
-                                    Logout
-                                </Button>
+                                <Stack sx={{ p: 2 }}>
+                                    <Link
+                                        component={RouterLink}
+                                        to="/"
+                                        color="inherit"
+                                        underline="none"
+                                        sx={menuStyles}
+                                    >
+                                        Profile
+                                    </Link>
+                                    <Button
+                                        variant="contained"
+                                        onClick={logoutHandler}
+                                        sx={{ mt: 1 }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </Stack>
                             </Menu>
                         </Box>
                     ) : (

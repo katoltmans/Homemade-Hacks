@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link as RouterLink } from "react-router-dom";
 import { List, Paper, Stack, Typography, Link, Divider } from "@mui/material";
-import "../components/HackListStyles.css";
+import "./HackListStyles.css";
 
 const CategoryPage = (props) => {
     // const navigate = useNavigate();
@@ -99,7 +99,7 @@ const CategoryPage = (props) => {
                     </List>
                 </div>
                 <div className="catPageDiv">
-                    <img src={catImg} alt={catName} className="catPage" />
+                    <img src={catImg} alt={catName} className="catPageImg" />
                 </div>
             </Stack>
         </Paper>
