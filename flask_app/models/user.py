@@ -65,6 +65,12 @@ class User:
             return False
         return cls(results[0])
     
+    # Method to update a user
+    @classmethod
+    def update_user(cls, data):
+        query = "UPDATE homemade_hacks.users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, birthdate=%(birthdate)s, location=%(location)s, username=%(username)s, password=%(password)s, updated_at=NOW() WHERE id=%(id)s;"
+        return connectToMySQL(cls.schema).query_db(query, data)
+    
     # Method to check if hack is favorited by a user
     @classmethod
     def check_if_favorite(cls, data):

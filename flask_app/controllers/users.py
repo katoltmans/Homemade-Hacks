@@ -76,5 +76,44 @@ def process_logout():
     response = jsonify({"message":"successfully logged out"})
     return response
 
+# Route to view data of a user
+@app.route("/api/profile/view/<int:num>")
+def view_one_user(num):
+    data = {
+        "id": num
+    }
+    return Response(jsonpickle.encode(user.User.display_user(data)), mimetype='application/json')
 
-
+# Route to update registration data on profile page
+@app.route("/profile/update/<int:num>", methods=["POST"])
+def update_profile(num):
+    pp = pprint.PrettyPrinter(indent=4)
+    formData = request.get_json()
+    print("FORM DATA:", formData)
+    # Display errors if input is not valid
+    errors = user.User.validate_registration(formData)
+    if len(errors) > 0:
+        response = jsonify({"errors":errors})
+    else:
+        #Create the hash of the password
+        pw_hash = bcrypt.generate_password_hash(formData["password"])
+        pw_hash_confirm = bcrypt.generate_password_hash(formData["confirm_password"])
+        print(pw_hash)
+        print(pw_hash_confirm)
+        # Create a user dictionary
+        data = {
+            "id": num,
+            "first_name": formData["first_name"],
+            "last_name": formData["last_name"],
+            "email": formData["email"],
+            "birthdate": formData["birthdate"],
+            "location": formData["location"],
+            "username": formData["username"],
+            "password": pw_hash,
+            "confirm_password": pw_hash_confirm
+        }
+        # Call the new_user method to add the user to the database
+        user_id = user.User.update_user(data)
+        # Redirect after submit
+        response = jsonify({"message":"user successfully updated"})
+    return response
