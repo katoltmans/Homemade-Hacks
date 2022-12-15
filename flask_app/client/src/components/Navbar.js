@@ -302,7 +302,8 @@ const Navbar = (props) => {
                                 <Stack sx={{ p: 2 }}>
                                     <Link
                                         component={RouterLink}
-                                        to="/"
+                                        to={`/profile/update/`}
+                                        // profile/update/${id}
                                         color="inherit"
                                         underline="none"
                                         sx={menuStyles}
