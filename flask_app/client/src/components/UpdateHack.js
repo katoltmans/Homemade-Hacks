@@ -28,7 +28,7 @@ const UpdateHack = (props) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // USeEffect to request and autofill data
+    // UseEffect to request and autofill hack data
     useEffect(() => {
         console.log(id);
         axios
@@ -45,6 +45,7 @@ const UpdateHack = (props) => {
             });
     }, []);
 
+    // Handler to update hack display and data upon input
     const onChangeHandler = (e) => {
         console.log(e.target.name);
         setHack({
@@ -111,10 +112,6 @@ const UpdateHack = (props) => {
                 console.log("ERROR:", errors);
             });
     };
-
-    // const deleteRowHandler = (index) => {
-    //     setInstructions(instructions.filter((elem, i) => i !== index));
-    // };
 
     const deleteRowHandler = (index, setFunction, elemArray) => {
         setFunction(elemArray.filter((elem, i) => i !== index));
