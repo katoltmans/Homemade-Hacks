@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, NavLink } from "react-router-dom";
-import { Grid, Paper, Typography, Button, MobileStepper } from "@mui/material";
+import { Paper, Typography, Button, MobileStepper } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Box } from "@mui/system";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
