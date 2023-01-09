@@ -42,7 +42,7 @@ const FavoriteHackList = (props) => {
                     );
                 });
         }
-    }, [user]);
+    }, [user, props]);
 
     useEffect(() => {
         console.log("HACKS", hacks);

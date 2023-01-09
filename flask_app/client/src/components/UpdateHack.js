@@ -43,7 +43,7 @@ const UpdateHack = (props) => {
             .catch((err) => {
                 console.log("Error with view_one_hack request", err);
             });
-    }, []);
+    }, [id]);
 
     // Handler to update hack display and data upon input
     const onChangeHandler = (e) => {

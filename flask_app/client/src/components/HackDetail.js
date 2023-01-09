@@ -36,7 +36,7 @@ const HackDetail = (props) => {
             .catch((err) => {
                 console.log("Error with view_one_hack request", err);
             });
-    }, [console.log("USER STATUS:", user)]);
+    }, [console.log("USER STATUS:", user), id, user.id]);
 
     const handleDelete = (hackId) => {
         axios
@@ -129,7 +129,7 @@ const HackDetail = (props) => {
                         sx={{ display: "flex" }}
                     >
                         {/* Update and Delete buttons appear only for Hack creator */}
-                        {user.id == hack.user_id ? (
+                        {user.id === hack.user_id ? (
                             <Grid
                                 item
                                 xs={12}

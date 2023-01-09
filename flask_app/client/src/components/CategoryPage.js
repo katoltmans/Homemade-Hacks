@@ -28,12 +28,12 @@ const CategoryPage = (props) => {
                     err
                 );
             });
-    }, []);
+    }, [category_id]);
 
     useEffect(() => {
         console.log("HACKS:", hacks);
         console.log("CATEGORY NAME:", catName, "CATEGORY IMG:", catImg);
-    }, [hacks]);
+    }, [hacks, catImg, catName]);
 
     // Sort hack titles alphabetically
     const sortList = (a, b) => {

@@ -39,6 +39,7 @@ const HacksList = () => {
         console.log("HACKS", hacks);
     }, [hacks]);
 
+    // Sort Hack titles alphabetically - each title is clickable to view hack details
     const sortList = (a, b) => {
         if (a.title < b.title) {
             return -1;
