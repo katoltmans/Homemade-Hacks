@@ -6,6 +6,8 @@ from flask import render_template, redirect, request, session, jsonify
 from flask_app.models import user, hack
 # Source: https://rasyue.com/full-stack-react-with-python-flask/
 import pprint
+import jsonpickle
+from flask import Response
 
 
 # Route to process registration data
@@ -84,22 +86,18 @@ def view_one_user(num):
     }
     return Response(jsonpickle.encode(user.User.display_user(data)), mimetype='application/json')
 
-# Route to update registration data on profile page
+# Route to update user data on profile page
 @app.route("/profile/update/<int:num>", methods=["POST"])
 def update_profile(num):
     pp = pprint.PrettyPrinter(indent=4)
     formData = request.get_json()
     print("FORM DATA:", formData)
     # Display errors if input is not valid
-    errors = user.User.validate_registration(formData)
+    errors = user.User.validate_profile(formData)
     if len(errors) > 0:
         response = jsonify({"errors":errors})
-    else:
-        #Create the hash of the password
-        pw_hash = bcrypt.generate_password_hash(formData["password"])
-        pw_hash_confirm = bcrypt.generate_password_hash(formData["confirm_password"])
-        print(pw_hash)
-        print(pw_hash_confirm)
+    else: 
+    
         # Create a user dictionary
         data = {
             "id": num,
@@ -108,9 +106,6 @@ def update_profile(num):
             "email": formData["email"],
             "birthdate": formData["birthdate"],
             "location": formData["location"],
-            "username": formData["username"],
-            "password": pw_hash,
-            "confirm_password": pw_hash_confirm
         }
         # Call the new_user method to add the user to the database
         user_id = user.User.update_user(data)

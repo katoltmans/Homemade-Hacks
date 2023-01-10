@@ -8,6 +8,20 @@ const ProfilePage = (props) => {
     const { id } = useParams();
     // const [errors, setErrors] = useState([]);
 
+    // Styles for profile text
+    const stylesText = {
+        marginTop: "3px",
+    };
+
+    // Styles for profile links
+    const stylesLink = {
+        color: "#478D95",
+        "&:hover": {
+            color: "#f5ccb7",
+        },
+        fontWeight: "bold",
+    };
+
     // UseEffect request will profile autofill data
     useEffect(() => {
         console.log(id);
@@ -66,59 +80,65 @@ const ProfilePage = (props) => {
             {/* Component text */}
             <Box sx={{ flexGrow: 1, p: 2 }}>
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
-                        <Typography variant="h3" component="h1">
+                    <Grid item xs={6} sx={stylesText}>
+                        <Typography variant="h4" component="h1">
                             Email:
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={stylesText}>
                         <Typography variant="body1" component="p">
                             {user.email}
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} sx={stylesText}>
                     <Grid item xs={6}>
-                        <Typography variant="h3" component="h1">
+                        <Typography variant="h4" component="h1">
                             Birth Date:
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={stylesText}>
                         <Typography variant="body1" component="p">
                             {/* {user.birthdate} */}
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} sx={stylesText}>
                     <Grid item xs={6}>
-                        <Typography variant="h3" component="h1">
+                        <Typography variant="h4" component="h1">
                             Location:
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={stylesText}>
                         <Typography variant="body1" component="p">
                             {user.location}
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} sx={stylesText}>
                     <Grid item xs={6}>
-                        <Typography variant="h3" component="h1">
+                        <Typography variant="h4" component="h1">
                             Username:
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={stylesText}>
                         <Typography variant="body1" component="p">
                             {user.username}
                         </Typography>
                     </Grid>
                 </Grid>
                 {/* Link to Update component - password changes are available on update page */}
-                <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row-reverse",
+                        mt: 3,
+                    }}
+                >
                     <Link
                         component={RouterLink}
                         to={`/profile/update/${id}`}
-                        color="inherit"
+                        sx={stylesLink}
                     >
                         Update Profile
                     </Link>

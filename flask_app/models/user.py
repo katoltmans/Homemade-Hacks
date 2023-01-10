@@ -44,7 +44,7 @@ class User:
         print(results)
         if len(results) == 0: # In case no users are registered
             return None
-        this_user = cle(results[0])
+        this_user = cls(results[0])
         return this_user
     
     # Method to check identify repeats when registering
@@ -68,7 +68,7 @@ class User:
     # Method to update a user
     @classmethod
     def update_user(cls, data):
-        query = "UPDATE homemade_hacks.users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, birthdate=%(birthdate)s, location=%(location)s, username=%(username)s, password=%(password)s, updated_at=NOW() WHERE id=%(id)s;"
+        query = "UPDATE homemade_hacks.users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, birthdate=%(birthdate)s, location=%(location)s, updated_at=NOW() WHERE id=%(id)s;"
         return connectToMySQL(cls.schema).query_db(query, data)
     
     # Method to check if hack is favorited by a user
@@ -82,7 +82,50 @@ class User:
         return is_favorite
     
     # Static method to display flash messages for registration
+    @staticmethod
     def validate_registration(form_data):
+        # Array to hold all error messages
+        errorMessages = User.validate_profile(form_data)
+        # Check for repeat emails
+        if User.has_repeats(form_data):
+            errorMessages.append("This email is already registered. Would you prefer to login?")
+
+        if len(form_data['username']) < 5:
+            print("Username name too short")
+            errorMessages.append("Username name must be at least 5 characters long")
+        
+        # Compare password input to REGEX
+        if not User.PASSWORD_REGEX.match(form_data['password']):
+            print("invalid password: "+form_data['password'])
+            errorMessages.append("Our users require the utmost security. Please use a password with 8-32 characters, 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 number.")
+        # Confirm reentered password matches
+        if form_data['confirm_password'] != form_data['password']:
+            print("Password does not match")
+            errorMessages.append("Uh oh, passwords must match. Please try again!")
+        return errorMessages
+    
+    # Static method to display flash messages for login
+    @staticmethod
+    def validate_login(form_data, user_in_db):
+        errorMessages = []
+        print(form_data)
+        is_valid = True
+        if user_in_db == False:
+            print("Invalid email")
+            is_valid = False
+        else:
+            # Check to see if password matches
+            if form_data['password'] == '' or not bcrypt.check_password_hash(user_in_db.password, form_data['password']):
+                print("Invalid password")
+                is_valid = False
+        # If either credential is false
+        if not is_valid:
+            errorMessages.append("Invalid credentials. Please try again.")
+        return errorMessages
+    
+    # Static method to validate user profile
+    @staticmethod
+    def validate_profile(form_data):
         # Array to hold all error messages
         errorMessages = []
 
@@ -98,9 +141,6 @@ class User:
         if not User.EMAIL_REGEX.match(form_data['email']):
             print("invalid email")
             errorMessages.append("Invalid email address. Bummer, try again!")
-        # Check for repeat emails
-        if User.has_repeats(form_data):
-            errorMessages.append("This email is already registered. Would you prefer to login?")
             
         
         # Check if birthdate is a valid date
@@ -120,34 +160,5 @@ class User:
         if len(form_data['location']) < 4:
             print("Location too short")
             errorMessages.append("Location must be at least 5 characters long")
-        if len(form_data['username']) < 5:
-            print("Username name too short")
-            errorMessages.append("Username name must be at least 5 characters long")
         
-        # Compare password input to REGEX
-        if not User.PASSWORD_REGEX.match(form_data['password']):
-            print("invalid password: "+form_data['password'])
-            errorMessages.append("Our users require the utmost security. Please use a password with 8-32 characters, 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 number.")
-        # Confirm reentered password matches
-        if form_data['confirm_password'] != form_data['password']:
-            print("Password does not match")
-            errorMessages.append("Uh oh, passwords must match. Please try again!")
-        return errorMessages
-    
-    # Static method to display flash messages for login
-    def validate_login(form_data, user_in_db):
-        errorMessages = []
-        print(form_data)
-        is_valid = True
-        if user_in_db == False:
-            print("Invalid email")
-            is_valid = False
-        else:
-            # Check to see if password matches
-            if form_data['password'] == '' or not bcrypt.check_password_hash(user_in_db.password, form_data['password']):
-                print("Invalid password")
-                is_valid = False
-        # If either credential is false
-        if not is_valid:
-            errorMessages.append("Invalid credentials. Please try again.")
         return errorMessages

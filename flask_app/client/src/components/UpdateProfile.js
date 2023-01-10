@@ -8,18 +8,13 @@ import {
     TextField,
     Typography,
     Button,
-    FormControl,
-    Select,
-    MenuItem,
-    InputLabel,
     List,
     ListItem,
-    Stack,
 } from "@mui/material";
 
 const UpdateProfile = (props) => {
     const navigate = useNavigate();
-    const { user, setUser } = useState(null);
+    const [user, setUser] = useState(null);
     const { id } = useParams();
     const [errors, setErrors] = useState([]);
 
@@ -27,9 +22,9 @@ const UpdateProfile = (props) => {
     useEffect(() => {
         console.log(id);
         axios
-            .get("http://localhost:5000/api/profile/view/" + id)
+            .get("/api/profile/view/" + id)
             .then((res) => {
-                console.log(res.data);
+                console.log("USER:", res.data);
                 setUser(res.data);
             })
             .catch((err) => {
@@ -48,20 +43,21 @@ const UpdateProfile = (props) => {
 
     // Post request to update user data when changed on the profile page
     const onSubmitHandler = (e) => {
-        console.log("submitting registration");
+        console.log("submitting profile update");
         e.preventDefault();
         //make axios post request
         console.log(user);
-        // Post request to create a new author
+
+        // Post request to update
         axios
-            .post("http://localhost:5000/register", user)
+            .post(`/profile/update/${id}`, user)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
                 if (!res.data?.errors) {
                     //set user if successfully registered
                     setUser(user);
-                    navigate("/hacks/view");
+                    navigate("/profile/view/" + id);
                 } else {
                     // Add errors to be d
                     setErrors(res.data.errors);
@@ -76,6 +72,10 @@ const UpdateProfile = (props) => {
                 console.log("ERROR:", errors);
             });
     };
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <Paper
@@ -132,6 +132,7 @@ const UpdateProfile = (props) => {
                                 fullWidth
                                 name="first_name"
                                 label="First Name"
+                                defaultValue={user.first_name}
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
@@ -141,6 +142,7 @@ const UpdateProfile = (props) => {
                                 fullWidth
                                 name="last_name"
                                 label="Last Name"
+                                defaultValue={user.last_name}
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
@@ -152,6 +154,7 @@ const UpdateProfile = (props) => {
                                 fullWidth
                                 name="email"
                                 label="Email"
+                                defaultValue={user.email}
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
@@ -163,6 +166,7 @@ const UpdateProfile = (props) => {
                                 fullWidth
                                 name="birthdate"
                                 label="Birth Date (YYYY/MM/DD)"
+                                // defaultValue={user.birthdate}
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
@@ -172,39 +176,7 @@ const UpdateProfile = (props) => {
                                 fullWidth
                                 name="location"
                                 label="Location"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="username"
-                                label="Username"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="password"
-                                type="password"
-                                label="Password"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="confirm_password"
-                                type="password"
-                                label="Confirm Password"
+                                defaultValue={user.location}
                                 variant="outlined"
                                 onChange={onChangeHandler}
                             />
