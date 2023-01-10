@@ -23,7 +23,7 @@ const UpdateProfile = (props) => {
     const { id } = useParams();
     const [errors, setErrors] = useState([]);
 
-    // UseEffect request will profile autofill data
+    // UseEffect request to autofill profile data
     useEffect(() => {
         console.log(id);
         axios

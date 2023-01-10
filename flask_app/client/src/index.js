@@ -1,8 +1,7 @@
-import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes, Router } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
@@ -14,6 +13,7 @@ import WelcomePage from "./components/WelcomePage";
 import FavoriteHackList from "./components/FavoriteHackList";
 import CategoryPage from "./components/CategoryPage";
 import ProfilePage from "./components/ProfilePage";
+import UpdateProfile from "./components/UpdateProfile";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
 
@@ -53,8 +53,6 @@ const App = () => {
             },
             text: {
                 primary: "#808e95",
-            },
-            text: {
                 secondary: "#478d95",
             },
         },
@@ -105,7 +103,6 @@ const App = () => {
                                     <AddHack user={user} setUser={setUser} />
                                 }
                             />
-
                             <Route
                                 path="/hacks/view/:id"
                                 element={
@@ -133,9 +130,18 @@ const App = () => {
                                 }
                             />
                             <Route
-                                path="/profile/update/"
+                                path="/profile/view/:id"
                                 element={
                                     <ProfilePage
+                                        user={user}
+                                        setUser={setUser}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/profile/update/:id"
+                                element={
+                                    <UpdateProfile
                                         user={user}
                                         setUser={setUser}
                                     />

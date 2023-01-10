@@ -11,7 +11,6 @@ import {
     Stack,
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import Container from "@mui/material/Container";
 import CountertopsIcon from "@mui/icons-material/Countertops";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -69,6 +68,7 @@ const Navbar = (props) => {
 
     return (
         <AppBar position="static">
+            {/* Mobile layout */}
             <Box sx={{ mx: 2 }}>
                 <Toolbar
                     disableGutters
@@ -107,6 +107,7 @@ const Navbar = (props) => {
                             </Link>
                         </Typography>
                     </Box>
+                    {/* Drop down menu for navigation options */}
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -141,6 +142,7 @@ const Navbar = (props) => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
+                            {/* Display links to other components */}
                             {pages.map((page, index) => (
                                 <MenuItem
                                     key={index}
@@ -162,6 +164,27 @@ const Navbar = (props) => {
                                     </Typography>
                                 </MenuItem>
                             ))}
+                            {/* Profile link appears in same menu with other navigation options on mobile only*/}
+                            <MenuItem
+                                key="profile"
+                                onClick={handleCloseNavMenu}
+                            >
+                                <Typography
+                                    variant="h6"
+                                    color="inherit"
+                                    sx={{ ml: 2 }}
+                                >
+                                    <Link
+                                        component={RouterLink}
+                                        to={`/profile/view/${user.id}`}
+                                        underline="none"
+                                        sx={menuStyles}
+                                    >
+                                        Profile
+                                    </Link>
+                                </Typography>
+                            </MenuItem>
+                            {/* Display logout button only when a user is signed in */}
                             {!!user?.firstName ? (
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Button
@@ -174,6 +197,7 @@ const Navbar = (props) => {
                                 </MenuItem>
                             ) : (
                                 <MenuItem onClick={handleCloseNavMenu}>
+                                    {/* Display Login and Register buttons when a user is not signed in */}
                                     <Button variant="contained" sx={{ ml: 2 }}>
                                         <Link
                                             component={RouterLink}
@@ -201,6 +225,7 @@ const Navbar = (props) => {
                                 </MenuItem>
                             )}
                         </Menu>
+                        {/* Website layout */}
                         <Box
                             sx={{
                                 ml: 5,
@@ -242,6 +267,7 @@ const Navbar = (props) => {
                             },
                         }}
                     >
+                        {/* Display links to other components */}
                         {pages.map((page, index) => {
                             return (
                                 <Typography
@@ -272,6 +298,7 @@ const Navbar = (props) => {
                                 ml: 5,
                             }}
                         >
+                            {/* Display menu when a user is signed in */}
                             <Button
                                 id="initials"
                                 onClick={handleOpenProfileMenu}
@@ -300,16 +327,18 @@ const Navbar = (props) => {
                                 }}
                             >
                                 <Stack sx={{ p: 2 }}>
-                                    <Link
-                                        component={RouterLink}
-                                        to={`/profile/update/`}
-                                        // profile/update/${id}
-                                        color="inherit"
-                                        underline="none"
-                                        sx={menuStyles}
-                                    >
-                                        Profile
-                                    </Link>
+                                    <MenuItem onClick={handleCloseProfileMenu}>
+                                        <Link
+                                            component={RouterLink}
+                                            to={`/profile/view/${user.id}`}
+                                            // profile/view/${id}
+                                            color="inherit"
+                                            underline="none"
+                                            sx={menuStyles}
+                                        >
+                                            Profile
+                                        </Link>
+                                    </MenuItem>
                                     <Button
                                         variant="contained"
                                         onClick={logoutHandler}
@@ -328,6 +357,7 @@ const Navbar = (props) => {
                                 display: { xs: "none", md: "flex" },
                             }}
                         >
+                            {/* Display buttons when a user is not signed in */}
                             <Button variant="contained">
                                 <Link
                                     component={RouterLink}

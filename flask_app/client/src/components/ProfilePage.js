@@ -1,81 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-    Box,
-    Grid,
-    Paper,
-    TextField,
-    Typography,
-    Button,
-    FormControl,
-    Select,
-    MenuItem,
-    InputLabel,
-    List,
-    ListItem,
-    Stack,
-} from "@mui/material";
+import { Link as RouterLink, useParams } from "react-router-dom";
+import { Box, Grid, Paper, Typography, Link } from "@mui/material";
 
 const ProfilePage = (props) => {
-    const navigate = useNavigate();
-    const { user, setUser } = useState(null);
+    const [user, setUser] = useState(null);
     const { id } = useParams();
-    const [errors, setErrors] = useState([]);
+    // const [errors, setErrors] = useState([]);
 
     // UseEffect request will profile autofill data
     useEffect(() => {
         console.log(id);
         axios
-            .get("http://localhost:5000/api/profile/view/" + id)
+            .get("/api/profile/view/" + id)
             .then((res) => {
-                console.log(res.data);
+                console.log("USER:", res.data);
                 setUser(res.data);
             })
             .catch((err) => {
                 console.log("Error with display_user request", err);
             });
-    }, []);
+    }, [id]);
 
-    // Handler to update and display user data when changed on profile page
-    const onChangeHandler = (e) => {
-        console.log(e.target.name);
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    // Post request to update user data when changed on the profile page
-    const onSubmitHandler = (e) => {
-        console.log("submitting registration");
-        e.preventDefault();
-        //make axios post request
-        console.log(user);
-        // Post request to create a new author
-        axios
-            .post("http://localhost:5000/register", user)
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                if (!res.data?.errors) {
-                    //set user if successfully registered
-                    setUser(user);
-                    navigate("/hacks/view");
-                } else {
-                    // Add errors to be d
-                    setErrors(res.data.errors);
-                }
-            })
-            .catch((err) => {
-                console.log(
-                    "Error with post registration request (client)",
-                    err
-                );
-                setErrors(err.response.data?.error?.errors);
-                console.log("ERROR:", errors);
-            });
-    };
+    if (!user) {
+        return null;
+    }
 
     return (
         <Paper
@@ -86,6 +35,7 @@ const ProfilePage = (props) => {
                 height: { xs: "100%", md: "auto" },
             }}
         >
+            {/* Component Header */}
             <Box
                 sx={{
                     height: { xs: 150, sm: 250 },
@@ -110,114 +60,69 @@ const ProfilePage = (props) => {
                         p: { xs: 1, sm: 2 },
                     }}
                 >
-                    Update Profile
+                    {user.first_name} {user.last_name}
                 </Typography>
             </Box>
-            {errors ? (
-                <List sx={{ mb: 5 }}>
-                    {errors.map((error, index) => {
-                        return (
-                            <ListItem key={index} sx={{ color: "error.main" }}>
-                                {error}
-                            </ListItem>
-                        );
-                    })}
-                </List>
-            ) : null}
+            {/* Component text */}
             <Box sx={{ flexGrow: 1, p: 2 }}>
                 <Grid container spacing={3}>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="first_name"
-                                label="First Name"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="last_name"
-                                label="Last Name"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="h3" component="h1">
+                            Email:
+                        </Typography>
                     </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="email"
-                                label="Email"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="birthdate"
-                                label="Birth Date (YYYY/MM/DD)"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="location"
-                                label="Location"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="username"
-                                label="Username"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="password"
-                                type="password"
-                                label="Password"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="confirm_password"
-                                type="password"
-                                label="Confirm Password"
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="body1" component="p">
+                            {user.email}
+                        </Typography>
                     </Grid>
                 </Grid>
-                <Button
-                    variant="contained"
-                    sx={{ mt: 3 }}
-                    onClick={onSubmitHandler}
-                >
-                    Submit
-                </Button>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <Typography variant="h3" component="h1">
+                            Birth Date:
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="body1" component="p">
+                            {/* {user.birthdate} */}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <Typography variant="h3" component="h1">
+                            Location:
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="body1" component="p">
+                            {user.location}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <Typography variant="h3" component="h1">
+                            Username:
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="body1" component="p">
+                            {user.username}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                {/* Link to Update component - password changes are available on update page */}
+                <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+                    <Link
+                        component={RouterLink}
+                        to={`/profile/update/${id}`}
+                        color="inherit"
+                    >
+                        Update Profile
+                    </Link>
+                </Box>
             </Box>
         </Paper>
     );
