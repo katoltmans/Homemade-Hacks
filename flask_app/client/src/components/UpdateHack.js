@@ -59,9 +59,12 @@ const UpdateHack = (props) => {
         setSupplies([...supplies, { supply_name: "", quantity: "" }]);
     };
 
+    // Handler to add instructions to instructions array when field is updated
     const addInstructionHandler = () => {
         setInstructions([...instructions, ""]);
     };
+
+    // Handler to update supplies on input change
     const onChangeHandlerSupplies = (e, index, type) => {
         console.log(e.target.name);
         console.log(e.target.value);
@@ -70,6 +73,7 @@ const UpdateHack = (props) => {
         setSupplies(newSupplies);
     };
 
+    // Handler to update instructions on input change
     const onChangeHandlerInstructions = (e, index) => {
         console.log(e.target.name);
         console.log(e.target.value);
@@ -113,6 +117,7 @@ const UpdateHack = (props) => {
             });
     };
 
+    // Handler to delete unwanted supply and instruction rows
     const deleteRowHandler = (index, setFunction, elemArray) => {
         setFunction(elemArray.filter((elem, i) => i !== index));
     };

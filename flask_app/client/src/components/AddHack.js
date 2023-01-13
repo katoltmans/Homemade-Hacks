@@ -16,6 +16,7 @@ import {
     ListItem,
     Stack,
 } from "@mui/material";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const AddHack = (props) => {
     const navigate = useNavigate();
@@ -71,6 +72,11 @@ const AddHack = (props) => {
     // Handler to add instructions to instructions array when field is added
     const addInstructionHandler = () => {
         setInstructions([...instructions, ""]);
+    };
+
+    // Handler to delete unwanted supply and instruction rows
+    const deleteRowHandler = (index, setFunction, elemArray) => {
+        setFunction(elemArray.filter((elem, i) => i !== index));
     };
 
     // Handler to post hack with hack details connected to creator's user ID
@@ -233,7 +239,7 @@ const AddHack = (props) => {
                                         }
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={5}>
                                     <TextField
                                         fullWidth
                                         name="supplies"
@@ -248,6 +254,20 @@ const AddHack = (props) => {
                                             )
                                         }
                                     />
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Button
+                                        sx={{ color: "#C64040" }}
+                                        onClick={() =>
+                                            deleteRowHandler(
+                                                index,
+                                                setSupplies,
+                                                supplies
+                                            )
+                                        }
+                                    >
+                                        <HighlightOffIcon />
+                                    </Button>
                                 </Grid>
                             </Grid>
                         );
@@ -283,18 +303,37 @@ const AddHack = (props) => {
                 <Grid container rowSpacing={1}>
                     {instructions.map((step, index) => {
                         return (
-                            <Grid item xs={12} key={index}>
-                                <TextField
-                                    fullWidth
-                                    name="instructions"
-                                    value={step}
-                                    label="Instruction step"
-                                    variant="outlined"
-                                    onChange={(e) =>
-                                        onChangeHandlerInstructions(e, index)
-                                    }
-                                />
-                            </Grid>
+                            <>
+                                <Grid item xs={11} key={index}>
+                                    <TextField
+                                        fullWidth
+                                        name="instructions"
+                                        value={step}
+                                        label="Instruction step"
+                                        variant="outlined"
+                                        onChange={(e) =>
+                                            onChangeHandlerInstructions(
+                                                e,
+                                                index
+                                            )
+                                        }
+                                    />
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Button
+                                        sx={{ color: "#C64040" }}
+                                        onClick={() =>
+                                            deleteRowHandler(
+                                                index,
+                                                setInstructions,
+                                                instructions
+                                            )
+                                        }
+                                    >
+                                        <HighlightOffIcon />
+                                    </Button>
+                                </Grid>
+                            </>
                         );
                     })}
                 </Grid>
