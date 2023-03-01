@@ -61,6 +61,9 @@ const ProfilePage = (props) => {
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
+                    '& h1': {
+                        fontWeight: "bold",
+                    }
                 }}
             >
                 {/* Photo by Jess Bailey Designs: https://www.pexels.com/photo/gold-pen-1119794/ */}
@@ -86,23 +89,23 @@ const ProfilePage = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} sx={stylesText}>
-                        <Typography variant="body1" component="p">
+                        <Typography variant="h5" component="p">
                             {user.email}
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3} sx={stylesText}>
+                {/* <Grid container spacing={3} sx={stylesText}>
                     <Grid item xs={6}>
                         <Typography variant="h4" component="h1">
                             Birth Date:
                         </Typography>
                     </Grid>
                     <Grid item xs={6} sx={stylesText}>
-                        <Typography variant="body1" component="p">
-                            {/* {user.birthdate} */}
+                        <Typography variant="h5" component="p">
+                           {user.birthdate}
                         </Typography>
                     </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid container spacing={3} sx={stylesText}>
                     <Grid item xs={6}>
                         <Typography variant="h4" component="h1">
@@ -110,7 +113,7 @@ const ProfilePage = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} sx={stylesText}>
-                        <Typography variant="body1" component="p">
+                        <Typography variant="h5" component="p">
                             {user.location}
                         </Typography>
                     </Grid>
@@ -122,7 +125,7 @@ const ProfilePage = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} sx={stylesText}>
-                        <Typography variant="body1" component="p">
+                        <Typography variant="h5" component="p">
                             {user.username}
                         </Typography>
                     </Grid>
