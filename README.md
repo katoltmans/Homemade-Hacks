@@ -8,6 +8,10 @@ This project utilizes webpack to foster communication between a Python backend a
 
 In the future, I would like to add a rating system so the top rated hacks that users find most helpful will float to the top of category lists. Currently lists are organized in alphabetical order.
 
+![image](https://user-images.githubusercontent.com/95939299/230502678-3ffed538-ce46-4c4e-8400-c81992e47ab2.png)
+
+
+
 ## Instructions To Run Homemade Hacks
 
 1. Run `python server.py` to run the server side.
