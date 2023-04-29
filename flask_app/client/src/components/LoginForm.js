@@ -16,7 +16,7 @@ const LoginForm = (props) => {
         //make axios post request to login user
         console.log("USERNAME: " + username);
         axios
-            .post("http://localhost:5000/login", {
+            .post("/login", {
                 username: username,
                 password: password,
             })

@@ -16,7 +16,7 @@ const WelcomePage = (props) => {
     useEffect(() => {
         // GET request to find all hacks
         axios
-            .get("http://localhost:5000/api/hacks/view")
+            .get("/api/hacks/view")
             .then((res) => {
                 console.log(res);
                 setHacks(res.data.all_hacks);

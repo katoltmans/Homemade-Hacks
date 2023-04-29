@@ -15,7 +15,7 @@ const CategoryPage = (props) => {
     useEffect(() => {
         console.log("CATEGORY ID:", category_id);
         axios
-            .get("http://localhost:5000/api/hacks/category/" + category_id)
+            .get("/api/hacks/category/" + category_id)
             .then((res) => {
                 console.log(res);
                 setHacks(res.data.all_hacks);

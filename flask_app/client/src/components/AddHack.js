@@ -96,7 +96,7 @@ const AddHack = (props) => {
 
         // Post request to create a new hack
         axios
-            .post("http://localhost:5000/api/hacks/new", tempHack)
+            .post("/api/hacks/new", tempHack)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);

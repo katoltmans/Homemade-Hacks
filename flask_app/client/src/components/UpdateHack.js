@@ -32,7 +32,7 @@ const UpdateHack = (props) => {
     useEffect(() => {
         console.log(id);
         axios
-            .get("http://localhost:5000/api/hacks/view/" + id) //Remember the slash at the end of the IP address!
+            .get("/api/hacks/view/" + id) //Remember the slash at the end of the IP address!
             .then((res) => {
                 console.log(res.data);
                 setHack(res.data);
@@ -100,7 +100,7 @@ const UpdateHack = (props) => {
 
         // Post request to update a hack
         axios
-            .post("http://localhost:5000/api/hacks/update/" + id, tempHack)
+            .post("/api/hacks/update/" + id, tempHack)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);

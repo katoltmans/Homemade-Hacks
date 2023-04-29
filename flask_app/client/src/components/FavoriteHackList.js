@@ -26,7 +26,7 @@ const FavoriteHackList = (props) => {
             // GET request to find all hacks
             console.log(user);
             let url =
-                "http://localhost:5000/api/hacks/view/favorites/" + user?.id;
+                "/api/hacks/view/favorites/" + user?.id;
             console.log(url);
             axios
                 .get(url)

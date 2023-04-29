@@ -18,9 +18,9 @@ const HackDetail = (props) => {
         console.log(id);
         axios
             .all([
-                axios.get("http://localhost:5000/api/hacks/view/" + id),
+                axios.get("/api/hacks/view/" + id),
                 axios.get(
-                    `http://localhost:5000/api/user/${user.id}/favorites/${id}`
+                    `/api/user/${user.id}/favorites/${id}`
                 ),
             ])
             .then(
@@ -40,7 +40,7 @@ const HackDetail = (props) => {
 
     const handleDelete = (hackId) => {
         axios
-            .delete(`http://localhost:5000/api/hacks/delete/${hackId}`)
+            .delete(`/api/hacks/delete/${hackId}`)
             .then((res) => {
                 console.log(res);
                 setHacks(hacks.filter((hack) => hack.id !== hackId));
@@ -53,7 +53,7 @@ const HackDetail = (props) => {
 
     const addFavorite = () => {
         axios
-            .post("http://localhost:5000/api/hacks/favorite", {
+            .post("/api/hacks/favorite", {
                 user_id: user.id,
                 hack_id: hack.id,
             }) //Remember the slash at the end of the IP address!
@@ -68,7 +68,7 @@ const HackDetail = (props) => {
 
     const unfavorite = () => {
         axios
-            .post("http://localhost:5000/api/hacks/unfavorite", {
+            .post("/api/hacks/unfavorite", {
                 user_id: user.id,
                 hack_id: hack.id,
             }) //Remember the slash at the end of the IP address!
