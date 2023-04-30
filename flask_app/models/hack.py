@@ -5,7 +5,7 @@ from flask_app.models import user
 import re
 class Hack():
     # Assign schema
-    schema = "homemade_hacks"
+    schema = "katoltmans$default"
     
     def __init__(self, data):  # Attributes of hack class
         self.id = data["id"]
