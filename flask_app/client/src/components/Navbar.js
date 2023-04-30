@@ -165,6 +165,8 @@ const Navbar = (props) => {
                                 </MenuItem>
                             ))}
                             {/* Profile link appears in same menu with other navigation options on mobile only*/}
+                            {!!user?.firstName ? (
+                                <>
                             <MenuItem
                                 key="profile"
                                 onClick={handleCloseNavMenu}
@@ -183,9 +185,7 @@ const Navbar = (props) => {
                                         Profile
                                     </Link>
                                 </Typography>
-                            </MenuItem>
-                            {/* Display logout button only when a user is signed in */}
-                            {!!user?.firstName ? (
+                            </MenuItem>                            
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Button
                                         variant="contained"
@@ -195,6 +195,7 @@ const Navbar = (props) => {
                                         Logout
                                     </Button>
                                 </MenuItem>
+                                </>
                             ) : (
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     {/* Display Login and Register buttons when a user is not signed in */}
