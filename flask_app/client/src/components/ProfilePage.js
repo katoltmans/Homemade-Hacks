@@ -6,7 +6,6 @@ import { Box, Grid, Paper, Typography, Link } from "@mui/material";
 const ProfilePage = (props) => {
     const [user, setUser] = useState(null);
     const { id } = useParams();
-    // const [errors, setErrors] = useState([]);
 
     // Styles for profile text
     const stylesText = {
@@ -94,18 +93,6 @@ const ProfilePage = (props) => {
                         </Typography>
                     </Grid>
                 </Grid>
-                {/* <Grid container spacing={3} sx={stylesText}>
-                    <Grid item xs={6}>
-                        <Typography variant="h4" component="h1">
-                            Birth Date:
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6} sx={stylesText}>
-                        <Typography variant="h5" component="p">
-                           {user.birthdate}
-                        </Typography>
-                    </Grid>
-                </Grid> */}
                 <Grid container spacing={3} sx={stylesText}>
                     <Grid item xs={6}>
                         <Typography variant="h4" component="h1">

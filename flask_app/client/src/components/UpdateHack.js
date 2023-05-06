@@ -32,7 +32,7 @@ const UpdateHack = (props) => {
     useEffect(() => {
         console.log(id);
         axios
-            .get("/api/hacks/view/" + id) //Remember the slash at the end of the IP address!
+            .get("/api/hacks/view/" + id) 
             .then((res) => {
                 console.log(res.data);
                 setHack(res.data);
@@ -86,7 +86,6 @@ const UpdateHack = (props) => {
     const onSubmitHandler = (e) => {
         console.log("submitting hack");
         e.preventDefault();
-        //make axios post request
         console.log(user);
 
         // Create hack object
@@ -199,7 +198,6 @@ const UpdateHack = (props) => {
                                         label="Category"
                                         defaultValue={hack.category_id}
                                         onChange={onChangeHandler}
-                                        // value={hack.category_id}
                                     >
                                         <MenuItem value={1}>Cleaning</MenuItem>
                                         <MenuItem value={2}>Wardrobe</MenuItem>
@@ -341,7 +339,6 @@ const UpdateHack = (props) => {
                                             name="instructions"
                                             value={step}
                                             label="Instruction step"
-                                            // defaultValue={}
                                             variant="outlined"
                                             onChange={(e) =>
                                                 onChangeHandlerInstructions(

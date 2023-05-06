@@ -45,12 +45,11 @@ const UpdateProfile = (props) => {
     const onSubmitHandler = (e) => {
         console.log("submitting profile update");
         e.preventDefault();
-        //make axios post request
         console.log(user);
 
         // Post request to update
         axios
-            .post(`/profile/update/${id}`, user)
+            .post(`/api/profile/update/${id}`, user)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -161,16 +160,6 @@ const UpdateProfile = (props) => {
                         </Grid>
                     </Grid>
                     <Grid container item spacing={3}>
-                        {/* <Grid item xs={12} sm={6}>
-                            <TextField
-                                fullWidth
-                                name="birthdate"
-                                label="Birth Date (YYYY/MM/DD)"
-                                defaultValue={user.birthdate.toString()}
-                                variant="outlined"
-                                onChange={onChangeHandler}
-                            />
-                        </Grid> */}
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth

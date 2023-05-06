@@ -11,7 +11,6 @@ const HackDetail = (props) => {
     const [favorite, setFavorite] = useState(false);
     const [categoryImg, setCategoryImg] = useState();
     const { user, setUser } = props;
-    // const [loggedIn, setLoggedIn] = useParams();
     const { id } = useParams();
 
     useEffect(() => {
@@ -56,7 +55,7 @@ const HackDetail = (props) => {
             .post("/api/hacks/favorite", {
                 user_id: user.id,
                 hack_id: hack.id,
-            }) //Remember the slash at the end of the IP address!
+            }) 
             .then((res) => {
                 console.log(res.data);
                 setFavorite(true);
@@ -71,7 +70,7 @@ const HackDetail = (props) => {
             .post("/api/hacks/unfavorite", {
                 user_id: user.id,
                 hack_id: hack.id,
-            }) //Remember the slash at the end of the IP address!
+            }) 
             .then((res) => {
                 console.log(res.data);
                 setFavorite(false);
@@ -101,7 +100,6 @@ const HackDetail = (props) => {
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    // opacity: "0.6",
                 }}
             >
                 {/* Photo by Kaboompics .com: https://www.pexels.com/photo/flour-in-a-jar-5765/ */}
@@ -113,7 +111,6 @@ const HackDetail = (props) => {
                         color: "#FFF",
                         textShadow: "2px 2px 6px #000000",
                         p: { xs: 1, sm: 2 },
-                        // backgroundColor: "#478D95",
                     }}
                 >
                     {hack.title}

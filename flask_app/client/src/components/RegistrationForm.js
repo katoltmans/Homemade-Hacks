@@ -40,7 +40,7 @@ const RegistrationForm = (props) => {
         console.log(user);
         // Post request to create a new author
         axios
-            .post("/register", user)
+            .post("/api/register", user)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);

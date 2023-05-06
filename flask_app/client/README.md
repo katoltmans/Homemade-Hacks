@@ -13,3 +13,9 @@ yarn build
 ```
 
 to bundle your application
+
+```
+
+To Update Python Anywhere: 
+- npm run build:prod
+- commit and push

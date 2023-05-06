@@ -11,7 +11,7 @@ from flask import Response
 
 
 # Route to process registration data
-@app.route("/register", methods=["POST"])
+@app.route("/api/register", methods=["POST"])
 def process_registration():
     # Redirect to registration page if not a valid email
     pp = pprint.PrettyPrinter(indent=4)
@@ -46,7 +46,7 @@ def process_registration():
 # Solution source: https://stackoverflow.com/questions/26980713/solve-cross-origin-resource-sharing-with-flask
 
 # Route to process login
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def process_login():
     formData = request.get_json()
     print("FORM DATA:", formData)
@@ -72,7 +72,7 @@ def process_login():
     return response
 
 # Route to logout
-@app.route("/logout")
+@app.route("/api/logout")
 def process_logout():
     session.clear()
     response = jsonify({"message":"successfully logged out"})
@@ -87,7 +87,7 @@ def view_one_user(num):
     return Response(jsonpickle.encode(user.User.display_user(data)), mimetype='application/json')
 
 # Route to update user data on profile page
-@app.route("/profile/update/<int:num>", methods=["POST"])
+@app.route("/api/profile/update/<int:num>", methods=["POST"])
 def update_profile(num):
     pp = pprint.PrettyPrinter(indent=4)
     formData = request.get_json()
