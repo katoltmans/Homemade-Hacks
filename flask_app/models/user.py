@@ -50,7 +50,7 @@ class User:
     # Method to check identify repeats when registering
     @classmethod
     def has_repeats(cls, data):
-        query = "SELECT COUNT(*) AS count FROM homemade_hacks.users WHERE email = %(email)s;"
+        query = "SELECT COUNT(*) AS count FROM users WHERE email = %(email)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         return results[0]['count'] > 0
