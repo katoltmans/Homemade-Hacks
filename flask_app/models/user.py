@@ -30,7 +30,7 @@ class User:
     # Method to create a user
     @classmethod
     def new_user(cls, data):
-        query = "INSERT INTO homemade_hacks.users (first_name, last_name, email, birthdate, location, username, password, created_at, updated_at) \
+        query = "INSERT INTO users (first_name, last_name, email, birthdate, location, username, password, created_at, updated_at) \
         VALUES (%(first_name)s, %(last_name)s, %(email)s, %(birthdate)s, %(location)s, %(username)s, %(password)s, NOW(), NOW());"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
@@ -39,7 +39,7 @@ class User:
     # Method to display a user
     @classmethod
     def display_user(cls, data):
-        query = "SELECT * FROM homemade_hacks.users WHERE users.id = %(id)s;"
+        query = "SELECT * FROM users WHERE users.id = %(id)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         if len(results) == 0: # In case no users are registered
@@ -58,7 +58,7 @@ class User:
     # Method to check if a user's email is in the database when logging in
     @classmethod
     def get_by_username(cls, data):
-        query = "SELECT * FROM homemade_hacks.users WHERE username = %(username)s;"
+        query = "SELECT * FROM users WHERE username = %(username)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         # Action when no matching username is found
         if len(results) <1: 
@@ -68,14 +68,14 @@ class User:
     # Method to update a user
     @classmethod
     def update_user(cls, data):
-        query = "UPDATE homemade_hacks.users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, birthdate=%(birthdate)s, location=%(location)s, updated_at=NOW() WHERE id=%(id)s;"
+        query = "UPDATE users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, birthdate=%(birthdate)s, location=%(location)s, updated_at=NOW() WHERE id=%(id)s;"
         return connectToMySQL(cls.schema).query_db(query, data)
     
     # Method to check if hack is favorited by a user
     @classmethod
     def check_if_favorite(cls, data):
-        query = """SELECT COUNT(*) > 0 AS favorite_status FROM homemade_hacks.favorites 
-        WHERE homemade_hacks.favorites.user_id = %(user_id)s AND homemade_hacks.favorites.hack_id = %(hack_id)s;"""
+        query = """SELECT COUNT(*) > 0 AS favorite_status FROM favorites 
+        WHERE favorites.user_id = %(user_id)s AND favorites.hack_id = %(hack_id)s;"""
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         is_favorite = results[0]

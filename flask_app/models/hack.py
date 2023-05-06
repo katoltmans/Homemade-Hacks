@@ -28,7 +28,7 @@ class Hack():
     # Method to add a hack (create)
     @classmethod
     def add_hack(cls, data):
-        query = "INSERT INTO homemade_hacks.hacks (title, supplies, instructions, category_id, user_id) \
+        query = "INSERT INTO hacks (title, supplies, instructions, category_id, user_id) \
         VALUES (%(title)s, %(supplies)s, %(instructions)s, %(category_id)s, %(user_id)s);"
         # Will need to fix category
         results = connectToMySQL(cls.schema).query_db(query, data)
@@ -38,9 +38,9 @@ class Hack():
     # Method to get all hacks with categories
     @classmethod
     def get_all_hacks_with_category_and_user(cls):
-        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
-	    LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
-        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id;"""
+        query = """SELECT *, categories.name as category_name FROM hacks 
+	    LEFT JOIN categories ON categories.id = hacks.category_id 
+        LEFT JOIN users ON users.id = hacks.user_id;"""
         results = connectToMySQL(cls.schema).query_db(query)
         #print(results)
         category_query = "SELECT * FROM categories;"
@@ -81,10 +81,10 @@ class Hack():
     # Method to get all hacks of a particular category
     @classmethod
     def get_all_hacks_of_one_category(cls, data):
-        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
-	    LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
-        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id
-        WHERE homemade_hacks.hacks.category_id = %(category_id)s; """
+        query = """SELECT *, categories.name as category_name FROM hacks 
+	    LEFT JOIN categories ON categories.id = hacks.category_id 
+        LEFT JOIN users ON users.id = hacks.user_id
+        WHERE hacks.category_id = %(category_id)s; """
         results = connectToMySQL(cls.schema).query_db(query, data)
         results_object = {}
         all_hacks = []
@@ -105,9 +105,9 @@ class Hack():
     # Method to view details of one hack
     @classmethod
     def view_details(cls, data):
-        query = """SELECT *, homemade_hacks.categories.name as category_name FROM homemade_hacks.hacks 
-        LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id 
-        LEFT JOIN homemade_hacks.users ON users.id = hacks.user_id
+        query = """SELECT *, categories.name as category_name FROM hacks 
+        LEFT JOIN categories ON categories.id = hacks.category_id 
+        LEFT JOIN users ON users.id = hacks.user_id
         WHERE hacks.id = %(id)s;"""
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
@@ -119,14 +119,14 @@ class Hack():
     # Method to update a hack
     @classmethod
     def update_hack(cls, data):
-        query = "UPDATE homemade_hacks.hacks SET title=%(title)s, supplies=%(supplies)s, instructions=%(instructions)s, category_id=%(category_id)s, updated_at=NOW() WHERE id=%(id)s;"
+        query = "UPDATE hacks SET title=%(title)s, supplies=%(supplies)s, instructions=%(instructions)s, category_id=%(category_id)s, updated_at=NOW() WHERE id=%(id)s;"
         return connectToMySQL(cls.schema).query_db(query, data)
     
     
     # Method to delete a hack
     @classmethod
     def delete_hack_record(cls, data):
-        query = "DELETE FROM homemade_hacks.hacks WHERE id=%(id)s;"
+        query = "DELETE FROM hacks WHERE id=%(id)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
         return results
@@ -135,7 +135,7 @@ class Hack():
     # Method to favorite a hack 
     @classmethod
     def add_favorite(cls, data):
-        query = "INSERT INTO homemade_hacks.favorites (user_id, hack_id) \
+        query = "INSERT INTO favorites (user_id, hack_id) \
         VALUES ( %(user_id)s,  %(hack_id)s);"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
@@ -144,7 +144,7 @@ class Hack():
     # Method to unfavorite a hack 
     @classmethod
     def unfavorite(cls, data):
-        query = "DELETE FROM homemade_hacks.favorites \
+        query = "DELETE FROM favorites \
         WHERE user_id = %(user_id)s and hack_id = %(hack_id)s;"
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
@@ -153,10 +153,10 @@ class Hack():
     # Method to display favorite hacks
     @classmethod
     def get_all_favorited_hacks_with_category_and_user(cls, data):
-        query = """SELECT *, homemade_hacks.favorites.user_id AS favorites_user_id, homemade_hacks.categories.name AS category_name FROM homemade_hacks.favorites
-        LEFT JOIN homemade_hacks.hacks ON homemade_hacks.favorites.hack_id = homemade_hacks.hacks.id
-        LEFT JOIN homemade_hacks.categories ON homemade_hacks.categories.id = homemade_hacks.hacks.category_id
-        LEFT JOIN homemade_hacks.users ON users.id = homemade_hacks.favorites.user_id
+        query = """SELECT *, favorites.user_id AS favorites_user_id, categories.name AS category_name FROM favorites
+        LEFT JOIN hacks ON favorites.hack_id = hacks.id
+        LEFT JOIN categories ON categories.id = hacks.category_id
+        LEFT JOIN users ON users.id = favorites.user_id
         WHERE users.id = %(user_id)s;"""
         results = connectToMySQL(cls.schema).query_db(query, data)
         print(results)
