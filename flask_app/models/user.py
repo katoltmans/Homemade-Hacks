@@ -8,7 +8,10 @@ import datetime
 
 class User:
     # Assign schema
-    schema = "katoltmans$homemade_hacks"
+    if hasattr(app,'connection'):
+        schema = "homemade_hacks"
+    else:
+        schema = "katoltmans$homemade_hacks"
     
     # Create regular expressions used to validate emails and passwords
     EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')

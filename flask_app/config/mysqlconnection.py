@@ -1,13 +1,26 @@
 import pymysql.cursors
+from flask_app import app
 class MySQLConnection:
     def __init__(self, db):
-        connection = pymysql.connect(host = 'katoltmans.mysql.pythonanywhere-services.com',
-                                    user = 'katoltmans', # change the user and password as needed
-                                    password = 'Ii1Vvx93nbMJ7yxvyLEmBBxt', 
-                                    db = db,
-                                    charset = 'utf8mb4',
-                                    cursorclass = pymysql.cursors.DictCursor,
-                                    autocommit = True)
+        connection = None
+        if hasattr(app,'connection'):
+            app.logger.warning("LOCAL DB", app.connection)
+            connection = pymysql.connect(host = app.connection['host'],
+                                        user = app.connection['user'], # change the user and password as needed
+                                        password = app.connection['password'] , 
+                                        db = db,
+                                        charset = 'utf8mb4',
+                                        cursorclass = pymysql.cursors.DictCursor,
+                                        autocommit = True)
+        else:
+            app.logger.warning("PROD DB")
+            connection = pymysql.connect(host = 'katoltmans.mysql.pythonanywhere-services.com',
+                                        user = 'katoltmans', # change the user and password as needed
+                                        password = 'Ii1Vvx93nbMJ7yxvyLEmBBxt', 
+                                        db = db,
+                                        charset = 'utf8mb4',
+                                        cursorclass = pymysql.cursors.DictCursor,
+                                        autocommit = True)
         self.connection = connection
     def query_db(self, query, data=None):
         with self.connection.cursor() as cursor:

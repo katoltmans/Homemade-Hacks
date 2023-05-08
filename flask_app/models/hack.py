@@ -5,7 +5,12 @@ from flask_app.models import user
 import re
 class Hack():
     # Assign schema
-    schema = "katoltmans$homemade_hacks"
+    if hasattr(app,'connection'):
+        app.logger.warning("LOCAL SCHEMA")
+        schema = "homemade_hacks"
+    else:
+        app.logger.warning("PROD SCHEMA")
+        schema = "katoltmans$homemade_hacks"
     
     def __init__(self, data):  # Attributes of hack class
         self.id = data["id"]
