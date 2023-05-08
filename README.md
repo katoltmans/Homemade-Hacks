@@ -12,7 +12,18 @@ In the future, I would like to add a rating system so the top rated hacks that u
 
 
 
-## Instructions To Run Homemade Hacks
+## Instructions To Run Homemade Hacks in Development
 
 1. Run `python server.py` to run the server side.
-2. Navigate to the client folder inside the flask_app folder and run `npm run wpack` to run the client side.
+2. Navigate to the client folder inside the flask_app folder and run `npm run wpack` to run webpack in development mode to instantly recompile the client side for development.
+
+## Instructions to Update Homemade Hacks on PROD
+To Update Python Anywhere: 
+- Run `npm run build:prod` to compile the React front-end for PROD
+- Commit and push
+- Go to site: https://www.pythonanywhere.com/user/katoltmans/
+- Open bash virtual environment console and go to path `/home/katoltmans/Homemade-Hacks`
+- Run `git pull origin` to update
+- Go to Python Anywhere's Dashboard --> Web Apps click Reload
+- Hold shift refresh to completely clear the cache and reload the page
+
