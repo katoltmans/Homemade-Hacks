@@ -18,24 +18,39 @@ const HackDetail = (props) => {
         axios
             .all([
                 axios.get("/api/hacks/view/" + id),
-                axios.get(
-                    `/api/user/${user.id}/favorites/${id}`
-                ),
             ])
             .then(
                 axios.spread((...responses) => {
                     console.log(responses);
                     console.log(responses[0].data);
                     setHack(responses[0].data);
-                    console.log(responses[1].data);
-                    setFavorite(responses[1].data.favorite_status > 0);
                     setCategoryImg(responses[0].data.cat_img);
                 })
             )
             .catch((err) => {
                 console.log("Error with view_one_hack request", err);
             });
-    }, [console.log("USER STATUS:", user), id, user.id]);
+    }, [id]);
+
+    useEffect(() => {
+        if(!!id && !!user?.id) {
+            axios
+            .all([
+                axios.get(
+                    `/api/user/${user.id}/favorites/${id}`
+                ),
+            ])
+            .then(
+                axios.spread((...responses) => {
+                    console.log(responses[0].data);
+                    setFavorite(responses[0].data.favorite_status > 0);
+                })
+            )
+            .catch((err) => {
+                console.log("Error with view_favorite_hacks request", err);
+            });
+        }
+    }, [id, user]);
 
     const handleDelete = (hackId) => {
         axios
@@ -117,7 +132,7 @@ const HackDetail = (props) => {
                 </Typography>
             </Box>
             <Stack spacing={2} sx={{ p: 2 }}>
-                {!!user.username ? (
+                {!!user?.username ? (
                     <Grid
                         container
                         direction="row"

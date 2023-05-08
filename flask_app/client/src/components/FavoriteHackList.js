@@ -149,7 +149,7 @@ const FavoriteHackList = (props) => {
                         })}
                     </Grid>
                 </Paper>
-            ) : !!user.username ? (
+            ) : !!user?.username ? (
                 <Paper
                     elevation={2}
                     sx={{
